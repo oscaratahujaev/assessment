@@ -39,10 +39,50 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
+            ['label' => 'Данные', 'url' => ['/site/contact'], 'items' => [
+                [
+                    'label' => 'Категории',
+                    'url' => ['/category/']
+                ],
+                [
+                    'label' => 'Параметры',
+                    'url' => ['/category-params/']
+                ],
+                [
+                    'label' => 'Типы параметров',
+                    'url' => ['/param-type/']
+                ],
+                [
+                    'label' => 'Квартал',
+                    'url' => ['/quarter/']
+                ],
+                [
+                    'label' => 'Министерства',
+                    'url' => ['/ministry/']
+                ],
+                [
+                    'label' => 'Регионы',
+                    'url' => ['/region/']
+                ],
+                [
+                    'label' => 'Районы',
+                    'url' => ['/district/']
+                ],
+                [
+                    'label' => 'Показатели',
+                    'url' => ['/data/']
+                ],
+                [
+                    'label' => 'Оценка',
+                    'url' => ['/score/']
+                ],
+                [
+                    'label' => 'Года',
+                    'url' => ['/years/']
+                ],
+            ]],
             Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
+            ['label' => 'Login', 'url' => ['/site/login']]
             ) : (
                 '<li>'
                 . Html::beginForm(['/site/logout'], 'post')

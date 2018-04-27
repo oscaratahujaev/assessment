@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\Category;
+use app\models\Data;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -62,6 +64,39 @@ class SiteController extends Controller
     public function actionIndex()
     {
         return $this->render('index');
+    }
+
+    public function actionAdd($districtId = 1)
+    {
+        $categoryId = 1;
+        $regionId = 1;
+        $districtId = 1;
+
+        $category = Category::find()->with('categoryParams')->where(['id' => 1])->asArray()->one();
+
+//        echo "<pre>";
+//        var_dump($category);
+//        exit;
+
+        $datas = [];
+        $i = 0;
+        foreach ($category['categoryParams'] as $param) {
+            if ($param['param_type_id'] == 1) {
+                $model = new Data();
+                $model->category_id = $categoryId;
+                $model->region_id = $regionId;
+                $model->district_id = $districtId;
+                $model->param_id = $param['id'];
+                $model->param->name = $param['name'];
+                $datas[$i] = $model;
+                $i++;
+            }
+        }
+
+        return $this->render('add', [
+            'data' => $datas,
+            'category' => $category,
+        ]);
     }
 
     /**
