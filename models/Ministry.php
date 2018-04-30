@@ -35,9 +35,10 @@ class Ministry extends \yii\db\ActiveRecord
         return [
             [['creator', 'modifier'], 'integer'],
             [['created_at', 'modified_at'], 'safe'],
-            [['name'], 'string', 'max' => 50],
+            [['name'], 'string', 'max' => 255],
         ];
     }
+
     public function behaviors()
     {
         return [
