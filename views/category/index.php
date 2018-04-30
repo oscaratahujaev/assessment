@@ -27,9 +27,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'name',
-            'creator',
-            'created_at',
-            'modifier',
+            'place_type',
+            'factor_column',
+            'score_class',
+            /* 'creator',
+             'created_at',
+             'modifier',*/
             //'modified_at',
             //'ministry_id',
 
