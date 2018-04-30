@@ -17,10 +17,12 @@ use yii\behaviors\TimestampBehavior;
  * @property int $ministry_id
  * @property int $place_type
  * @property int $factor_column
+ * @property string $score_class
  *
  * @property Ministry $ministry
  * @property CategoryParams[] $categoryParams
  * @property Data[] $datas
+ * @property Score[] $scores
  */
 class Category extends \yii\db\ActiveRecord
 {
@@ -32,6 +34,37 @@ class Category extends \yii\db\ActiveRecord
         return 'category';
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['creator', 'modifier', 'ministry_id', 'place_type', 'factor_column'], 'integer'],
+            [['created_at', 'modified_at'], 'safe'],
+            [['name', 'score_class'], 'string', 'max' => 255],
+            [['ministry_id'], 'exist', 'skipOnError' => true, 'targetClass' => Ministry::className(), 'targetAttribute' => ['ministry_id' => 'id']],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'name' => 'Name',
+            'creator' => 'Creator',
+            'created_at' => 'Created At',
+            'modifier' => 'Modifier',
+            'modified_at' => 'Modified At',
+            'ministry_id' => 'Ministry ID',
+            'place_type' => 'Place Type',
+            'factor_column' => 'Factor Column',
+            'score_class' => 'Score Class',
+        ];
+    }
     public function behaviors()
     {
         return [
@@ -45,7 +78,9 @@ class Category extends \yii\db\ActiveRecord
             ]
         ];
     }
-
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function beforeSave($insert)
     {
         if ($this->isNewRecord) {
@@ -55,41 +90,6 @@ class Category extends \yii\db\ActiveRecord
         return parent::beforeSave($insert);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            [['creator', 'modifier', 'ministry_id', 'place_type', 'factor_column'], 'integer'],
-            [['created_at', 'modified_at'], 'safe'],
-            [['name'], 'string', 'max' => 255],
-            [['ministry_id'], 'exist', 'skipOnError' => true, 'targetClass' => Ministry::className(), 'targetAttribute' => ['ministry_id' => 'id']],
-        ];
-    }
-
-
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => Yii::t('main', 'ID'),
-            'name' => Yii::t('main', 'Name'),
-            'creator' => Yii::t('main', 'Creator'),
-            'created_at' => Yii::t('main', 'Created At'),
-            'modifier' => Yii::t('main', 'Modifier'),
-            'modified_at' => Yii::t('main', 'Modified At'),
-            'ministry_id' => Yii::t('main', 'Ministry ID'),
-            'place_type' => Yii::t('main', 'Place Type'),
-            'factor_column' => Yii::t('main', 'Factor Column'),
-        ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getMinistry()
     {
         return $this->hasOne(Ministry::className(), ['id' => 'ministry_id']);
@@ -109,5 +109,13 @@ class Category extends \yii\db\ActiveRecord
     public function getDatas()
     {
         return $this->hasMany(Data::className(), ['category_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getScores()
+    {
+        return $this->hasMany(Score::className(), ['category_id' => 'id']);
     }
 }
