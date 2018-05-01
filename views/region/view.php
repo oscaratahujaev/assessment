@@ -46,7 +46,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'region_id',
                         'value' => function ($data) {
                             return $data->region ? $data->region->name : "";
-
                         }
                     ],
                     [
