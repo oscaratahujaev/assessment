@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Region;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
@@ -8,8 +9,8 @@ use yii\helpers\Html;
 $this->title = Yii::t('app', 'Update District: {nameAttribute}', [
     'nameAttribute' => $model->name,
 ]);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Districts'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Regions'), 'url' => ['/region/index']];
+$this->params['breadcrumbs'][] = ['label' => Region::findOne($regionId)->name, 'url' => ['/region/view', 'id' => $regionId]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
 <div class="district-update">

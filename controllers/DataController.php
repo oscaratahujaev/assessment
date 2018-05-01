@@ -63,14 +63,12 @@ class DataController extends Controller
         $year = $request->getQueryParam("year");
         $quarter = $request->getQueryParam("quarter");
         $category = Category::find()->with('categoryParams')->where(['id' => $categoryId])->asArray()->one();
-        $post = Yii::$app->request->post();
 
-        $scoreVariable = 0;
+        $post = $request->post();
 
         if ($post) {
 
-            Data::setData($category, $post);
-            if (Score::setScore($post)) {
+            if (Data::setData($category, $post) && Score::setScore($post)) {
 
                 return $this->redirect(['table',
                     'category' => $category,
@@ -81,27 +79,28 @@ class DataController extends Controller
                 ]);
             }
 
-        } else {
-            $i = 3;
-            $datas = [];
-            foreach ($category['categoryParams'] as $param) {
-                if ($param['param_type_id'] == ParamType::TYPE_INPUT) {
-                    $model = new Data();
-                    $model->category_id = $categoryId;
-                    $model->region_id = $regionId;
-                    $model->district_id = 1;
-                    $model->param_id = $param['id'];
-                    $model->param->name = $param['name'];
-                    $datas[$i] = $model;
-                }
+        }
 
-                if (in_array($param['param_type_id'], [ParamType::TYPE_INPUT, ParamType::TYPE_FORMULA])) {
-                    $i++;
-                }
+        $i = 3;
+        $data = [];
+        foreach ($category['categoryParams'] as $param) {
+            if ($param['param_type_id'] == ParamType::TYPE_INPUT) {
+                $model = new Data();
+                $model->category_id = $categoryId;
+                $model->region_id = $regionId;
+                $model->district_id = 1;
+                $model->param_id = $param['id'];
+                $model->param->name = $param['name'];
+                $data[$i] = $model;
+            }
+
+            if (in_array($param['param_type_id'], [ParamType::TYPE_INPUT, ParamType::TYPE_FORMULA])) {
+                $i++;
             }
         }
+
         return $this->render('add', [
-            'data' => $datas,
+            'data' => $data,
             'category' => $category,
             'region_id' => $regionId,
         ]);

@@ -1,5 +1,6 @@
 <?php
 
+use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -28,13 +29,48 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
             'name',
-            'creator',
-            'created_at',
-            'modifier',
-            'modified_at',
         ],
     ]) ?>
 
-</div>
+    <div class="row">
+        <div class="col-md-12">
+            <?= GridView::widget([
+                'dataProvider' => $dataProvider,
+                'filterModel' => $searchModel,
+                'columns' => [
+                    ['class' => 'yii\grid\SerialColumn'],
+
+                    'name',
+                    [
+                        'attribute' => 'region_id',
+                        'value' => function ($data) {
+                            return $data->region ? $data->region->name : "";
+
+                        }
+                    ],
+                    [
+                        'attribute' => 'place_type',
+                        'value' => function ($data) {
+                            return \app\models\District::getPlaceTypeById($data->place_type);
+
+                        }
+                    ],
+
+                    [
+                        'class' => 'yii\grid\ActionColumn',
+                        'controller' => 'district',
+                        'buttons' => [
+                            'update' => function ($url, $model, $key) {
+                                return Html::a('<i class="glyphicon glyphicon-pencil"></i>', ['/district/update', 'id' => $model->id, 'regionId' => $model->region_id]);
+                                debug($url);
+                                debug($model);
+
+                            }
+                        ],
+                    ],
+                ],
+            ]); ?>
+        </div>
+
+    </div>

@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\District;
+use app\models\DistrictSearch;
 use Yii;
 use app\models\Region;
 use app\models\RegionSearch;
@@ -52,8 +54,15 @@ class RegionController extends Controller
      */
     public function actionView($id)
     {
+        $searchModel = new DistrictSearch();
+        $_GET['DistrictSearch']['region_id'] = $id;
+
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
