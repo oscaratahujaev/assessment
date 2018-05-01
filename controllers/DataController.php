@@ -94,7 +94,6 @@ class DataController extends Controller
                     if ($score->save()) {
                     } else {
                         var_dump($score->getErrors());
-                        die();
                     }
                 }
                 $data->save();
