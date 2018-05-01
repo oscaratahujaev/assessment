@@ -51,6 +51,7 @@ class Score extends \yii\db\ActiveRecord
             [['region_id'], 'exist', 'skipOnError' => true, 'targetClass' => Region::className(), 'targetAttribute' => ['region_id' => 'id']],
         ];
     }
+
     public function behaviors()
     {
         return [
@@ -73,6 +74,37 @@ class Score extends \yii\db\ActiveRecord
         $this->modifier = Yii::$app->user->id;
         return parent::beforeSave($insert);
     }
+
+    public static function setScore($post)
+    {
+        $request = Yii::$app->request;
+        $categoryId = $request->get("categoryID");
+        $regionId = $request->get("regionID");
+        $year = $request->get("year");
+        $quarter = $request->get("quarter");
+        $category = Category::find()->with('categoryParams')->where(['id' => $categoryId])->asArray()->one();
+
+
+        $score = new Score();
+        $score->category_id = $categoryId;
+        $score->region_id = $regionId;
+        $score->district_id = $post['districtId'];
+        $score->year = $year;
+        $score->quarter_id = $quarter ? $quarter : Quarter::find()->one()->id;
+
+
+        $className = "app\\components\\";
+        $className .= Category::getScoreClassById($category['score_class']);
+
+//        debug($category['factor_column']);
+//        exit;
+        $percentage = $post[$category['factor_column']];
+        $scoreCalculator = new $className($percentage);
+        $scoreCalculator->calculate();
+        $score->value = $scoreCalculator->getValue();
+        return $score->save();
+    }
+
 
     /**
      * @inheritdoc

@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\components\MathExpression;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 
@@ -75,6 +76,54 @@ class Data extends \yii\db\ActiveRecord
         }
         $this->modifier = Yii::$app->user->id;
         return parent::beforeSave($insert);
+    }
+
+    public static function setData($category, &$post)
+    {
+
+        $request = Yii::$app->request;
+        $categoryId = $request->get("categoryID");
+        $regionId = $request->get("regionID");
+        $year = $request->get("year");
+        $quarter = $request->get("quarter");
+        $category = Category::find()->with('categoryParams')->where(['id' => $categoryId])->asArray()->one();
+
+
+        $i = 3;
+        foreach ($category['categoryParams'] as $param) {
+            $data = new Data();
+            $data->category_id = $categoryId;
+            $data->region_id = $regionId;
+            $data->district_id = $post["districtId"];
+            $data->param_id = $param['id'];
+            $data->year = $year;
+            $data->quarter = $quarter ? $quarter : Quarter::find()->one()->id;
+
+            if ($param['param_type_id'] == ParamType::TYPE_INPUT) {
+                /**
+                 * Param type: INPUT (user inputs value)
+                 */
+                $data->value = $post[$i];
+
+            } else if ($param['param_type_id'] == ParamType::TYPE_FORMULA) {
+                /**
+                 * Param type: FORMULA, value calculated according to formula
+                 */
+
+
+                $formula = $param['formula'];
+                $expr = new MathExpression($formula, $post);
+                $expr->calculate();
+                $data->value = $expr->getResult();
+                $data->value = $data->value > 1 ? 1 : $data->value; // the value shouldn't exceed 100%
+                $post[$i] = $data->value;
+            }
+
+            if (in_array($param['param_type_id'], [ParamType::TYPE_INPUT, ParamType::TYPE_FORMULA])) {
+                $i++;
+                $data->save();
+            }
+        }
     }
 
     /**

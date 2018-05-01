@@ -17,7 +17,7 @@ use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
 /**
- *
+ *$category Category;
  * */
 $categories = Category::find()->all();
 $regions = Region::find()->all();

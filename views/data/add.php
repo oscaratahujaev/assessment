@@ -21,10 +21,10 @@ $districts = District::find()->where(['region_id' => $region_id])->all();
     <?= Html::dropDownList('districtId', 1,
         ArrayHelper::map($districts, 'id', 'name'),
         ['prompt' => 'Select District', 'class' => 'form-control', 'id' => 'category']); ?>
-    <?php foreach ($data as $item): ?>
+    <?php foreach ($data as $key => $item): ?>
         <p>
             <?= $item['param']['name'] ?><br>
-            <input type="text" id="data-value" class="form-control" name="<?= $i ?>" aria-invalid="false">
+            <input type="text" id="data-value" class="form-control" name="<?= $key ?>" aria-invalid="false">
         </p>
         <?php $i++; ?>
     <?php endforeach; ?>

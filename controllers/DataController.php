@@ -13,6 +13,8 @@ use app\models\Quarter;
 use app\models\Score;
 use app\models\Years;
 use Yii;
+use yii\base\ErrorException;
+use yii\base\Exception;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -62,77 +64,26 @@ class DataController extends Controller
         $quarter = $request->getQueryParam("quarter");
         $category = Category::find()->with('categoryParams')->where(['id' => $categoryId])->asArray()->one();
         $post = Yii::$app->request->post();
-        $datas = [];
 
         $scoreVariable = 0;
 
         if ($post) {
-            $i = 3;
 
-            // Saving data for category_params
-            foreach ($category['categoryParams'] as $param) {
-                $data = new Data();
-                $data->category_id = $categoryId;
-                $data->region_id = $regionId;
-                $data->district_id = $request->getBodyParam("districtId");
-                $data->param_id = $param['id'];
-                $data->year = $year;
-                $data->quarter = $quarter ? $quarter : Quarter::find()->one()->id;
+            Data::setData($category, $post);
+            if (Score::setScore($post)) {
 
-
-                if ($param['param_type_id'] == ParamType::TYPE_INPUT) {
-                    /**
-                     * Param type: INPUT (user inputs value)
-                     */
-                    $data->value = $post[$i];
-
-                } else if ($param['param_type_id'] == ParamType::TYPE_FORMULA) {
-                    /**
-                     * Param type: FORMULA, value calculated according to formula
-                     */
-
-                    $formula = $param['formula'];
-                    $expr = new MathExpression($formula, $post);
-                    $expr->calculate();
-                    $data->value = $expr->getResult();
-                    $data->value = $data->value > 1 ? 1 : $data->value; // the value shouldn't exceed 100%
-                    $post[$i] = $data->value;
-                }
-                $i++;
-                $data->save();
-            }
-
-
-            $score = new Score();
-            $score->category_id = $categoryId;
-            $score->region_id = $regionId;
-            $score->district_id = $request->getBodyParam('districtId');
-            $score->year = $year;
-            $score->quarter_id = $quarter ? $quarter : Quarter::find()->one()->id;
-
-
-            $className = "app\\components\\";
-            $className .= Category::getScoreClassById($category['score_class']);
-
-            $percentage = $post[$category['factor_column']];
-            $scoreCalculator = new $className($percentage);
-            $scoreCalculator->calculate();
-            $score->value = $scoreCalculator->getValue();
-
-            if ($score->save()) {
                 return $this->redirect(['table',
-                    'categoryId' => $categoryId,
+                    'category' => $category,
+                    'categoryID' => $categoryId,
                     'year' => $year,
                     'quarter' => $quarter,
-                    'regionId' => $regionId,
+                    'regionID' => $regionId,
                 ]);
-            } else {
-                debug($score->getErrors());
-                die();
             }
 
         } else {
-            $i = 0;
+            $i = 3;
+            $datas = [];
             foreach ($category['categoryParams'] as $param) {
                 if ($param['param_type_id'] == ParamType::TYPE_INPUT) {
                     $model = new Data();
@@ -142,6 +93,9 @@ class DataController extends Controller
                     $model->param_id = $param['id'];
                     $model->param->name = $param['name'];
                     $datas[$i] = $model;
+                }
+
+                if (in_array($param['param_type_id'], [ParamType::TYPE_INPUT, ParamType::TYPE_FORMULA])) {
                     $i++;
                 }
             }
@@ -159,14 +113,13 @@ class DataController extends Controller
         $request = Yii::$app->request;
 
 
-        $categoryId = $request->getQueryParam('categoryID');
-        $regionId = $request->getQueryParam('regionID');
-        $yearId = $request->getQueryParam('yearID');
-        $quarterId = $request->getQueryParam('quarterID');
+        $categoryId = $request->get('categoryID');
+        $regionId = $request->get('regionID');
+        $yearId = $request->get('yearID');
+        $quarterId = $request->get('quarterID');
 
 
         $category = Category::find()->with('categoryParams')->where(['id' => $categoryId])->asArray()->one();
-
 
         $data = [];
         $query = Data::find()
