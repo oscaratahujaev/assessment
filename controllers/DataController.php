@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\components\Functions;
 use app\components\MathExpression;
 use app\models\Category;
 use app\models\CategoryDataSearch;
@@ -194,8 +195,6 @@ class DataController extends Controller
                 $arr[$item['district_id']]['values'][] = $item['value'];
                 $arr[$item['district_id']]['score'] = $item['scoreDistrict'] ? $item ['scoreDistrict']['value'] : '';
             }
-            //            debug($arr);
-            //            $children[$categoryParam['id']]
         } else {
             foreach ($data as $item) {
                 $arr[$item['region_id']]['place'] = $item['region'] ? $item['region']['name'] : '';

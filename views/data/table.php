@@ -24,6 +24,42 @@ $regions = Region::find()->all();
 $district = District::find()->all();
 $quarter = Quarter::find()->all();
 $year = Years::find()->all();
+
+$parents = [];
+$categorySorted = [];
+$children = [];
+$maxChilds = 1;
+$i = 1;
+
+foreach ($category['categoryParams'] as $categoryParam) {
+
+    if (is_null($categoryParam['parent_id'])) {
+        $children[$categoryParam['id']] = [
+            'name' => $categoryParam['name'],
+        ];
+
+    } else {
+
+        if (isset($children[$categoryParam['parent_id']])) {
+            $children[$categoryParam['parent_id']]['children'][] = [
+                'name' => $categoryParam['name'],
+            ];
+        } else {
+            $children[$categoryParam['parent_id']] = [
+                'children' => [
+                    'name' => $categoryParam['name'],
+                ]
+            ];
+        }
+        $tmp = sizeof($children[$categoryParam['parent_id']]['children']);
+        $maxChilds = $maxChilds < $tmp ? $tmp : $maxChilds;
+    }
+}
+//debug($category['categoryParams']);
+//debug($children);
+//debug($maxChilds);
+//exit;
+
 ?>
 <p>
     <?php $form = ActiveForm::begin(['method' => 'GET', 'action' => Url::to(['data/table'])]); ?>
@@ -32,6 +68,7 @@ $year = Years::find()->all();
         ['class' => 'form-control', 'id' => 'category']); ?>
     <br>
 
+</p>
 <div>
     <?= Html::dropDownList('regionID', $regionId,
         ArrayHelper::map($regions, 'id', 'name'),
@@ -59,26 +96,48 @@ $year = Years::find()->all();
 </div>
 <button class="btn btn-success" type="submit">Filter</button>
 <?php ActiveForm::end() ?>
-</p>
+
 <div>
-    <table class="table table-striped">
+    <table class="table table-bordered table-striped">
         <thead>
-        <th>Худуд номи</th>
-        <?php if (isset($category)): ?>
-            <?php foreach ($category['categoryParams'] as $cParam): ?>
-                <th>
-                    <?= $cParam['name'] ?>
-                </th>
+        <tr>
+            <td rowspan="<?= $maxChilds ?>">№</td>
+            <td rowspan="<?= $maxChilds ?>">Hudud nomi</td>
+            <?php foreach ($children as $key => $value): ?>
+
+                <?php if (isset($value['children'])): ?>
+                    <td colspan="<?= sizeof($value['children']) ?>">
+                        <?= $value['name'] ?>
+                    </td>
+                <?php else: ?>
+                    <td rowspan="<?= $maxChilds ?>">
+                        <?= $value['name'] ?>
+                    </td>
+                <?php endif; ?>
+
             <?php endforeach; ?>
-        <?php else: ?>
-            <p>Please choose the filters</p>
-        <?php endif; ?>
-        <td>Score</td>
+            <td rowspan="<?=$maxChilds?>">Score</td>
+        </tr>
+        <tr>
+            <?php foreach ($children as $key => $value): ?>
+
+                <?php if (isset($value['children'])): ?>
+                    <?php foreach ($value['children'] as $childItem): ?>
+                        <td>
+                            <?= $childItem['name'] ?>
+                        </td>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+
+            <?php endforeach; ?>
+        </tr>
+
         </thead>
         <tbody>
 
         <?php foreach ($data as $item): ?>
             <tr>
+                <td><?=$i?></td>
                 <td><?= $item['place'] ?></td>
                 <?php foreach ($item['values'] as $value): ?>
                     <td><?= $value ?></td>
@@ -86,6 +145,8 @@ $year = Years::find()->all();
                 <?php endforeach; ?>
                 <td><?= $item['score'] ?></td>
             </tr>
+            <?php $i++;?>
+
         <?php endforeach; ?>
         </tbody>
     </table>
@@ -96,3 +157,5 @@ $year = Years::find()->all();
             ADD</a>
     </p>
 </div>
+
+
