@@ -96,8 +96,6 @@ class Score extends \yii\db\ActiveRecord
         $className = "app\\components\\";
         $className .= Category::getScoreClassById($category['score_class']);
 
-//        debug($category['factor_column']);
-//        exit;
         $percentage = $post[$category['factor_column']];
         $scoreCalculator = new $className($percentage);
         $scoreCalculator->calculate();
