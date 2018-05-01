@@ -8,8 +8,10 @@ use app\models\Category;
 use app\models\CategoryDataSearch;
 use app\models\CategoryParams;
 use app\models\Data;
+use app\models\District;
 use app\models\ParamType;
 use app\models\Quarter;
+use app\models\Region;
 use app\models\Score;
 use app\models\Years;
 use Yii;
@@ -103,6 +105,7 @@ class DataController extends Controller
             'data' => $data,
             'category' => $category,
             'region_id' => $regionId,
+            'districtId' => $request->get('districtID'),
         ]);
     }
 
@@ -110,7 +113,6 @@ class DataController extends Controller
     public function actionTable()
     {
         $request = Yii::$app->request;
-
 
         $categoryId = $request->get('categoryID');
         $regionId = $request->get('regionID');
@@ -155,6 +157,16 @@ class DataController extends Controller
             }
         }
 
+        $filledDistricts = [];
+        $emptyPlaces = [];
+        if (isset($regionId)) {
+            foreach ($arr as $item) {
+                array_push($filledDistricts, $item['place']);
+            }
+            $emptyPlaces = District::find()->where(['region_id' => $regionId])->andWhere(['NOT IN', 'name', $filledDistricts])->all();
+        } else {
+            $emptyPlaces = Region::find()->where(['NOT IN', 'name', $filledDistricts])->all();
+        }
         return $this->render('table', [
             'categoryId' => $categoryId,
             'regionId' => $regionId,
@@ -162,6 +174,7 @@ class DataController extends Controller
             'quarterId' => $quarterId,
             'data' => $arr,
             'category' => $category,
+            'emptyPlaces' => $emptyPlaces
         ]);
 
     }

@@ -18,7 +18,7 @@ $districts = District::find()->where(['region_id' => $region_id])->all();
     <h1><?= Html::encode($category['name']) ?></h1>
 
     <?php $form = ActiveForm::begin(); ?>
-    <?= Html::dropDownList('districtId', 1,
+    <?= Html::dropDownList('districtId', $districtId,
         ArrayHelper::map($districts, 'id', 'name'),
         ['prompt' => 'Select District', 'class' => 'form-control', 'id' => 'category']); ?>
     <?php foreach ($data as $key => $item): ?>

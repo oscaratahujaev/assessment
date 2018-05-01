@@ -30,9 +30,8 @@ $categorySorted = [];
 $children = [];
 $maxChilds = 1;
 $i = 1;
-
+$numberOfColumns = -1;
 foreach ($category['categoryParams'] as $categoryParam) {
-
     if (is_null($categoryParam['parent_id'])) {
         $children[$categoryParam['id']] = [
             'name' => $categoryParam['name'],
@@ -55,11 +54,6 @@ foreach ($category['categoryParams'] as $categoryParam) {
         $maxChilds = $maxChilds < $tmp ? $tmp : $maxChilds;
     }
 }
-//debug($category['categoryParams']);
-//debug($children);
-//debug($maxChilds);
-//exit;
-
 ?>
 <p>
     <?php $form = ActiveForm::begin(['method' => 'GET', 'action' => Url::to(['data/table'])]); ?>
@@ -104,7 +98,7 @@ foreach ($category['categoryParams'] as $categoryParam) {
             <td rowspan="<?= $maxChilds ?>">№</td>
             <td rowspan="<?= $maxChilds ?>">Hudud nomi</td>
             <?php foreach ($children as $key => $value): ?>
-
+                <?php $numberOfColumns++ ?>
                 <?php if (isset($value['children'])): ?>
                     <td colspan="<?= sizeof($value['children']) ?>">
                         <?= $value['name'] ?>
@@ -116,11 +110,12 @@ foreach ($category['categoryParams'] as $categoryParam) {
                 <?php endif; ?>
 
             <?php endforeach; ?>
-            <td rowspan="<?=$maxChilds?>">Score</td>
+            <td rowspan="<?= $maxChilds ?>">Score</td>
+            <td rowspan="<?= $maxChilds ?>">Action</td>
         </tr>
         <tr>
             <?php foreach ($children as $key => $value): ?>
-
+                <?php $numberOfColumns++ ?>
                 <?php if (isset($value['children'])): ?>
                     <?php foreach ($value['children'] as $childItem): ?>
                         <td>
@@ -137,24 +132,35 @@ foreach ($category['categoryParams'] as $categoryParam) {
 
         <?php foreach ($data as $item): ?>
             <tr>
-                <td><?=$i?></td>
+                <td><?= $i ?></td>
                 <td><?= $item['place'] ?></td>
                 <?php foreach ($item['values'] as $value): ?>
                     <td><?= $value ?></td>
-
                 <?php endforeach; ?>
                 <td><?= $item['score'] ?></td>
+                <td></td>
             </tr>
-            <?php $i++;?>
-
+            <?php $i++; ?>
+        <?php endforeach; ?>
+        <?php foreach ($emptyPlaces as $place): ?>
+            <tr>
+                <td><?= $i ?></td>
+                <td><?= $place['name']; ?></td>
+                <?php for ($j = 2; $j < $numberOfColumns; $j++) {
+                    echo '<td></td>';
+                } ?>
+                <td><a class="btn btn-primary" id="addUrl" href="
+          <?= Url::to('/data/add?categoryID=' . $categoryId .
+                        '&regionID=' . $regionId . '&districtID=' . $place['id'] .
+                        '&year=' . $yearId . '&quarter=' . $quarterId) ?>">
+                        <i class="glyphicon glyphicon-plus"></i></a></td>
+            </tr>
+            <?php $i++ ?>
         <?php endforeach; ?>
         </tbody>
     </table>
     <p>
-        <a class="btn btn-primary" id="addUrl" href="
-        <?= Url::to('/data/add?categoryID=' . $categoryId .
-            '&regionID=' . $regionId . '&year=' . $yearId . '&quarter=' . $quarterId) ?>">
-            ADD</a>
+
     </p>
 </div>
 
