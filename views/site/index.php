@@ -3,6 +3,7 @@
 /* @var $this yii\web\View */
 
 $this->title = 'My Yii Application';
+
 ?>
 
 <a href="/site/add" class="btn btn-primary">Add</a>

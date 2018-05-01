@@ -9,6 +9,8 @@
 namespace app\components;
 
 
+use yii\base\Exception;
+
 class MathExpression
 {
     private $expression;
@@ -23,24 +25,30 @@ class MathExpression
 
     public function calculate()
     {
-        $bracketExists = (stripos($this->expression, '('));
 
-        if ($bracketExists === false) {
-            $arr = explode("/", $this->expression);
-            $prevNumber = $this->getColumnIndex($arr[0]);
-            $nextNumber = $this->getColumnIndex($arr[1]);
-            $this->result = $this->data_arr[$prevNumber] / $this->data_arr[$nextNumber];
-        } else {
-            $arr = explode("/", $this->expression);
-            $number = (int)$arr[1];
-            $substr = substr($arr[0], 1, strlen($arr[0]) - 2);
-            $elements = explode("+", $substr);
-            foreach ($elements as $item) {
-                $index = $this->getColumnIndex($item);
-                $this->result += $this->data_arr[$index];
+        try {
+            $bracketExists = (stripos($this->expression, '('));
+
+            if ($bracketExists === false) {
+                $arr = explode("/", $this->expression);
+                $prevNumber = $this->getColumnIndex($arr[0]);
+                $nextNumber = $this->getColumnIndex($arr[1]);
+                $this->result = $this->data_arr[$prevNumber] / $this->data_arr[$nextNumber];
+            } else {
+                $arr = explode("/", $this->expression);
+                $number = (int)$arr[1];
+                $substr = substr($arr[0], 1, strlen($arr[0]) - 2);
+                $elements = explode("+", $substr);
+                foreach ($elements as $item) {
+                    $index = $this->getColumnIndex($item);
+                    $this->result += $this->data_arr[$index];
+                }
+                $this->result /= $number;
             }
-            $this->result /= $number;
+        } catch (Exception $e) {
+            $this->result = 0;
         }
+
     }
 
     private function getColumnIndex($column)

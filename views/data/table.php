@@ -29,7 +29,7 @@ $year = Years::find()->all();
     <?php $form = ActiveForm::begin(['method' => 'GET', 'action' => Url::to(['data/table'])]); ?>
     <?= Html::dropDownList('categoryID', $categoryId,
         ArrayHelper::map($categories, 'id', 'name'),
-        ['prompt' => 'Select Category', 'class' => 'form-control', 'id' => 'category']); ?>
+        ['class' => 'form-control', 'id' => 'category']); ?>
     <br>
 
 <div>
@@ -52,7 +52,6 @@ $year = Years::find()->all();
     <?= Html::dropDownList('quarterID', $quarterId,
         ArrayHelper::map($quarter, 'id', 'name'),
         [
-            'prompt' => 'Select Quarter',
             'class' => 'col-md-3',
             'id' => 'quarter'
         ]

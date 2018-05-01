@@ -26,6 +26,15 @@ use yii\behaviors\TimestampBehavior;
  */
 class Category extends \yii\db\ActiveRecord
 {
+    private static $scoreClasses = [
+        '1' => 'DefaultScore',
+        '2' => 'NeedyScore',
+        '3' => 'EnterpriseScore',
+        '4' => 'NewEnterpriseScore',
+        '5' => 'WorkplaceScore',
+        '6' => 'EntrepreneurScore',
+    ];
+
     /**
      * @inheritdoc
      */
@@ -65,6 +74,7 @@ class Category extends \yii\db\ActiveRecord
             'score_class' => 'Score Class',
         ];
     }
+
     public function behaviors()
     {
         return [
@@ -78,9 +88,7 @@ class Category extends \yii\db\ActiveRecord
             ]
         ];
     }
-    /**
-     * @return \yii\db\ActiveQuery
-     */
+
     public function beforeSave($insert)
     {
         if ($this->isNewRecord) {
@@ -117,5 +125,15 @@ class Category extends \yii\db\ActiveRecord
     public function getScores()
     {
         return $this->hasMany(Score::className(), ['category_id' => 'id']);
+    }
+
+    public static function getScoreClassById($id)
+    {
+        return isset(self::$scoreClasses[$id]) ? self::$scoreClasses[$id] : "";
+    }
+
+    public static function getScoreClasses()
+    {
+        return self::$scoreClasses;
     }
 }

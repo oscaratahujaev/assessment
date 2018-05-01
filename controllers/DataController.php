@@ -2,14 +2,13 @@
 
 namespace app\controllers;
 
-use app\components\Functions;
 use app\components\MathExpression;
 use app\models\Category;
 use app\models\CategoryDataSearch;
+use app\models\CategoryParams;
 use app\models\Data;
 use app\models\ParamType;
 use app\models\Quarter;
-use app\models\Region;
 use app\models\Score;
 use app\models\Years;
 use Yii;
@@ -60,14 +59,16 @@ class DataController extends Controller
         $regionId = $request->getQueryParam("regionID");
         $year = $request->getQueryParam("year");
         $quarter = $request->getQueryParam("quarter");
-        $category = Category::find()->with('categoryParams')->where(['id' => $categoryId ? $categoryId : 1])->asArray()->one();
+        $category = Category::find()->with('categoryParams')->where(['id' => $categoryId])->asArray()->one();
         $post = Yii::$app->request->post();
         $datas = [];
-        $year = $year ? $year : 2018;
+
         $scoreVariable = 0;
+
         if ($post) {
             $i = 3;
 
+            // Saving data for category_params
             foreach ($category['categoryParams'] as $param) {
                 $data = new Data();
                 $data->category_id = $categoryId;
@@ -76,35 +77,63 @@ class DataController extends Controller
                 $data->param_id = $param['id'];
                 $data->year = $year;
                 $data->quarter = $quarter ? $quarter : Quarter::find()->one()->id;
+
+
                 if ($param['param_type_id'] == ParamType::TYPE_INPUT) {
-                    $data->value = $post[$i++];
+                    /**
+                     * Param type: INPUT (user inputs value)
+                     */
+                    $data->value = $post[$i];
+
                 } else if ($param['param_type_id'] == ParamType::TYPE_FORMULA) {
+                    /**
+                     * Param type: FORMULA, value calculated according to formula
+                     */
+
                     $formula = $param['formula'];
                     $expr = new MathExpression($formula, $post);
                     $expr->calculate();
                     $data->value = $expr->getResult();
-                    $scoreVariable = $data->value;
-                    $score = new Score();
-                    $score->category_id = $categoryId;
-                    $score->region_id = $regionId;
-                    $score->district_id = $request->getBodyParam('districtId');
-                    $score->year = $year;
-                    $score->quarter_id = $quarter ? $quarter : Quarter::find()->one()->id;
-                    $score->value = $expr->getScore($scoreVariable);
-                    if ($score->save()) {
-                    } else {
-                        var_dump($score->getErrors());
-                        die();
-                    }
+                    $data->value = $data->value > 1 ? 1 : $data->value; // the value shouldn't exceed 100%
+                    $post[$i] = $data->value;
                 }
+                $i++;
                 $data->save();
             }
 
-            return $this->redirect('/data/index');
+
+            $score = new Score();
+            $score->category_id = $categoryId;
+            $score->region_id = $regionId;
+            $score->district_id = $request->getBodyParam('districtId');
+            $score->year = $year;
+            $score->quarter_id = $quarter ? $quarter : Quarter::find()->one()->id;
+
+
+            $className = "app\\components\\";
+            $className .= Category::getScoreClassById($category['score_class']);
+
+            $percentage = $post[$category['factor_column']];
+            $scoreCalculator = new $className($percentage);
+            $scoreCalculator->calculate();
+            $score->value = $scoreCalculator->getValue();
+
+            if ($score->save()) {
+                return $this->redirect(['table',
+                    'categoryId' => $categoryId,
+                    'year' => $year,
+                    'quarter' => $quarter,
+                    'regionId' => $regionId,
+                ]);
+            } else {
+                debug($score->getErrors());
+                die();
+            }
+
         } else {
             $i = 0;
             foreach ($category['categoryParams'] as $param) {
-                if ($param['param_type_id'] == 1) {
+                if ($param['param_type_id'] == ParamType::TYPE_INPUT) {
                     $model = new Data();
                     $model->category_id = $categoryId;
                     $model->region_id = $regionId;
@@ -127,11 +156,17 @@ class DataController extends Controller
     public function actionTable()
     {
         $request = Yii::$app->request;
-        $categoryId = $request->getQueryParam('categoryID') ? $request->getQueryParam('categoryID') : 1;
+
+
+        $categoryId = $request->getQueryParam('categoryID');
         $regionId = $request->getQueryParam('regionID');
-        $yearId = $request->getQueryParam('yearID') ? $request->getQueryParam('yearID') : Years::find()->one()->year;
+        $yearId = $request->getQueryParam('yearID');
         $quarterId = $request->getQueryParam('quarterID');
+
+
         $category = Category::find()->with('categoryParams')->where(['id' => $categoryId])->asArray()->one();
+
+
         $data = [];
         $query = Data::find()
             ->where(['category_id' => $categoryId])
@@ -143,7 +178,7 @@ class DataController extends Controller
             $query->with('district');
             $query->with('scoreDistrict');
         } else {
-            $query->andWhere(['district_id' => null]);
+            $query->andWhere(['district_id' => '']);
             $query->with('region');
             $query->with('scoreRegion');
         }
@@ -159,6 +194,8 @@ class DataController extends Controller
                 $arr[$item['district_id']]['values'][] = $item['value'];
                 $arr[$item['district_id']]['score'] = $item['scoreDistrict'] ? $item ['scoreDistrict']['value'] : '';
             }
+            //            debug($arr);
+            //            $children[$categoryParam['id']]
         } else {
             foreach ($data as $item) {
                 $arr[$item['region_id']]['place'] = $item['region'] ? $item['region']['name'] : '';

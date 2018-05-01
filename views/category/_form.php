@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Category;
 use app\models\Ministry;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -19,7 +20,8 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'ministry_id')->dropDownList(ArrayHelper::map(Ministry::find()->all(), 'id', 'name')); ?>
     <?= $form->field($model, 'place_type')->dropDownList(['1' => 'Шахар', '2' => 'Кишлок']); ?>
     <?= $form->field($model, 'factor_column')->input('number'); ?>
-    <?= $form->field($model, 'score_class')->dropDownList(['1' => 'DefaultScore', '2' => 'EnterpriseScore']); ?>
+
+    <?= $form->field($model, 'score_class')->dropDownList(Category::getScoreClasses()); ?>
 
 
     <div class="form-group">

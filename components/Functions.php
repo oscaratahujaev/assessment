@@ -9,10 +9,5 @@ namespace app\components;
  */
 class Functions
 {
-    static function debug($value)
-    {
-        echo '<pre>';
-        var_dump($value);
-        echo '</pre>';
-    }
+    
 }
