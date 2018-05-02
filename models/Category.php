@@ -33,6 +33,8 @@ class Category extends \yii\db\ActiveRecord
         '4' => 'NewEnterpriseScore',
         '5' => 'WorkplaceScore',
         '6' => 'EntrepreneurScore',
+        '7' => 'AppealScore',
+        '8' => 'AppealSolvedScore',
     ];
 
     /**
