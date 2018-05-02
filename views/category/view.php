@@ -66,6 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     [
                         'class' => 'yii\grid\ActionColumn',
+                        'headerOptions'=>['style'=>'width:70px;'],
                         'controller' => 'category-params',
                         'buttons' => [
                             'update' => function ($url, $model, $key) {
