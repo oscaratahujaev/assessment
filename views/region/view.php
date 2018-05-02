@@ -43,12 +43,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     'name',
                     [
-                        'attribute' => 'region_id',
-                        'value' => function ($data) {
-                            return $data->region ? $data->region->name : "";
-                        }
-                    ],
-                    [
                         'attribute' => 'place_type',
                         'value' => function ($data) {
                             return \app\models\District::getPlaceTypeById($data->place_type);
@@ -62,9 +56,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         'buttons' => [
                             'update' => function ($url, $model, $key) {
                                 return Html::a('<i class="glyphicon glyphicon-pencil"></i>', ['/district/update', 'id' => $model->id, 'regionId' => $model->region_id]);
-                                debug($url);
-                                debug($model);
-
                             }
                         ],
                     ],
