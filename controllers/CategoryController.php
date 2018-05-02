@@ -38,6 +38,7 @@ class CategoryController extends Controller
     {
         $searchModel = new CategorySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->pagination = false;
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -53,8 +54,8 @@ class CategoryController extends Controller
      */
     public function actionView($id)
     {
-//        debug("Hello");
-//        exit;
+        //        debug("Hello");
+        //        exit;
         $searchModel = new CategoryParamsSearch();
         $_GET['CategoryParamsSearch']['category_id'] = $id;
 

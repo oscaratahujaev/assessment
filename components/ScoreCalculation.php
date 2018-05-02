@@ -21,8 +21,5 @@ abstract class ScoreCalculation
 
     abstract function calculate();
 
-    public function getValue()
-    {
-        return $this->value > 2 ? 2 : $this->value;
-    }
+    abstract function getValue();
 }
