@@ -30,7 +30,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'factor_column',
             'score_class',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'headerOptions' => ['style' => 'width:70px;'],
+            ],
         ],
     ]); ?>
 </div>
