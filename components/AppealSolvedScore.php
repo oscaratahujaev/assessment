@@ -9,7 +9,7 @@
 namespace app\components;
 
 
-class AppealScore extends ScoreCalculation
+class AppealSolvedScore extends ScoreCalculation
 {
     public function calculate()
     {

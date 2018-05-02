@@ -13,7 +13,7 @@ class AppealScore extends ScoreCalculation
 {
     public function calculate()
     {
-        $this->value = $this->percentage * 10;
+        $this->value = (1 - $this->percentage) * 10;
     }
 
     public function getValue()
