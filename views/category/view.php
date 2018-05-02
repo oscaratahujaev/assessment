@@ -69,7 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'controller' => 'category-params',
                         'buttons' => [
                             'update' => function ($url, $model, $key) {
-                                return Html::a('<i class="glyphicon glyphicon-pencil"></i>', ['/category-params/update', 'id' => $model->id, 'categoryId' => $model->id]);
+                                return Html::a('<i class="glyphicon glyphicon-pencil"></i>', ['/category-params/update', 'id' => $model->id, 'categoryId' => $model->category_id]);
                             }
                         ],
                     ],

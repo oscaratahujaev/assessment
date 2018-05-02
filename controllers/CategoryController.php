@@ -53,6 +53,8 @@ class CategoryController extends Controller
      */
     public function actionView($id)
     {
+//        debug("Hello");
+//        exit;
         $searchModel = new CategoryParamsSearch();
         $_GET['CategoryParamsSearch']['category_id'] = $id;
 
