@@ -73,6 +73,7 @@ class CategoryParamsController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'categoryId' => $categoryId,
         ]);
     }
 
