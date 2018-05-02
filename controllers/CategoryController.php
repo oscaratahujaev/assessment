@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\CategoryParamsSearch;
 use Yii;
 use app\models\Category;
 use app\models\CategorySearch;
@@ -52,8 +53,15 @@ class CategoryController extends Controller
      */
     public function actionView($id)
     {
+        $searchModel = new CategoryParamsSearch();
+        $_GET['CategoryParamsSearch']['category_id'] = $id;
+
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 

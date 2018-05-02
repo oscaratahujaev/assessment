@@ -1,5 +1,6 @@
 <?php
 
+use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -28,17 +29,55 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
             'name',
-            'place_type',
             'factor_column',
-            'score_class'
-            /*  'creator',
-              'created_at',
-              'modifier',
-              'modified_at',
-              'ministry_id',*/
+            [
+                'label' => 'score_class',
+                'value' => \app\models\Category::getScoreClassById($model->score_class),
+            ],
         ],
     ]) ?>
+
+    <div class="row">
+        <div class="col-md-12">
+            <?= Html::a('Add param', ['/category-params/create', 'categoryId' => $model->id], ['class' => 'btn btn-success']) ?>
+            <?= GridView::widget([
+                'dataProvider' => $dataProvider,
+                'filterModel' => $searchModel,
+                'columns' => [
+                    ['class' => 'yii\grid\SerialColumn'],
+
+                    'name',
+                    [
+                        'attribute' => 'param_type_id',
+                        'value' => function ($data) {
+                            return $data->paramType ? $data->paramType->name : "";
+
+                        }
+                    ],
+                    [
+                        'attribute' => 'parent_id',
+                        'value' => function ($data) {
+                            return $data->parent ? $data->parent->name : "";
+
+                        }
+                    ],
+                    'formula',
+
+                    [
+                        'class' => 'yii\grid\ActionColumn',
+                        'controller' => 'category-params',
+                        'buttons' => [
+                            'update' => function ($url, $model, $key) {
+                                return Html::a('<i class="glyphicon glyphicon-pencil"></i>', ['/category-params/update', 'id' => $model->id, 'categoryId' => $model->id]);
+                            }
+                        ],
+                    ],
+                ],
+            ]); ?>
+        </div>
+
+    </div>
+
 
 </div>
