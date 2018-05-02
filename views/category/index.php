@@ -26,9 +26,21 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'name',
-            'place_type',
+            [
+                'attribute' => 'place_type',
+                'value' => function ($data) {
+                    return \app\models\District::getPlaceTypeById($data->place_type);
+
+                }
+            ],
+            [
+                'attribute' => 'score_class',
+                'value' => function ($data) {
+                    return \app\models\Category::getScoreClassById($data->score_class);
+
+                }
+            ],
             'factor_column',
-            'score_class',
 
             [
                 'class' => 'yii\grid\ActionColumn',
