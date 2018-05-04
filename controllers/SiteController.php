@@ -4,7 +4,6 @@ namespace app\controllers;
 
 use app\models\Category;
 use app\models\Data;
-use function DeepCopy\deep_copy;
 use Yii;
 use yii\base\Exception;
 use yii\filters\AccessControl;
