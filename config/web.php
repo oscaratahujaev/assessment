@@ -9,7 +9,7 @@ $config = [
     'bootstrap' => ['log'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
-        '@npm'   => '@vendor/npm-asset',
+        '@npm' => '@vendor/npm-asset',
     ],
     'components' => [
         'request' => [
@@ -47,6 +47,9 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'login' => 'sis/login',
+                'signup' => 'sis/signup',
+                'logout' => 'sis/logout',
             ],
         ],
         'i18n' => [
@@ -56,7 +59,7 @@ $config = [
                     'basePath' => '@app/messages', // if advanced application, set @frontend/messages
                     'sourceLanguage' => 'uz',
                     'fileMap' => [
-//                        'main' => 'main.php',
+                        //                        'main' => 'main.php',
                     ],
                 ],
             ],

@@ -74,13 +74,12 @@ class DataController extends Controller
 
                 return $this->redirect(['table',
                     'category' => $category,
-                    'categoryID' => $categoryId,
+                    'categoryIв' => $categoryId,
                     'year' => $year,
                     'quarter' => $quarter,
-                    'regionID' => $regionId,
+                    'regionIв' => $regionId,
                 ]);
             }
-
         }
 
         $i = 3;
@@ -110,15 +109,9 @@ class DataController extends Controller
     }
 
 
-    public function actionTable()
+    public function actionTable($categoryId = 1, $regionId = 1, $yearId = 2018, $quarterId = 1)
     {
         $request = Yii::$app->request;
-
-        $categoryId = $request->get('categoryID');
-        $regionId = $request->get('regionID');
-        $yearId = $request->get('yearID');
-        $quarterId = $request->get('quarterID');
-
 
         $category = Category::find()->with('categoryParams')->where(['id' => $categoryId])->asArray()->one();
 

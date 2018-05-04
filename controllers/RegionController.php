@@ -76,7 +76,7 @@ class RegionController extends Controller
         $model = new Region();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
@@ -96,7 +96,7 @@ class RegionController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(['view', 'id' => $id]);
         }
 
         return $this->render('update', [

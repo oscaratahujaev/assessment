@@ -57,14 +57,14 @@ foreach ($category['categoryParams'] as $categoryParam) {
 ?>
 <p>
     <?php $form = ActiveForm::begin(['method' => 'GET', 'action' => Url::to(['data/table'])]); ?>
-    <?= Html::dropDownList('categoryID', $categoryId,
+    <?= Html::dropDownList('categoryId', $categoryId,
         ArrayHelper::map($categories, 'id', 'name'),
         ['class' => 'form-control', 'id' => 'category']); ?>
     <br>
 
 </p>
 <div>
-    <?= Html::dropDownList('regionID', $regionId,
+    <?= Html::dropDownList('regionId', $regionId,
         ArrayHelper::map($regions, 'id', 'name'),
         [
             'prompt' => 'Select Region',
@@ -72,7 +72,7 @@ foreach ($category['categoryParams'] as $categoryParam) {
             'id' => 'region'
         ]
     ); ?>
-    <?= Html::dropDownList('yearID', $yearId,
+    <?= Html::dropDownList('yearId', $yearId,
         ArrayHelper::map($year, 'year', 'year'),
         [
             'prompt' => 'Select Year',
@@ -80,7 +80,7 @@ foreach ($category['categoryParams'] as $categoryParam) {
             'id' => 'year'
         ]
     ); ?>
-    <?= Html::dropDownList('quarterID', $quarterId,
+    <?= Html::dropDownList('quarterId', $quarterId,
         ArrayHelper::map($quarter, 'id', 'name'),
         [
             'class' => 'col-md-3',

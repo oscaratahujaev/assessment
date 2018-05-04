@@ -30,10 +30,19 @@ class MathExpression
             $bracketExists = (stripos($this->expression, '('));
 
             if ($bracketExists === false) {
-                $arr = explode("/", $this->expression);
-                $prevNumber = $this->getColumnIndex($arr[0]);
-                $nextNumber = $this->getColumnIndex($arr[1]);
-                $this->result = $this->data_arr[$prevNumber] / $this->data_arr[$nextNumber];
+
+                if (stripos($this->expression, '/')) {
+                    $arr = explode("/", $this->expression);
+                    $prevNumber = $this->getColumnIndex($arr[0]);
+                    $nextNumber = $this->getColumnIndex($arr[1]);
+                    $this->result = $this->data_arr[$prevNumber] / $this->data_arr[$nextNumber];
+                } elseif (stripos($this->expression, '+')) {
+                    $arr = explode("+", $this->expression);
+                    $prevNumber = $this->getColumnIndex($arr[0]);
+                    $nextNumber = $this->getColumnIndex($arr[1]);
+                    $this->result = $this->data_arr[$prevNumber] + $this->data_arr[$nextNumber];
+                }
+
             } else {
                 $arr = explode("/", $this->expression);
                 $number = (int)$arr[1];
