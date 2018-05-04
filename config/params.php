@@ -1,5 +1,10 @@
 <?php
 
 return [
-    'adminEmail' => 'admin@example.com',
+    'clientId' => 'toprating',
+    'scope' => 'toprating',
+    'token' => 'xCtTA457tPBaR1+FKxELxQ==',
+
+    'authUrl' => "https://sso.gov.uz:8443/sso/oauth/Authorization.do",
+    'logoutUrl' => "https://sso.gov.uz:8443/sso/svc/tk/SLO.do"
 ];

@@ -23,4 +23,9 @@ class NeedyScore extends ScoreCalculation
 
         }
     }
+
+    public function getValue()
+    {
+        return $this->value > 2 ? 2 : $this->value;
+    }
 }

@@ -18,6 +18,7 @@ $this->title = Yii::t('app', 'Update Category Params: {nameAttribute}', [
 
     <?= $this->render('_form', [
         'model' => $model,
+        'categoryId' => $categoryId,
     ]) ?>
 
 </div>

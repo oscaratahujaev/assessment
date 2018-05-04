@@ -9,15 +9,15 @@
 namespace app\components;
 
 
-class DefaultScore extends ScoreCalculation
+class AppealScore extends ScoreCalculation
 {
     public function calculate()
     {
-        $this->value = $this->percentage * 2;
+        $this->value = (1 - $this->percentage) * 10;
     }
 
     public function getValue()
     {
-        return $this->value > 2 ? 2 : $this->value;
+        return $this->value > 10 ? 10 : $this->value;
     }
 }

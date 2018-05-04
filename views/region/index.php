@@ -25,7 +25,7 @@ $this->title = Yii::t('app', 'Regions');
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+            //            'id',
             'name',
 //            'creator',
 //            'created_at',

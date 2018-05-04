@@ -82,16 +82,17 @@ class DistrictController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate($id, $regionId)
     {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(['/region/view', 'id' => $regionId]);
         }
 
         return $this->render('update', [
             'model' => $model,
+            'regionId' => $regionId,
         ]);
     }
 

@@ -22,7 +22,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'param_type_id')->dropDownList(ArrayHelper::map(ParamType::find()->all(), 'id', 'name')) ?>
 
-    <?= $form->field($model, 'parent_id')->dropDownList(['' => ''] + ArrayHelper::map(CategoryParams::find()->all(), 'id', 'name')) ?>
+    <?= $form->field($model, 'parent_id')->dropDownList(['' => ''] + ArrayHelper::map(CategoryParams::find()->where(['category_id' => $categoryId])->all(), 'id', 'name')) ?>
 
     <?= $form->field($model, 'formula')->textInput() ?>
 

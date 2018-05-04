@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\Category;
 use app\models\Data;
 use Yii;
+use yii\base\Exception;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
@@ -29,12 +30,6 @@ class SiteController extends Controller
                         'allow' => true,
                         'roles' => ['@'],
                     ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
                 ],
             ],
         ];
@@ -66,72 +61,49 @@ class SiteController extends Controller
         return $this->render('index');
     }
 
-    public function actionAdd($districtId = 1)
-    {
-        $categoryId = 1;
-        $regionId = 1;
-        $districtId = 1;
-
-        $category = Category::find()->with('categoryParams')->where(['id' => 1])->asArray()->one();
-
-//        echo "<pre>";
-//        var_dump($category);
-//        exit;
-
-        $datas = [];
-        $i = 0;
-        foreach ($category['categoryParams'] as $param) {
-            if ($param['param_type_id'] == 1) {
-                $model = new Data();
-                $model->category_id = $categoryId;
-                $model->region_id = $regionId;
-                $model->district_id = $districtId;
-                $model->param_id = $param['id'];
-                $model->param->name = $param['name'];
-                $datas[$i] = $model;
-                $i++;
-            }
-        }
-
-        return $this->render('add', [
-            'data' => $datas,
-            'category' => $category,
-        ]);
-    }
-
     /**
      * Login action.
      *
      * @return Response|string
      */
-    public function actionLogin()
-    {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        }
-
-        $model->password = '';
-        return $this->render('login', [
-            'model' => $model,
-        ]);
-    }
+    //    public function actionLogin()
+    //    {
+    //        if (!Yii::$app->user->isGuest) {
+    //            return $this->goHome();
+    //        }
+    //
+    //        $model = new LoginForm();
+    //        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+    //            return $this->goBack();
+    //        }
+    //
+    //        $model->password = '';
+    //        return $this->render('login', [
+    //            'model' => $model,
+    //        ]);
+    //    }
 
     /**
      * Logout action.
      *
      * @return Response
      */
-    public function actionLogout()
-    {
-        Yii::$app->user->logout();
+//    public function actionLogout()
+//    {
+//        //        $clientId = Yii::$app->params['clientId'];
+//        //        return $this->redirect(Yii::$app->params['logoutUrl'] . "?id=" . $clientId);
+//        Yii::$app->user->logout();
+//        return $this->goHome();
+//    }
 
-        return $this->goHome();
+    public function beforeAction($action)
+    {
+        if ($action->id == 'index') {
+            $this->enableCsrfValidation = false;
+        }
+        return parent::beforeAction($action);
     }
+
 
     /**
      * Displays contact page.

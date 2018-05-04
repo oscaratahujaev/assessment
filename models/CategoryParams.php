@@ -104,6 +104,11 @@ class CategoryParams extends \yii\db\ActiveRecord
         return $this->hasOne(ParamType::className(), ['id' => 'param_type_id']);
     }
 
+    public function getParent()
+    {
+        return $this->hasOne(CategoryParams::className(), ['id' => 'parent_id']);
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */

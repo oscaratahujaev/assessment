@@ -16,6 +16,7 @@ $this->title = Yii::t('app', 'Create Category Params');
 
     <?= $this->render('_form', [
         'model' => $model,
+        'categoryId' => $categoryId,
     ]) ?>
 
 </div>

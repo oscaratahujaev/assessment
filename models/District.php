@@ -22,6 +22,11 @@ use yii\behaviors\TimestampBehavior;
  */
 class District extends \yii\db\ActiveRecord
 {
+    public static $placeType = [
+        '1' => 'Город',
+        '2' => 'Село',
+    ];
+
     /**
      * @inheritdoc
      */
@@ -64,6 +69,11 @@ class District extends \yii\db\ActiveRecord
         }
         $this->modifier = Yii::$app->user->id;
         return parent::beforeSave($insert);
+    }
+
+    public static function getPlaceTypeById($id)
+    {
+        return isset(self::$placeType[$id]) ? self::$placeType[$id] : "";
     }
 
     /**

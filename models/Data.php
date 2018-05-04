@@ -80,7 +80,6 @@ class Data extends \yii\db\ActiveRecord
 
     public static function setData($category, &$post)
     {
-
         $request = Yii::$app->request;
         $categoryId = $request->get("categoryID");
         $regionId = $request->get("regionID");
@@ -124,6 +123,7 @@ class Data extends \yii\db\ActiveRecord
                 $data->save();
             }
         }
+        return true;
     }
 
     /**
