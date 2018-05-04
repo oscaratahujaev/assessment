@@ -74,13 +74,12 @@ class DataController extends Controller
 
                 return $this->redirect(['table',
                     'category' => $category,
-                    'categoryID' => $categoryId,
+                    'categoryIв' => $categoryId,
                     'year' => $year,
                     'quarter' => $quarter,
-                    'regionID' => $regionId,
+                    'regionIв' => $regionId,
                 ]);
             }
-
         }
 
         $i = 3;

@@ -36,6 +36,10 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_ACTIVE = 10;
     const STATUS_INACTIVE = 1;
 
+    const MESSAGE_UPDATED = "Данные пользователя успешно сохранены";
+    const MESSAGE_NOT_REGISTERED = "Для входа в систему требуется регистрация";
+    const MESSAGE_NOT_CONFIRMED = 'Для входа в систему требуется активация вашего аккаунта. Обратитесь к администратору.';
+    const MESSAGE_REGISTERED_NOT_CONFIRMED = 'Вы успешно зарегистрировались.';
 
     /**
      * @inheritdoc
@@ -104,6 +108,12 @@ class User extends ActiveRecord implements IdentityInterface
         $this->password_hash = md5($this->username);
         $this->auth_key = md5($this->username);
 
+        $this->validate();
+
+        if ($this->isNewRecord && $this->validate()) {
+            Yii::$app->getSession()->setFlash('success', self::MESSAGE_REGISTERED_NOT_CONFIRMED);
+        }
+
         if (!$this->save()) {
             foreach ($this->getErrors() as $error) {
                 $errors .= $error[0] . '<br/>';
@@ -112,9 +122,10 @@ class User extends ActiveRecord implements IdentityInterface
             return false;
         }
 
-//        debug($this);
-//        debug(Yii::$app->user->login($this, $duration));
-//        exit;
+        if ($this->status == self::STATUS_INACTIVE) {
+            Yii::$app->getSession()->setFlash('warning', self::MESSAGE_NOT_CONFIRMED);
+            return false;
+        }
 
         return Yii::$app->user->login($this, $duration);
     }

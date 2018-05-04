@@ -7,11 +7,20 @@ function debug($value)
 }
 
 $ips = [
-    '192.168.10.5',
+    '91.212.89.45',
+    '127.0.0.1',
 ];
-if (in_array($_SERVER['REMOTE_ADDR'], $ips)) {
-    defined('YII_DEBUG') or define('YII_DEBUG', true);
-    defined('YII_ENV') or define('YII_ENV', 'dev');
+
+if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+    if (in_array($_SERVER['HTTP_X_FORWARDED_FOR'], $ips)) {
+        defined('YII_DEBUG') or define('YII_DEBUG', true);
+        defined('YII_ENV') or define('YII_ENV', 'dev');
+    }
+} elseif (isset($_SERVER['REMOTE_ADDR'])) {
+    if (in_array($_SERVER['REMOTE_ADDR'], $ips)) {
+        defined('YII_DEBUG') or define('YII_DEBUG', true);
+        defined('YII_ENV') or define('YII_ENV', 'dev');
+    }
 }
 
 require __DIR__ . '/../vendor/autoload.php';

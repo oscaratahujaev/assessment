@@ -26,6 +26,10 @@ class SisController extends Controller
 
         $authCode = $_GET["code"];
 
+        if (!$authCode) {
+            return $this->goHome();
+        }
+
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_URL, $authorizationurl);
@@ -71,8 +75,6 @@ class SisController extends Controller
 
         $response = get_object_vars($response);
 
-//        debug($response);
-//        exit;
 
         if (isset($response['error'])) {
             Yii::$app->getSession()->setFlash('error', 'Авторизация временное не работает. Попробуйте повторить попытку через некоторое время.');
@@ -86,11 +88,9 @@ class SisController extends Controller
 
         if ($user->loginViaSis($response)) {
             Yii::$app->getSession()->setFlash('success', 'Вы успешно прошли авторизацию.');
-            return $this->goHome();
         }
 
-        return $this->redirect('/');
-
+        return $this->goBack();
     }
 
 
@@ -102,13 +102,17 @@ class SisController extends Controller
     public function actionLogout()
     {
         Yii::$app->user->logout();
+        //        return $this->goHome();
 
         $clientId = Yii::$app->params['clientId'];
-
-        //        header("Location:" . "https://sso.gov.uz:8443/sso/svc/tk/SLOUzb.do?id=imtiyozliuy.uz");
-        //        return;
-
         return $this->redirect(Yii::$app->params['logoutUrl'] . "?id=" . $clientId);
     }
+
+    public function beforeAction($action)
+    {
+        $this->enableCsrfValidation = false;
+        return parent::beforeAction($action);
+    }
+
 
 }
