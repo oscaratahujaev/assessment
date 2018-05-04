@@ -8,7 +8,7 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Category Params');
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="category-params-index">
 
@@ -35,7 +35,42 @@ $this->params['breadcrumbs'][] = $this->title;
             //'modifier',
             //'modified_at',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{view} {update} {delete}',
+                'buttons' => [
+                    'view' => function ($url) {
+                        return Html::a(
+                            '<span class="fa fa-eye"></span> ',
+                            $url,
+                            [
+                                'title' => 'view',
+                                'data-pjax' => '0',
+                            ]
+                        );
+                    },
+                    'update' => function ($url) {
+                        return Html::a(
+                            '<span class="fa fa-pencil-alt"></span> ',
+                            $url,
+                            [
+                                'title' => 'view',
+                                'data-pjax' => '0',
+                            ]
+                        );
+                    },
+                    'delete' => function ($url) {
+                        return Html::a(
+                            '<span class="fa fa-trash"></span> ',
+                            $url,
+                            [
+                                'title' => 'Delete',
+                                'data-pjax' => '0',
+                            ]
+                        );
+                    },
+                ],
+            ],
         ],
     ]); ?>
 </div>

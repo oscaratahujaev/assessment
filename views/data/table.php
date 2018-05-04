@@ -55,72 +55,86 @@ foreach ($category['categoryParams'] as $categoryParam) {
     }
 }
 ?>
-<p>
-    <?php $form = ActiveForm::begin(['method' => 'GET', 'action' => Url::to(['data/table'])]); ?>
-    <?= Html::dropDownList('categoryID', $categoryId,
-        ArrayHelper::map($categories, 'id', 'name'),
-        ['class' => 'form-control', 'id' => 'category']); ?>
-    <br>
 
-</p>
-<div>
-    <?= Html::dropDownList('regionID', $regionId,
-        ArrayHelper::map($regions, 'id', 'name'),
-        [
-            'prompt' => 'Select Region',
-            'class' => 'col-md-3',
-            'id' => 'region'
-        ]
-    ); ?>
-    <?= Html::dropDownList('yearID', $yearId,
-        ArrayHelper::map($year, 'year', 'year'),
-        [
-            'prompt' => 'Select Year',
-            'class' => 'col-md-3',
-            'id' => 'year'
-        ]
-    ); ?>
-    <?= Html::dropDownList('quarterID', $quarterId,
-        ArrayHelper::map($quarter, 'id', 'name'),
-        [
-            'class' => 'col-md-3',
-            'id' => 'quarter'
-        ]
-    ); ?>
+<?php $form = ActiveForm::begin(['method' => 'GET', 'action' => Url::to(['data/table'])]); ?>
+<div class="row">
+    <div class="col-md-12">
+        <?= Html::label('Категория', 'categoryID', ['class' => 'form-label']) ?>
+        <?= Html::dropDownList('categoryID', $categoryId,
+            ArrayHelper::map($categories, 'id', 'name'),
+            ['class' => 'form-control', 'id' => 'category']); ?>
+    </div>
 </div>
-<button class="btn btn-success" type="submit">Filter</button>
-<?php ActiveForm::end() ?>
+<br>
+<div class="row">
+    <div class="col-md-4">
+        <?= Html::label('Вилоят', 'region', ['class' => 'form-label']) ?>
+        <?= Html::dropDownList('regionID', $regionId,
+            ArrayHelper::map($regions, 'id', 'name'),
+            [
+                'id' => 'region',
+                'class' => 'form-control'
+            ]
+        ); ?>
+    </div>
+    <div class="col-md-3">
+        <?= Html::label('Йил', 'region', ['class' => 'form-label']) ?>
+        <?= Html::dropDownList('yearID', $yearId,
+            ArrayHelper::map($year, 'year', 'year'),
+            [
+                'class' => 'form-control',
+                'id' => 'year'
+            ]
+        ) ?>
+    </div>
+    <div class="col-md-3">
+        <?= Html::label('Чорак', 'region', ['class' => 'form-label']) ?>
+        <?= Html::dropDownList('quarterID', $quarterId,
+            ArrayHelper::map($quarter, 'id', 'name'),
+            [
+                'id' => 'quarter',
+                'class' => 'form-control'
+            ]
+        ); ?>
+    </div>
+    <div class="col-md-2">
+        <?= Html::label(' ', 'region', ['class' => 'form-label']) ?>
+        <button class="btn btn-block btn-outline-primary" id="btn-submit" type="submit">Filter</button>
+    </div>
+</div>
 
+<?php ActiveForm::end() ?>
+<br>
 <div>
     <table class="table table-bordered table-striped">
-        <thead>
+        <thead class="thead-light">
         <tr>
-            <td rowspan="<?= $maxChilds ?>">№</td>
-            <td rowspan="<?= $maxChilds ?>">Hudud nomi</td>
+            <th rowspan="<?= $maxChilds ?>">№</th>
+            <th rowspan="<?= $maxChilds ?>">Hudud nomi</th>
             <?php foreach ($children as $key => $value): ?>
                 <?php $numberOfColumns++ ?>
                 <?php if (isset($value['children'])): ?>
-                    <td colspan="<?= sizeof($value['children']) ?>">
+                    <th colspan="<?= sizeof($value['children']) ?>">
                         <?= $value['name'] ?>
-                    </td>
+                    </th>
                 <?php else: ?>
-                    <td rowspan="<?= $maxChilds ?>">
+                    <th rowspan="<?= $maxChilds ?>">
                         <?= $value['name'] ?>
-                    </td>
+                    </th>
                 <?php endif; ?>
 
             <?php endforeach; ?>
-            <td rowspan="<?= $maxChilds ?>">Score</td>
-            <td rowspan="<?= $maxChilds ?>">Action</td>
+            <th rowspan="<?= $maxChilds ?>">Score</th>
+            <th rowspan="<?= $maxChilds ?>">Action</th>
         </tr>
         <tr>
             <?php foreach ($children as $key => $value): ?>
                 <?php $numberOfColumns++ ?>
                 <?php if (isset($value['children'])): ?>
                     <?php foreach ($value['children'] as $childItem): ?>
-                        <td>
+                        <th>
                             <?= $childItem['name'] ?>
-                        </td>
+                        </th>
                     <?php endforeach; ?>
                 <?php endif; ?>
 
@@ -149,11 +163,11 @@ foreach ($category['categoryParams'] as $categoryParam) {
                 <?php for ($j = 2; $j < $numberOfColumns; $j++) {
                     echo '<td></td>';
                 } ?>
-                <td><a class="btn btn-primary" id="addUrl" href="
+                <td><a class="btn btn-outline-primary" id="addUrl" href="
           <?= Url::to('/data/add?categoryID=' . $categoryId .
                         '&regionID=' . $regionId . '&districtID=' . $place['id'] .
                         '&year=' . $yearId . '&quarter=' . $quarterId) ?>">
-                        <i class="glyphicon glyphicon-plus"></i></a></td>
+                        <i class="fa fa-plus"></i></a></td>
             </tr>
             <?php $i++ ?>
         <?php endforeach; ?>

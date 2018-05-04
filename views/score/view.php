@@ -7,9 +7,9 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Score */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Scores'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
-?>
+//$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Scores'), 'url' => ['index']];
+//$this->params['breadcrumbs'][] = $this->title;
+//?>
 <div class="score-view">
 
     <h1><?= Html::encode($this->title) ?></h1>

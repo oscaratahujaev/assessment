@@ -8,7 +8,7 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Districts');
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="district-index">
 
@@ -28,12 +28,47 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'name',
             'region_id',
-            'creator',
-            'created_at',
+//            'creator',
+//            'created_at',
             //'modifier',
             //'modified_at',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{view} {update} {delete}',
+                'buttons' => [
+                    'view' => function ($url) {
+                        return Html::a(
+                            '<span class="fa fa-eye"></span> ',
+                            $url,
+                            [
+                                'title' => 'view',
+                                'data-pjax' => '0',
+                            ]
+                        );
+                    },
+                    'update' => function ($url) {
+                        return Html::a(
+                            '<span class="fa fa-pencil-alt"></span> ',
+                            $url,
+                            [
+                                'title' => 'view',
+                                'data-pjax' => '0',
+                            ]
+                        );
+                    },
+                    'delete' => function ($url) {
+                        return Html::a(
+                            '<span class="fa fa-trash"></span> ',
+                            $url,
+                            [
+                                'title' => 'Delete',
+                                'data-pjax' => '0',
+                            ]
+                        );
+                    },
+                ],
+            ],
         ],
     ]); ?>
 </div>

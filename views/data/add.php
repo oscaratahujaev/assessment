@@ -9,27 +9,32 @@ use yii\helpers\Html;
 
 $i = 3;
 $this->title = 'About';
-$this->params['breadcrumbs'][] = $this->title;
 $districts = District::find()->where(['region_id' => $region_id])->all();
 ?>
 <div class="site-about">
 
-
-    <h1><?= Html::encode($category['name']) ?></h1>
+    <h3><?= Html::encode($category['name']) ?></h3>
 
     <?php $form = ActiveForm::begin(); ?>
-    <?= Html::dropDownList('districtId', $districtId,
-        ArrayHelper::map($districts, 'id', 'name'),
-        ['prompt' => 'Select District', 'class' => 'form-control', 'id' => 'category']); ?>
-    <?php foreach ($data as $key => $item): ?>
-        <p>
-            <?= $item['param']['name'] ?><br>
-            <input type="text" id="data-value" class="form-control" name="<?= $key ?>" aria-invalid="false">
-        </p>
-        <?php $i++; ?>
-    <?php endforeach; ?>
+    <div class="row">
+        <div class="col-md-4">
+            Туманлар
+            <br>
+            <?= Html::dropDownList('districtId', $districtId,
+                ArrayHelper::map($districts, 'id', 'name'),
+                ['prompt' => 'Туманни танланг', 'class' => 'form-control', 'id' => 'category']); ?>
+        </div>
+        <?php foreach ($data as $key => $item): ?>
+            <div class="col-md-4">
+                <?= $item['param']['name'] ?><br>
+                <input type="text" id="data-value" class="form-control" name="<?= $key ?>" aria-invalid="false">
+            </div>
+            <?php $i++; ?>
+        <?php endforeach; ?>
+    </div>
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(Yii::t('app', 'Саклаш'), ['class' => 'btn btn-primary btn-save']) ?>
     </div>
     <?php ActiveForm::end() ?>
 </div>
+

@@ -7,8 +7,8 @@ use yii\helpers\Html;
 /* @var $model app\models\Score */
 
 $this->title = Yii::t('app', 'Create Score');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Scores'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Scores'), 'url' => ['index']];
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="score-create">
 

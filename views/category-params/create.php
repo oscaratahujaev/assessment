@@ -7,8 +7,8 @@ use yii\helpers\Html;
 /* @var $model app\models\CategoryParams */
 
 $this->title = Yii::t('app', 'Create Category Params');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Category Params'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Category Params'), 'url' => ['index']];
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="category-params-create">
 

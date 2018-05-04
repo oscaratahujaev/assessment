@@ -7,8 +7,6 @@ use yii\helpers\Html;
 /* @var $model app\models\Years */
 
 $this->title = Yii::t('app', 'Create Years');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Years'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="years-create">
 

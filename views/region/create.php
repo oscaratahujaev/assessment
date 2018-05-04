@@ -7,8 +7,8 @@ use yii\helpers\Html;
 /* @var $model app\models\Region */
 
 $this->title = Yii::t('app', 'Create Region');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Regions'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Regions'), 'url' => ['index']];
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="region-create">
 

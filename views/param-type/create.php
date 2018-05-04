@@ -7,8 +7,8 @@ use yii\helpers\Html;
 /* @var $model app\models\ParamType */
 
 $this->title = Yii::t('app', 'Create Param Type');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Param Types'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Param Types'), 'url' => ['index']];
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="param-type-create">
 

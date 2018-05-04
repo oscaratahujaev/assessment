@@ -19,14 +19,31 @@ class AppAsset extends AssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
-    public $css = [
-        'css/site.css',
-    ];
     public $js = [
-        'js/table.js'
+        'js/jquery.js',
+        'js/popper.min.js',
+        'js/bootstrap.js',
+        'js/jquery-ui.js',
+        'js/jquery.cookie.js',
+        'js/specialView.js',
+        'js/jquery.vmap.js',
+        'js/map.js',
+        'js/vmap.uzbekistan.js',
+        'js/main.js',
+        'js/table.js',
+    ];
+    public $css = [
+        'css/bootstrap.css',
+        'css/jqvmap.css',
+        'css/jquery-ui.css',
+        'css/map.css',
+        'css/style.css',
+        'css/media.css',
+        'css/animate.css',
+        'css/fontawesome-all.css',
     ];
     public $depends = [
-        'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
+//        'yii\web\YiiAsset',
+//        'yii\bootstrap\BootstrapAsset',
     ];
 }
