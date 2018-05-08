@@ -7,6 +7,7 @@ use yii\web\View;
 $this->title = 'My Yii Application';
 
 ?>
+
     <div class="stats">
         <div class="lines">
 
