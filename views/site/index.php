@@ -90,6 +90,7 @@ $this->title = 'My Yii Application';
                         <div>
                             <div>
                                 <div class="row">
+
                                     <div class="item col-md-6">
                                         <h5>Навоий шаҳри халқ қабулхонаси</h5>
                                         <p>Меморлар кўчаси, 6-уй, <span>ишонч телефони</span>: 0(336) 221-1000</p>
