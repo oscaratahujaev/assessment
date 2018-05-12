@@ -78,10 +78,10 @@ class Score extends \yii\db\ActiveRecord
     public static function setScore($post)
     {
         $request = Yii::$app->request;
-        $categoryId = $request->get("categoryID");
-        $regionId = $request->get("regionID");
-        $year = $request->get("year");
-        $quarter = $request->get("quarter");
+        $categoryId = $request->get("categoryId");
+        $regionId = $request->get("regionId");
+        $year = $request->get("yearId");
+        $quarter = $request->get("quarterId");
         $category = Category::find()->with('categoryParams')->where(['id' => $categoryId])->asArray()->one();
 
 
@@ -91,11 +91,8 @@ class Score extends \yii\db\ActiveRecord
         $score->district_id = $post['districtId'];
         $score->year = $year;
         $score->quarter_id = $quarter ? $quarter : Quarter::find()->one()->id;
-
-
         $className = "app\\components\\";
         $className .= Category::getScoreClassById($category['score_class']);
-
         $percentage = $post[$category['factor_column']];
         $scoreCalculator = new $className($percentage);
         $scoreCalculator->calculate();

@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\components\Functions;
 use app\models\Category;
 use app\models\Data;
 use Yii;
@@ -58,7 +59,12 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $scoreValues = Functions::getScore(date('Y'), 1);
+        $emptyPlaces = Functions::getEmptyPlaces($scoreValues, 0);
+        return $this->render('index', [
+            'scoreValues' => $scoreValues,
+            'emptyPlaces' => $emptyPlaces
+        ]);
     }
 
     /**

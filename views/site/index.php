@@ -90,76 +90,28 @@ $this->title = 'My Yii Application';
                         <div>
                             <div>
                                 <div class="row">
-                                    <div class="item col-md-6">
-                                        <h5>Навоий шаҳри халқ қабулхонаси</h5>
-                                        <p>Меморлар кўчаси, 6-уй, <span>ишонч телефони</span>: 0(336) 221-1000</p>
-                                        <a href="#">
-                                            <span>Батафсил</span>
-                                        </a>
-                                    </div>
-                                    <div class="item col-md-6">
-                                        <h5>Зарафшон шаҳри халқ қабулхонаси</h5>
-                                        <p>1-кичик тумани халқ қабулхонаси, Геологлар кўчаси,
-                                            <span>ишонч телефони</span>: 0(336) 573-1000
-                                        </p>
-                                        <a href="#">
-                                            <span>Батафсил</span>
-                                        </a>
-                                    </div>
-                                    <div class="item col-md-6">
-                                        <h5>Конимех тумани халқ қабулхонаси </h5>
-                                        <p>Ш.Рашидов кўчаси, 33а-уй, <span>ишонч телефони</span>: 0(336) 512-1000
-                                        </p>
-                                        <a href="#">
-                                            <span>Батафсил</span>
-                                        </a>
-                                    </div>
-                                    <div class="item col-md-6">
-                                        <h5>Қизилтепа тумани халқ қабулхонаси </h5>
-                                        <p>Ўзбекистон кўчаси, 43-уй,
-                                            <span>ишонч телефони</span>: 0(336) 555-1000
-                                        </p>
-                                        <a href="#">
-                                            <span>Батафсил</span>
-                                        </a>
-                                    </div>
-                                    <div class="item col-md-6">
-                                        <h5>Навбаҳор тумани халқ қабулхонаси </h5>
-                                        <p>Бобур шоҳ кўчаси, 3-уй, <span>ишонч телефони</span>: 0(336) 562-1000</p>
-                                        <a href="#">
-                                            <span>Батафсил</span>
-                                        </a>
-                                    </div>
-                                    <div class="item col-md-6">
-                                        <h5>Нурота тумани халқ қабулхонаси </h5>
-                                        <p>Ш.Рашидов кўчаси, 47-уй, <span>ишонч телефони</span>: 0(336) 523-1000</p>
-                                        <a href="#"><span>Батафсил</span></a>
-                                    </div>
-                                    <div class="item col-md-6">
-                                        <h5>Томди тумани халқ қабулхонаси </h5>
-                                        <p>Янги Томди қўрғони, <span>ишонч телефони</span>: 0(336) 582-1000 </p>
-                                        <a href="#"><span>Батафсил</span></a>
-                                    </div>
-                                    <div class="item col-md-6"><h5>Учқудуқ тумани халқ қабулхонаси </h5>
-                                        <p>Х.Дўстлиги кўчаси, <span>ишонч телефони</span>: 0(336) 593-1000</p>
-                                        <a href="#"><span>Батафсил</span></a>
-                                    </div>
-                                    <div class="item col-md-6">
-                                        <h5>Хатирчи тумани халқ қабулхонаси </h5>
-                                        <p>А.Яссавий, 131-уй, <span>ишонч телефони</span>: 0(336) 545-1000</p>
-                                        <a href="#"><span>Батафсил</span></a>
-                                    </div>
-                                    <div class="item col-md-6">
-                                        <h5>Кармана тумани халқ қабулхонаси </h5>
-                                        <p>Янги ариқ ҚФЙ, Талқоқ МФЙ, <span>ишонч телефони</span>: 0(336) 539-1000
-                                        </p>
-                                        <a href="#"><span>Батафсил</span></a>
-                                    </div>
-                                    <div class="item col-md-6"><h5>Навоий вилояти халқ қабулхонаси</h5>
-                                        <p>Навоий шаҳри, Навоий кўчаси, 48а-уй, <span>ишонч телефони</span>: 0(336)
-                                            223-10-00</p>
-                                        <a href="#"><span>Батафсил</span></a>
-                                    </div>
+                                    <?php foreach ($scoreValues as $value): ?>
+                                        <div class="item col-md-6">
+                                            <h5><?= $value['name'] ?></h5>
+                                            <p>Score:
+                                                <span> <?= Yii::$app->formatter->asDecimal($value['score_sum']) ?></span>
+                                            </p>
+                                            <a href="#">
+                                                <span>Батафсил</span>
+                                            </a>
+                                        </div>
+                                    <?php endforeach; ?>
+                                    <?php foreach ($emptyPlaces as $place): ?>
+                                        <div class="item col-md-6">
+                                            <h5><?= $place['name'] ?></h5>
+                                            <p>Score:
+                                                <span>0</span>
+                                            </p>
+                                            <a href="#">
+                                                <span>Батафсил</span>
+                                            </a>
+                                        </div>
+                                    <?php endforeach; ?>
                                 </div>
                             </div>
                         </div>

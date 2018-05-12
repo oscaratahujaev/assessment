@@ -16,22 +16,27 @@ $districts = District::find()->where(['region_id' => $region_id])->all();
     <h3><?= Html::encode($category['name']) ?></h3>
 
     <?php $form = ActiveForm::begin(); ?>
-    <div class="row">
-        <div class="col-md-4">
-            Туманлар
-            <br>
-            <?= Html::dropDownList('districtId', $districtId,
-                ArrayHelper::map($districts, 'id', 'name'),
-                ['prompt' => 'Туманни танланг', 'class' => 'form-control', 'id' => 'category']); ?>
-        </div>
-        <?php foreach ($data as $key => $item): ?>
-            <div class="col-md-4">
-                <?= $item['param']['name'] ?><br>
-                <input type="text" id="data-value" class="form-control" name="<?= $key ?>" aria-invalid="false">
-            </div>
-            <?php $i++; ?>
-        <?php endforeach; ?>
-    </div>
+    <table class="table">
+        <tr>
+            <td class="align-bottom">
+                Туманлар
+                <br>
+                <?= Html::dropDownList('districtId', $districtId,
+                    ArrayHelper::map($districts, 'id', 'name'),
+                    ['prompt' => 'Туманни танланг', 'class' => 'form-control',
+                        'id' => 'district', 'required' => true]); ?>
+
+            </td>
+            <?php foreach ($data as $key => $item): ?>
+                <td class="align-bottom">
+                    <?= $item['param']['name'] ?><br>
+                    <input type="text" id="data-value" class="form-control" name="<?= $key ?>" required
+                           aria-invalid="false">
+                </td>
+                <?php $i++; ?>
+            <?php endforeach; ?>
+        </tr>
+    </table>
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Саклаш'), ['class' => 'btn btn-primary btn-save']) ?>
     </div>

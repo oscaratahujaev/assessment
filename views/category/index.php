@@ -18,7 +18,6 @@ $this->title = 'Categories';
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
             'name',
             [
                 'attribute' => 'place_type',

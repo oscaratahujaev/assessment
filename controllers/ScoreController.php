@@ -2,6 +2,9 @@
 
 namespace app\controllers;
 
+use app\components\Functions;
+use app\models\District;
+use app\models\Region;
 use Yii;
 use app\models\Score;
 use app\models\ScoreSearch;
@@ -41,6 +44,24 @@ class ScoreController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+        ]);
+    }
+
+
+    public function actionValues($regionId = 0, $yearId = 2018, $quarterId = 1)
+    {
+        $scoreValues = Functions::getScore($yearId, $quarterId, $regionId);
+        $emptyPlaces = Functions::getEmptyPlaces($scoreValues, $regionId);
+
+      /*  debug($emptyPlaces);
+        die();*/
+
+        return $this->render('values', [
+            'regionId' => $regionId,
+            'yearId' => $yearId,
+            'quarterId' => $quarterId,
+            'scoreValues' => $scoreValues,
+            'emptyPlaces' => $emptyPlaces,
         ]);
     }
 
