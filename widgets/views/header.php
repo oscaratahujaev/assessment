@@ -13,11 +13,13 @@ use yii\helpers\Url;
     <div class="row">
         <div class="col-md-5">
             <div class="logo_box">
-                <a href="<?= Url::to('#')?>">
+                <a href="<?= Url::to('#') ?>">
                     <img src="/img/Uzb.png">
-                    Информационные системы внедрение критериев оценка дятельности руководителей регионов по
-                    комплексному социально
-                    экономическому развитию
+                    <h5>
+                        Информационная система <br>
+                        оценки деятельности<br>
+                        руководителей регионов
+                    </h5>
                 </a>
             </div>
         </div>
@@ -95,7 +97,7 @@ use yii\helpers\Url;
                                             <div class="authorization_text">Жамоавий мурожаат яратиш учун Ягона
                                                 идентификация тизими (id.gov.uz) орқали авторизациядан ўтишингиз лозим
                                             </div>
-                                            <a href="https://id.gov.uz" class="register_square">
+                                            <a href="/login" class="register_square">
                                                 <img src="/img/oneidBig.png">
                                             </a>
                                         </div>
@@ -108,17 +110,17 @@ use yii\helpers\Url;
                             </div>'
                     ) : (
                         '<div class="named__box">
-                     <ul> <li> <span class="link">MNO</span></li> 
+                     <ul> <li> <span class="link">MNO</span></li>
                        <li> <span class="link">' . Yii::$app->user->identity->username . '</span></li> 
                      </ul>
                       </div>');
                     ?>
 
                 </div>
-                <ul class="lang">
-                    <li><a class="actives" href="#">РУ</a></li>
-                    <li><a href="#">УЗ</a></li>
-                </ul>
+<!--                <ul class="lang">-->
+<!--                    <li><a class="actives" href="#">РУ</a></li>-->
+<!--                    <li><a href="#">УЗ</a></li>-->
+<!--                </ul>-->
                 <?php if (!Yii::$app->user->isGuest): ?>
                     <div class="simple_button">
                         <?= Html::beginForm(['/site/logout'], 'post')

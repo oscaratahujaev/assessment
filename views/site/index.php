@@ -12,7 +12,7 @@ $this->title = 'My Yii Application';
         <div class="lines">
 
         </div>
-        <p class="mapTitle">Статистика</p>
+        <h2 class="mapTitle">Статистика</h2><br>
         <div class="row">
 
             <div class="col-md-6 " id="mapbox">
@@ -20,7 +20,6 @@ $this->title = 'My Yii Application';
                 <!--<div class="map_shadow"></div>-->
                 <div id="vmap">
                     <svg width="640" height="480" class="shadow">
-                        <rect x="100" y="10" width="100" height="50" fill="red"/>
                         <g transform="scale(1.4) translate(0, 7.142857142857143)">
                             <path d="M515.735,176.06L514.8 174.387 499.861 174.132 498.302 172.12 496.828 172.006 496.46 170.447 493.88 169.257 488.013 172.12 488.013 172.375 487.928 173.112 487.361 174.217 487.105 174.671 486.085 175.606 485.433 176.06 484.98 176.23 484.526 176.315 481.861 176.598 476.164 176.315 475.909 176.315 475.455 176.428 474.605 176.683 474.151 176.967 473.244 177.619 472.422 178.441 469.389 182.835 490.847 191.367 496.261 193.748 496.998 191.197 494.164 186.236 495.184 185.329 502.243 188.334 503.15 185.783 505.162 186.151 505.814 182.381z"
                                   stroke="#fff" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
@@ -341,21 +340,105 @@ $script = <<< JS
     if (top.location != location) top.location.href = location.href;
 
     var messages = {
-
-        an: 'Андижанская  <div class="egle"></div><span>область</span>',
-        bu: 'Бухарская   <div class="egle"></div><span>область</span>',
-        fa: 'Ферганская   <div class="egle"></div><span>область</span>',
-        gu: 'Сырдаринская   <div class="egle"></div><span>область</span>',
-        ji: 'Джизакская   <div class="egle"></div><span>область</span>',
-        na: 'Наманганская   <div class="egle"></div><span>область</span>',
-        no: 'Навоийская  <div class="egle"></div> <span>область</span>',
-        qa: 'Кашкадаринская   <div class="egle"></div><span>область</span>',
-        qo: 'Республика  <div class="egle"></div>Каракалпакстан',
-        sa: 'Самаркандская  <div class="egle"></div><span>область</span>',
-        te: 'Сурхандаринская   <div class="egle"></div><span>область</span>',
-        to: 'Ташкентская  <div class="egle"></div><span>область</span>',
-        tosh: 'Город  <div class="egle"></div>Ташкент',
-        xo: 'Хорезмская  <div class="egle"></div><span>область</span>'
+        
+        an: function(type){
+            if (type == 'code'){
+                return 'Андижон <div class="egle"></div><span>вилояти</span>';                
+            }else{
+                return 2;
+            }
+        },
+        bu: function(type){
+            if (type == 'code'){
+                return 'Бухоро <div class="egle"></div><span>вилояти</span>';                
+            }else{
+                return 3;
+            }
+        },
+        fa: function(type){
+            if (type == 'code'){
+                return 'Фарғона  <div class="egle"></div><span>вилояти</span>';                
+            }else{
+                return 12;
+            }
+        },
+        gu: function(type){
+            if (type == 'code'){
+                return 'Сирдарё  <div class="egle"></div><span>вилояти</span>';                
+            }else{
+                return 9;
+            }
+        },
+        ji: function(type){
+            if (type == 'code'){
+                return 'Жиззах <div class="egle"></div><span>вилояти</span>';                
+            }else{
+                return 4;
+            }
+        },
+        na: function(type){
+            if (type == 'code'){
+                return 'Наманган <div class="egle"></div><span>вилояти</span>';                
+            }else{
+                return 7;
+            }
+        },
+        no: function(type){
+            if (type == 'code'){
+                return 'Навоий <div class="egle"></div><span>вилояти</span>';                
+            }else{
+                return 6;
+            }
+        },
+        qa: function(type){
+            if (type == 'code'){
+                return 'Қашқадарё <div class="egle"></div><span>вилояти</span>';                
+            }else{
+                return 5;
+            }
+        },
+        qo: function(type){
+            if (type == 'code'){
+                return 'Қорақалпоғистон <div class="egle"></div><span>Республикаси</span>';                
+            }else{
+                return 1;
+            }
+        },
+        sa: function(type){
+            if (type == 'code'){
+                return 'Самарқанд  <div class="egle"></div><span>вилояти</span>';                
+            }else{
+                return 8;
+            }
+        },
+        te: function(type){
+            if (type == 'code'){
+                return 'Сурхондарё <div class="egle"></div><span>вилояти</span>';                
+            }else{
+                return 10;
+            }
+        },
+        to: function(type){
+            if (type == 'code'){
+                return 'Тошкент  <div class="egle"></div><span>вилояти</span>';                
+            }else{
+                return 11;
+            }
+        },
+        tosh: function(type){
+            if (type == 'code'){
+                return 'Тошкент <div class="egle"></div><span>шаҳар</span>';                
+            }else{
+                return 15;
+            }
+        },
+        xo: function(type){
+            if (type == 'code'){
+                return 'Хоразм <div class="egle"></div><span>вилояти</span>';                
+            }else{
+                return 14;
+            }
+        },
     };
 JS;
 $this->registerJs($script, View::POS_HEAD);
