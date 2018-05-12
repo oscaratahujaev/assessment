@@ -59,8 +59,8 @@ foreach ($category['categoryParams'] as $categoryParam) {
 <?php $form = ActiveForm::begin(['method' => 'GET', 'action' => Url::to(['data/table'])]); ?>
 <div class="row">
     <div class="col-md-12">
-        <?= Html::label('Категория', 'categoryID', ['class' => 'form-label']) ?>
-        <?= Html::dropDownList('categoryID', $categoryId,
+        <?= Html::label('Категория', 'categoryId', ['class' => 'form-label']) ?>
+        <?= Html::dropDownList('categoryId', $categoryId,
             ArrayHelper::map($categories, 'id', 'name'),
             ['class' => 'form-control', 'id' => 'category']); ?>
     </div>
@@ -69,7 +69,7 @@ foreach ($category['categoryParams'] as $categoryParam) {
 <div class="row">
     <div class="col-md-4">
         <?= Html::label('Вилоят', 'region', ['class' => 'form-label']) ?>
-        <?= Html::dropDownList('regionID', $regionId,
+        <?= Html::dropDownList('regionId', $regionId,
             ArrayHelper::map($regions, 'id', 'name'),
             [
                 'id' => 'region',
@@ -79,7 +79,7 @@ foreach ($category['categoryParams'] as $categoryParam) {
     </div>
     <div class="col-md-3">
         <?= Html::label('Йил', 'region', ['class' => 'form-label']) ?>
-        <?= Html::dropDownList('yearID', $yearId,
+        <?= Html::dropDownList('yearId', $yearId,
             ArrayHelper::map($year, 'year', 'year'),
             [
                 'class' => 'form-control',
@@ -89,7 +89,7 @@ foreach ($category['categoryParams'] as $categoryParam) {
     </div>
     <div class="col-md-3">
         <?= Html::label('Чорак', 'region', ['class' => 'form-label']) ?>
-        <?= Html::dropDownList('quarterID', $quarterId,
+        <?= Html::dropDownList('quarterId', $quarterId,
             ArrayHelper::map($quarter, 'id', 'name'),
             [
                 'id' => 'quarter',
@@ -164,8 +164,8 @@ foreach ($category['categoryParams'] as $categoryParam) {
                     echo '<td></td>';
                 } ?>
                 <td><a class="btn btn-outline-primary" id="addUrl" href="
-          <?= Url::to('/data/add?categoryID=' . $categoryId .
-                        '&regionID=' . $regionId . '&districtID=' . $place['id'] .
+          <?= Url::to('/data/add?categoryId=' . $categoryId .
+                        '&regionId=' . $regionId . '&districtId=' . $place['id'] .
                         '&year=' . $yearId . '&quarter=' . $quarterId) ?>">
                         <i class="fa fa-plus"></i></a></td>
             </tr>
