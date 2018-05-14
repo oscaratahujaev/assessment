@@ -60,6 +60,8 @@ class Functions
         } else {
             $emptyPlaces = Region::find()->where(['NOT IN', 'id', $filledPlaces])->all();
         }
+
         return $emptyPlaces;
     }
+
 }
