@@ -38,9 +38,21 @@
 }
 @media screen and ( max-width: 587px){
     .circle__block li{
-        width: 50%;
-        float: left;
+        width: 100%;
         list-style: none;
+    }
+
+    .circle__block li a{
+        margin:15px auto;
+    }
+
+    .care li{
+        width: 48%;
+        list-style: none;
+    }
+
+    .care li a{
+        margin:15px auto;
     }
 
 }
