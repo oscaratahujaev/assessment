@@ -25,7 +25,7 @@ use yii\helpers\Url;
         </div>
         <div class="col-md-7">
             <div class="box">
-                <div class="dropdown">
+                <div class="dropdown" style="max-width:150px;">
                     <img src="/img/eye.png">
                     <button class="dropdown" data-toggle="dropdown">
                         Махсус имкониятлар
@@ -78,60 +78,58 @@ use yii\helpers\Url;
                     </div>
                 </div>
                 <div class="enter">
-                    <?= (Yii::$app->user->isGuest) ? (
-                    '<button href="<??>" type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#myModal">
-                                Войти в кабинет
-                            </button>
+                    <?php if (Yii::$app->user->isGuest): ?>
+                        <button href="<? ?>" type="button" class="btn btn-outline-primary" data-toggle="modal"
+                                data-target="#myModal">
+                            Войти в кабинет
+                        </button>
 
-                            <div class="modal fade" id="myModal">
-                                <div class="modal-dialog modal-lg modal-dialog-centered">
-                                    <div class="modal-content">
+                        <div class="modal fade" id="myModal">
+                            <div class="modal-dialog modal-lg modal-dialog-centered">
+                                <div class="modal-content">
 
-                                        <!-- Modal Header -->
-                                        <div class="modal-header">
-                                            <h4 class="modal-title">Авторизация</h4>
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        </div>
-                                        <!-- Modal body -->
-                                        <div class="modal-body">
-                                            <div class="authorization_text">Жамоавий мурожаат яратиш учун Ягона
-                                                идентификация тизими (id.gov.uz) орқали авторизациядан ўтишингиз лозим
-                                            </div>
-                                            <a href="/login" class="register_square">
-                                                <img src="/img/oneidBig.png">
-                                            </a>
-                                        </div>
-
-                                        <!-- Modal footer -->
-
-
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Авторизация</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
                                     </div>
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                        <div class="authorization_text">Жамоавий мурожаат яратиш учун Ягона
+                                            идентификация тизими (id.gov.uz) орқали авторизациядан ўтишингиз лозим
+                                        </div>
+                                        <a href="/login" class="register_square">
+                                            <img src="/img/oneidBig.png">
+                                        </a>
+                                    </div>
+
+                                    <!-- Modal footer -->
+
+
                                 </div>
-                            </div>'
-                    ) : (
-                        '<div class="named__box">
-                     <ul> <li> <span class="link">MNO</span></li>
-                       <li> <span class="link">' . Yii::$app->user->identity->username . '</span></li> 
-                     </ul>
-                      </div>');
-                    ?>
+                            </div>
+                        </div>
+                    <?php else: ?>
+                        <div class="named__box">
+                            <ul>
+                                <li><span class="link">MNO</span></li>
+                                <li>
+                                    <?= Html::a('Чиқиш <span class="link">(' . Yii::$app->user->identity->username . ')</span>',
+                                        ['/logout'], [
+                                            'class' => 'btn btn-danger',
+                                            'style' => 'color:#505355',
+                                            'data' => [
+                                                'confirm' => Yii::t('main', 'Are you sure you want to delete this item?'),
+                                                'method' => 'post',
+                                            ],
+                                        ]) ?>
+
+                                </li>
+                            </ul>
+                        </div>
+                    <?php endif; ?>
 
                 </div>
-<!--                <ul class="lang">-->
-<!--                    <li><a class="actives" href="#">РУ</a></li>-->
-<!--                    <li><a href="#">УЗ</a></li>-->
-<!--                </ul>-->
-                <?php if (!Yii::$app->user->isGuest): ?>
-                    <div class="simple_button">
-                        <?= Html::beginForm(['/site/logout'], 'post')
-                        . Html::submitButton(
-                            'Выход',
-                            ['class' => 'btn btn-outline-primary logout']
-                        )
-                        . Html::endForm()
-                        ?>
-                    </div>
-                <?php endif; ?>
 
             </div>
             <div class="clearfix"></div>

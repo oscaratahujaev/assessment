@@ -743,7 +743,7 @@ img {
     float: right;
     display: inline-block;
     margin-left: 5px;
-    width:48%;
+    /*width:48%;*/
 }
 
 .enter img {
