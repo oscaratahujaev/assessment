@@ -99,11 +99,6 @@ class SiteController extends Controller
     //        ]);
     //    }
 
-    /**
-     * Logout action.
-     *
-     * @return Response
-     */
 //    public function actionLogout()
 //    {
 //        //        $clientId = Yii::$app->params['clientId'];
