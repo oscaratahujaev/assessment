@@ -79,7 +79,7 @@ use yii\helpers\Url;
                 </div>
                 <div class="enter">
                     <?php if (Yii::$app->user->isGuest): ?>
-                        <button href="<? ?>" type="button" class="btn btn-outline-primary" data-toggle="modal"
+                        <button type="button" class="btn btn-outline-primary" data-toggle="modal"
                                 data-target="#myModal">
                             Войти в кабинет
                         </button>

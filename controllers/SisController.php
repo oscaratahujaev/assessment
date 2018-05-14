@@ -102,7 +102,6 @@ class SisController extends Controller
     public function actionLogout()
     {
         Yii::$app->user->logout();
-        //        return $this->goHome();
 
         $clientId = Yii::$app->params['clientId'];
         return $this->redirect(Yii::$app->params['logoutUrl'] . "?id=" . $clientId);
