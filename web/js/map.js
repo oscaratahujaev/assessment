@@ -6,13 +6,13 @@ $(document).ready(function () {
         }
     );
 
-    $('.mapPoints a').click(function(e){
+    $('.mapPoints a').click(function (e) {
         e.preventDefault();
     });
 
-    $('.mapPoints a').hover(function(){
+    $('.mapPoints a').hover(function () {
         filterRegions($(this).attr('href'));
-    }, function(){
+    }, function () {
         filterRegions('');
     });
 });
@@ -39,7 +39,7 @@ function filterRegions(regionId) {
         var elementColor = '#4da9ec';
         regionsList[key] = elementColor;
     });
-    if (regionId.length > 0){
+    if (regionId.length > 0) {
         regionsList[regionId] = '';
     }
     $('#vmap').vectorMap('set', 'colors', regionsList);
@@ -61,14 +61,18 @@ function makeMap(messages) {
 
         'stroke-width': 1,
         onLabelShow: function (event, label, code) {
-            $('#mapLabels').html(messages[code]);
+            $('#mapLabels').html(messages[code]('code'));
         },
-        onRegionOut: function(){
+        onRegionOut: function () {
 
             $('#mapLabels').html('');
 
         },
         onRegionClick: function (element, code, region) {
+            console.log(messages[code]('id'));
+            // console.log(element);
+            // console.log(code);
+            // console.log(element);
             // document.location.href = 'http://' + location.hostname + '/pensionpoint/region?code=' + code;
         },
 

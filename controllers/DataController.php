@@ -60,10 +60,7 @@ class DataController extends Controller
     public function actionAdd($categoryId = 1, $regionId = 1, $yearId = 2018, $quarterId = 1)
     {
         $request = Yii::$app->request;
-        /* $categoryId = $request->getQueryParam("categoryID");
-         $regionId = $request->getQueryParam("regionID");
-         $year = $request->getQueryParam("year");
-         $quarter = $request->getQueryParam("quarter");*/
+
         $category = Category::find()->with('categoryParams')->where(['id' => $categoryId])->asArray()->one();
 
         $post = $request->post();
