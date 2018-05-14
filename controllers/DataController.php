@@ -57,7 +57,7 @@ class DataController extends Controller
     }
 
 
-    public function actionAdd($categoryId = 1, $regionId = 1, $yearId = 2018, $quarterId = 1)
+    public function actionAdd($categoryId = 1, $regionId = 1, $districtId = null, $yearId = 2018, $quarterId = 1)
     {
         $request = Yii::$app->request;
 
@@ -70,11 +70,10 @@ class DataController extends Controller
             if (Data::setData($category, $post) && Score::setScore($post)) {
 
                 return $this->redirect(['table',
-                    'category' => $category,
                     'categoryId' => $categoryId,
+                    'regionId' => $regionId,
                     'year' => $yearId,
                     'quarter' => $quarterId,
-                    'regionId' => $regionId,
                 ]);
             }
         }
@@ -101,7 +100,7 @@ class DataController extends Controller
             'data' => $data,
             'category' => $category,
             'region_id' => $regionId,
-            'districtId' => $request->get('districtID'),
+            'districtId' => $districtId,
         ]);
     }
 
@@ -150,7 +149,7 @@ class DataController extends Controller
             foreach ($data as $item) {
                 $arr[$item['region_id']]['place'] = $item['region'] ? $item['region']['name'] : '';
                 $arr[$item['region_id']]['values'][] = $item;
-//                $arr[$item['region_id']]['score'] = $item['scoreRegion'] ? $item ['scoreRegion']['value'] : '';
+                //                $arr[$item['region_id']]['score'] = $item['scoreRegion'] ? $item ['scoreRegion']['value'] : '';
             }
         }
 
@@ -158,13 +157,17 @@ class DataController extends Controller
         $filledDistricts = [];
         $emptyPlaces = [];
         if (isset($regionId)) {
-            foreach ($arr as $item) {
+            foreach ($arr as $key => $item) {
                 array_push($filledDistricts, $item['place']);
             }
-            $emptyPlaces = District::find()->where(['region_id' => $regionId])->andWhere(['NOT IN', 'name', $filledDistricts])->all();
+            $emptyPlaces = District::find()->where(['region_id' => $regionId])->andWhere(['NOT IN', 'name', $filledDistricts])->orderBy('name asc')->all();
         } else {
-            $emptyPlaces = Region::find()->where(['NOT IN', 'name', $filledDistricts])->all();
+            $emptyPlaces = Region::find()->where(['NOT IN', 'name', $filledDistricts])->asArray()->all();
         }
+
+//                debug($emptyPlaces);
+//                exit;
+
         return [
             'data' => $arr,
             'emptyPlaces' => $emptyPlaces,

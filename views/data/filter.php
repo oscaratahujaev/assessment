@@ -20,7 +20,7 @@ $year = Years::find()->all();
 <?= Html::beginForm(Url::to([$url]), 'GET'); ?>
 <div class="row">
     <div class="col-md-12">
-        <?= Html::label('Категория', 'categoryId', ['class' => 'form-label']) ?>
+        <?= Html::label('Индикатор', 'categoryId', ['class' => 'form-label']) ?>
         <?= Html::dropDownList('categoryId', $categoryId,
             ArrayHelper::map($categories, 'id', 'name'),
             ['class' => 'form-control', 'id' => 'category']); ?>

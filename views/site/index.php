@@ -4,7 +4,7 @@
 
 use yii\web\View;
 
-$this->title = 'My Yii Application';
+$this->title = 'Бош саҳифа';
 
 ?>
 
@@ -86,62 +86,102 @@ $this->title = 'My Yii Application';
             <div id="home_score" class="col-md-6">
                 <?= $this->render('home_scores', [
                     'scoreValues' => $scoreValues,
-                    'emptyPlaces' =>  $emptyPlaces,
+                    'emptyPlaces' => $emptyPlaces,
+                    'year' => $year,
+                    'quarter' => $quarter,
                 ]) ?>
             </div>
         </div>
         <div class="news__block2">
             <div class="titiles_box">
-                Справочник
+                Бу тизим қандай ишлайди?
             </div>
             <div class="circle__block">
                 <ul>
                     <li>
-                        <a href="#" data-toggle="modal" data-target="#myModal2">
+                        <a href="#" data-toggle="modal" data-target="#myModal1">
                             <img src="img/cat.png" alt="">
                         </a>
-                        <span>Категории оценки</span>
+                        <span>Умумий қоидалар</span>
                     </li>
 
 
                     <li>
-                        <a href="#">
+                        <a href="#" data-toggle="modal" data-target="#myModal2">
                             <img src="img/assigment.png" alt="">
                         </a>
-                        <span>Категории оценки</span>
+                        <span>Баҳолаш индикаторлари</span>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="#" data-toggle="modal" data-target="#myModal3">
                             <img src="img/assigment1.png" alt=""></a>
-                        <span>Категории оценки</span>
+                        <span>Бахолаш формуласи</span>
 
-                    </li>
-                    <li><a href="#">
-                            <img src="img/onemini.png" alt=""></a>
-                        <span>Категории оценки</span>
                     </li>
                 </ul>
 
             </div>
+            <div class="modal fade" id="myModal1">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Умумий қоидалар</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <div class="authorization">
+                                <?= $this->render('modal1') ?>
+                            </div>
+
+                        </div>
+
+                        <!-- Modal footer -->
+
+
+                    </div>
+                </div>
+            </div>
+
             <div class="modal fade" id="myModal2">
                 <div class="modal-dialog modal-lg modal-dialog-centered">
                     <div class="modal-content">
 
                         <!-- Modal Header -->
                         <div class="modal-header">
-                            <h4 class="modal-title">Категории оценки</h4>
+                            <h4 class="modal-title">Баҳолаш индикаторлари</h4>
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
                         <!-- Modal body -->
                         <div class="modal-body">
-                            <div class="authorization">Жамоавий мурожаат яратиш учун Ягона
-                                идентификация тизими (id.gov.uz) орқали авторизациядан ўтишингиз лозимамоавий мурожаат
-                                яратиш учун Ягона
-                                идентификация тизими (id.gov.uz) орқали авторизациядан ўтишингиз лозимамоавий мурожаат
-                                яратиш учун Ягона
-                                идентификация тизими (id.gov.uz) орқали авторизациядан ўтишингиз лозимамоавий мурожаат
-                                яратиш учун Ягона
-                                идентификация тизими (id.gov.uz) орқали авторизациядан ўтишингиз лозим
+                            <div class="authorization">
+                                <?= $this->render('modal2') ?>
+                            </div>
+
+                        </div>
+
+                        <!-- Modal footer -->
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="myModal3">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Бахолаш формуласи</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <div class="authorization">
+                                <?= $this->render('modal3') ?>
                             </div>
 
                         </div>

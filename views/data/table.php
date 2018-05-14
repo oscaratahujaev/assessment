@@ -20,6 +20,8 @@ use yii\widgets\ActiveForm;
 /**
  *$category Category;
  * */
+
+$this->title = 'Маълумотни киритиш';
 $categories = Category::find()->all();
 $regions = Region::find()->all();
 $district = District::find()->all();

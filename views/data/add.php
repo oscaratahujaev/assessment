@@ -8,7 +8,7 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
 $i = 3;
-$this->title = 'About';
+$this->title = 'Маълумотни киритиш';
 $districts = District::find()->where(['region_id' => $region_id])->all();
 ?>
 <div class="site-about">
