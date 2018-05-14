@@ -69,7 +69,21 @@ function makeMap(messages) {
 
         },
         onRegionClick: function (element, code, region) {
-            console.log(messages[code]('id'));
+
+            $.ajax({
+                url: 'site/index',
+                data: {regionId: messages[code]('id')},
+                beforeSend: function () {
+                    $("#home_block").addClass("loader");
+                    $("#home_score_block").addClass("home_score_block_opacity");
+                },
+                success: function (result) {
+                    $("#home_block").removeClass("loader");
+                    $("#home_score_block").removeClass("home_score_block_opacity");
+                    $("#home_score").html(result);
+
+                }
+            });
             // console.log(element);
             // console.log(code);
             // console.log(element);

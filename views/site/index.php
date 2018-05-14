@@ -83,40 +83,11 @@ $this->title = 'My Yii Application';
                 <div id="mapLabels"></div>
                 <div class="clearfix"></div>
             </div>
-            <div class="col-md-6">
-                <div class="inspections-info">
-                    <div class="inspections-list clearfix">
-                        <i class="arrow"></i>
-                        <div>
-                            <div>
-                                <div class="row">
-                                    <?php foreach ($scoreValues as $value): ?>
-                                        <div class="item col-md-6">
-                                            <h5><?= $value['name'] ?></h5>
-                                            <p>Score:
-                                                <span> <?= Yii::$app->formatter->asDecimal($value['score_sum']) ?></span>
-                                            </p>
-                                            <a href="#">
-                                                <span>Батафсил</span>
-                                            </a>
-                                        </div>
-                                    <?php endforeach; ?>
-                                    <?php foreach ($emptyPlaces as $place): ?>
-                                        <div class="item col-md-6">
-                                            <h5><?= $place['name'] ?></h5>
-                                            <p>Score:
-                                                <span>0</span>
-                                            </p>
-                                            <a href="#">
-                                                <span>Батафсил</span>
-                                            </a>
-                                        </div>
-                                    <?php endforeach; ?>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div id="home_score" class="col-md-6">
+                <?= $this->render('home_scores', [
+                    'scoreValues' => $scoreValues,
+                    'emptyPlaces' =>  $emptyPlaces,
+                ]) ?>
             </div>
         </div>
         <div class="news__block2">

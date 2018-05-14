@@ -57,15 +57,25 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex($regionId = 0)
     {
-        $scoreValues = Functions::getScore(date('Y'), 1);
-        $emptyPlaces = Functions::getEmptyPlaces($scoreValues, 0);
+        $scoreValues = Functions::getScore(date('Y'), 1, $regionId);
+        $emptyPlaces = Functions::getEmptyPlaces($scoreValues, $regionId);
+
+        if (Yii::$app->request->isAjax) {
+            sleep(2);
+            return $this->renderAjax('home_scores', [
+                'scoreValues' => $scoreValues,
+                'emptyPlaces' => $emptyPlaces,
+            ]);
+        }
+
         return $this->render('index', [
             'scoreValues' => $scoreValues,
-            'emptyPlaces' => $emptyPlaces
+            'emptyPlaces' => $emptyPlaces,
         ]);
     }
+
 
     /**
      * Login action.
