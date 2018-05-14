@@ -65,7 +65,6 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            ['status', 'default', 'value' => self::STATUS_INACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED, self::STATUS_INACTIVE]],
 
             [['username', 'auth_key', 'password_hash', 'created_at', 'updated_at'], 'required'],
@@ -102,6 +101,7 @@ class User extends ActiveRecord implements IdentityInterface
 
         if ($this->isNewRecord) {
             $this->created_at = time();
+            $this->status = self::STATUS_INACTIVE;
         }
         $this->updated_at = time();
 
