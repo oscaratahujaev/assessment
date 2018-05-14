@@ -16,6 +16,3 @@ $('#category, #region, #year, #quarter').change(function () {
         '&year=' + year +
         '&quarter=' + quarter);
 });
-
-
-

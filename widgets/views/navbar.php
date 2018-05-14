@@ -1,3 +1,7 @@
+<?php
+$path = '/' . Yii::$app->controller->id . "/" . Yii::$app->controller->action->id;
+?>
+
 <div class="menus">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -7,13 +11,21 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Главная <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item ">
-                    <a class="nav-link" href="#">Статистика</a>
+                    <a id="hello" class="nav-link <?= $path === '/site/index' ? 'actives' : '' ?>"
+                       href="<?= \yii\helpers\Url::to("/") ?>">Главная <span
+                                class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link actives" href="/d/add">Добавить</a>
+                    <a class="nav-link <?= $path === '/score/values' ? 'actives' : '' ?>"
+                       href="<?= \yii\helpers\Url::to('/score/values') ?>">Оценка</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <?= $path === '/data/statistics' ? 'actives' : '' ?>"
+                       href="<?= \yii\helpers\Url::to('/data/statistics') ?>">Статистика</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <?= $path === '/data/table' ? 'actives' : '' ?>"
+                       href="<?= \yii\helpers\Url::to('/data/table') ?>">Добавить</a>
                 </li>
                 <li class="nav-item">
                     <div id="references" class="dropdown navbar-dropdown">

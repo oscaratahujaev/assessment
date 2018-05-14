@@ -57,7 +57,7 @@ class DataController extends Controller
     }
 
 
-    public function actionAdd($categoryId, $regionId, $year, $quarter)
+    public function actionAdd($categoryId = 1, $regionId = 1, $yearId = 2018, $quarterId = 1)
     {
         $request = Yii::$app->request;
 
@@ -71,10 +71,10 @@ class DataController extends Controller
 
                 return $this->redirect(['table',
                     'category' => $category,
-                    'categoryIв' => $categoryId,
-                    'year' => $year,
-                    'quarter' => $quarter,
-                    'regionIв' => $regionId,
+                    'categoryId' => $categoryId,
+                    'year' => $yearId,
+                    'quarter' => $quarterId,
+                    'regionId' => $regionId,
                 ]);
             }
         }
@@ -105,47 +105,55 @@ class DataController extends Controller
         ]);
     }
 
-
-    public function actionTable($categoryId = 1, $regionId = 1, $yearId = 2018, $quarterId = 1)
+    public static function getData($categoryId, $regionId, $yearId, $quarterId)
     {
-        $request = Yii::$app->request;
 
         $category = Category::find()->with('categoryParams')->where(['id' => $categoryId])->asArray()->one();
-
         $data = [];
+
+
+        //needed for finding the number of districts of a region
+
+        $numberOfChildDistricts = 0;
         $query = Data::find()
             ->where(['category_id' => $categoryId])
             ->andWhere(['year' => $yearId])
             ->andWhere(['quarter' => $quarterId]);
-        if (isset($regionId)) {
+        if (!empty($regionId)) {
             $query->andWhere(['region_id' => $regionId]);
             $query->andWhere(['<>', 'district_id', '']);
             $query->with('district');
             $query->with('scoreDistrict');
+            $query->with('param');
         } else {
-            $query->andWhere(['district_id' => '']);
+            $query->select(['*, sum(value) as value']);
             $query->with('region');
-            $query->with('scoreRegion');
+            $query->with('category');
+            $query->with('param');
+            $query->groupBy('region_id, param_id');
         }
+        $numberOfChildDistricts = 0;
+
         $data = $query
             ->orderBy('param_id ASC')
             ->asArray()
             ->all();
-
         $arr = [];
+
         if ($regionId) {
             foreach ($data as $item) {
                 $arr[$item['district_id']]['place'] = $item['district'] ? $item['district']['name'] : '';
-                $arr[$item['district_id']]['values'][] = $item['value'];
+                $arr[$item['district_id']]['values'][] = $item;
                 $arr[$item['district_id']]['score'] = $item['scoreDistrict'] ? $item ['scoreDistrict']['value'] : '';
             }
         } else {
             foreach ($data as $item) {
                 $arr[$item['region_id']]['place'] = $item['region'] ? $item['region']['name'] : '';
-                $arr[$item['region_id']]['values'][] = $item['value'];
-                $arr[$item['region_id']]['score'] = $item['scoreRegion'] ? $item ['scoreRegion']['value'] : '';
+                $arr[$item['region_id']]['values'][] = $item;
+//                $arr[$item['region_id']]['score'] = $item['scoreRegion'] ? $item ['scoreRegion']['value'] : '';
             }
         }
+
 
         $filledDistricts = [];
         $emptyPlaces = [];
@@ -157,15 +165,39 @@ class DataController extends Controller
         } else {
             $emptyPlaces = Region::find()->where(['NOT IN', 'name', $filledDistricts])->all();
         }
-        return $this->render('table', [
-            'categoryId' => $categoryId,
-            'regionId' => $regionId,
-            'yearId' => $yearId,
-            'quarterId' => $quarterId,
+        return [
             'data' => $arr,
+            'emptyPlaces' => $emptyPlaces,
             'category' => $category,
-            'emptyPlaces' => $emptyPlaces
-        ]);
+        ];
+    }
+
+
+    public function actionStatistics($categoryId = 1, $regionId = 1, $yearId = 2018, $quarterId = 1)
+    {
+
+        return $this->render('statistics',
+            array_merge(self::getData($categoryId, $regionId, $yearId, $quarterId),
+                [
+                    'categoryId' => $categoryId,
+                    'regionId' => $regionId,
+                    'yearId' => $yearId,
+                    'quarterId' => $quarterId,
+                ]));
+    }
+
+
+    public function actionTable($categoryId = 1, $regionId = 1, $yearId = 2018, $quarterId = 1)
+    {
+
+        return $this->render('table',
+            array_merge(self::getData($categoryId, $regionId, $yearId, $quarterId),
+                [
+                    'categoryId' => $categoryId,
+                    'regionId' => $regionId,
+                    'yearId' => $yearId,
+                    'quarterId' => $quarterId,
+                ]));
 
     }
 

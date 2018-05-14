@@ -81,10 +81,10 @@ class Data extends \yii\db\ActiveRecord
     public static function setData($category, &$post)
     {
         $request = Yii::$app->request;
-        $categoryId = $request->get("categoryID");
-        $regionId = $request->get("regionID");
-        $year = $request->get("year");
-        $quarter = $request->get("quarter");
+        $categoryId = $request->get("categoryId");
+        $regionId = $request->get("regionId");
+        $year = $request->get("yearId");
+        $quarter = $request->get("quarterId");
         $category = Category::find()->with('categoryParams')->where(['id' => $categoryId])->asArray()->one();
 
 

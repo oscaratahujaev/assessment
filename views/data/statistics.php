@@ -20,19 +20,25 @@ use yii\widgets\ActiveForm;
 /**
  *$category Category;
  * */
-$categories = Category::find()->all();
-$regions = Region::find()->all();
-$district = District::find()->all();
-$quarter = Quarter::find()->all();
-$year = Years::find()->all();
+
 
 $parents = [];
 $categorySorted = [];
 $children = [];
+/**
+ * maxchildren is necessary setting the colspan
+ * */
 $maxChilds = 1;
 $i = 1;
+/**
+ * number of all columns in the head, parents columns are the ones that were used as parent_id
+ * */
 $numberOfColumns = 0;
 $parentColumns = 0;
+
+/**
+ * find out the children of the parents, these are necessary for setting the head of the table
+ * */
 foreach ($category['categoryParams'] as $categoryParam) {
     if ($categoryParam['param_type_id'] != ParamType::TYPE_FORMULA) {
         $numberOfColumns++;
@@ -58,16 +64,17 @@ foreach ($category['categoryParams'] as $categoryParam) {
     }
 }
 ?>
-
 <!--filter block-->
 <?= $this->render('filter', [
     'categoryId' => $categoryId,
     'regionId' => $regionId,
     'yearId' => $yearId,
     'quarterId' => $quarterId,
-    'url' => 'data/table'
+    'url' => 'data/statistics'
 ]); ?>
 <!--filter block-->
+
+
 <br>
 <div>
     <table class="table table-bordered table-striped">
@@ -86,7 +93,6 @@ foreach ($category['categoryParams'] as $categoryParam) {
                     </th>
                 <?php endif; ?>
             <?php endforeach; ?>
-            <th>Action</th>
         </tr>
         <tr>
             <!--Set the values of the second row of the head-->
@@ -99,6 +105,7 @@ foreach ($category['categoryParams'] as $categoryParam) {
                         </th>
                     <?php endforeach; ?>
                 <?php endif; ?>
+
             <?php endforeach; ?>
         </tr>
         </thead>
@@ -114,11 +121,10 @@ foreach ($category['categoryParams'] as $categoryParam) {
                         <td><?= $value['value'] ?></td>
                     <?php endif; ?>
                 <?php endforeach; ?>
-                <td></td>
             </tr>
             <?php $i++; ?>
         <?php endforeach; ?>
-        <!--Fill with empty cells if the values are not set-->
+        <!--Fill in with empty cells if values are not set-->
         <?php foreach ($emptyPlaces as $place): ?>
             <tr>
                 <td><?= $i ?></td>
@@ -126,11 +132,6 @@ foreach ($category['categoryParams'] as $categoryParam) {
                 <?php for ($j = 0; $j < $numberOfColumns - $parentColumns; $j++) {
                     echo '<td>0</td>';
                 } ?>
-                <td><a class="btn btn-outline-primary" id="addUrl" href="
-          <?= Url::to('/data/add?categoryId=' . $categoryId .
-                        '&regionId=' . $regionId . '&districtId=' . $place['id'] .
-                        '&yearId=' . $yearId . '&quarterId=' . $quarterId) ?>">
-                        <i class="fa fa-plus"></i></a></td>
             </tr>
             <?php $i++ ?>
         <?php endforeach; ?>
@@ -140,5 +141,4 @@ foreach ($category['categoryParams'] as $categoryParam) {
 
     </p>
 </div>
-
 
