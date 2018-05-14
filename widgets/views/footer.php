@@ -7,7 +7,7 @@
  */ ?>
 <div class="userfull">
     <div class="userfull_link">
-        Полезные ссылки
+        Фойдали ҳаволалар
     </div>
     <ul class="care">
         <li><a href="http://prezident.uz"><img src="/img/1.png" alt=""><span>Ўзбекистон Республикаси Президентининг расмий веб-сайти</span></a>

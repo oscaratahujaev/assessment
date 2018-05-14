@@ -35,7 +35,7 @@ $year = Years::find()->all();
             [
                 'id' => 'region',
                 'class' => 'form-control',
-                'prompt' => 'Viloyatni Tanglang'
+                'prompt' => ''
             ]
         ); ?>
     </div>

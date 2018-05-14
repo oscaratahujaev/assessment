@@ -12,7 +12,7 @@ $this->title = 'My Yii Application';
         <div class="lines">
 
         </div>
-        <h2 class="mapTitle">Статистика</h2><br>
+        <h2 class="mapTitle"></h2><br>
         <div class="row">
 
             <div class="col-md-6 " id="mapbox">
@@ -182,9 +182,6 @@ $this->title = 'My Yii Application';
                 </div>
             </div>
         </div>
-
-
-
     </div>
 <?php
 $script = <<< JS
