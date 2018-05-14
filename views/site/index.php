@@ -12,7 +12,7 @@ $this->title = 'My Yii Application';
         <div class="lines">
 
         </div>
-        <h2 class="mapTitle">Статистика</h2><br>
+        <h2 class="mapTitle"></h2><br>
         <div class="row">
 
             <div class="col-md-6 " id="mapbox">
@@ -152,110 +152,6 @@ $this->title = 'My Yii Application';
                     </div>
                 </div>
             </div>
-        </div>
-
-
-        <div class="news__block">
-            <div class="header__titr">
-                Новости организации
-            </div>
-            <div class="small__text">
-                <div class="row">
-                    <div class="col-md-3"><h6>Легкая математика - Самое интересное в блогах</h6>
-                        <a href="#" class="smalling">A text (literary theory) is any object that can be read,
-                            including: Documents:
-                            Religious text, a writing that a religious tradition considers to be sacred; Textbook, a
-                            book of instruction in any branch of study. Text may also refer to: Contents.</a>
-                        <div class="date">
-                            02.02.2018
-                        </div>
-                    </div>
-                    <div class="col-md-3"><h6>Легкая математика - Самое интересное в блогах</h6>
-                        <a href="#" class="smalling">A text (literary theory) is any object that can be read,
-                            including: Documents:
-                            Religious text, a writing that a religious tradition considers to be sacred; Textbook, a
-                            book of instruction in any branch of study. Text may also refer to: Contents.</a>
-                        <div class="date">
-                            02.02.2018
-                        </div>
-                    </div>
-                    <div class="col-md-3"><h6>Легкая математика - Самое интересное в блогах</h6>
-                        <a href="#" class="smalling">A text (literary theory) is any object that can be read,
-                            including: Documents:
-                            Religious text, a writing that a religious tradition considers to be sacred; Textbook, a
-                            book of instruction in any branch of study. Text may also refer to: Contents.</a>
-                        <div class="date">
-                            02.02.2018
-                        </div>
-                    </div>
-                    <div class="col-md-3"><h6>Легкая математика - Самое интересное в блогах</h6>
-                        <a href="#" class="smalling">A text (literary theory) is any object that can be read,
-                            including: Documents:
-                            Religious text, a writing that a religious tradition considers to be sacred; Textbook, a
-                            book of instruction in any branch of study. Text may also refer to: Contents.</a>
-                        <div class="date">
-                            02.02.2018
-                        </div>
-                    </div>
-                    <div class="clearfix"></div>
-                    <div class="col-md-3"><h6>Легкая математика - Самое интересное в блогах</h6>
-                        <a href="#" class="smalling">A text (literary theory) is any object that can be read,
-                            including: Documents:
-                            Religious text, a writing that a religious tradition considers to be sacred; Textbook, a
-                            book of instruction in any branch of study. Text may also refer to: Contents.</a>
-                        <div class="date">
-                            02.02.2018
-                        </div>
-                    </div>
-                    <div class="col-md-3"><h6>Легкая математика - Самое интересное в блогах</h6>
-                        <a href="#" class="smalling">A text (literary theory) is any object that can be read,
-                            including: Documents:
-                            Religious text, a writing that a religious tradition considers to be sacred; Textbook, a
-                            book of instruction in any branch of study. Text may also refer to: Contents.</a>
-                        <div class="date">
-                            02.02.2018
-                        </div>
-                    </div>
-                    <div class="col-md-3"><h6>Легкая математика - Самое интересное в блогах</h6>
-                        <a href="#" class="smalling">A text (literary theory) is any object that can be read,
-                            including: Documents:
-                            Religious text, a writing that a religious tradition considers to be sacred; Textbook, a
-                            book of instruction in any branch of study. Text may also refer to: Contents.</a>
-                        <div class="date">
-                            02.02.2018
-                        </div>
-                    </div>
-                    <div class="col-md-3"><h6>Легкая математика - Самое интересное в блогах</h6>
-                        <a href="#" class="smalling">A text (literary theory) is any object that can be read,
-                            including: Documents:
-                            Religious text, a writing that a religious tradition considers to be sacred; Textbook, a
-                            book of instruction in any branch of study. Text may also refer to: Contents.</a>
-                        <div class="date">
-                            02.02.2018
-                        </div>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-            </div>
-        </div>
-        <div class="paginationn__block">
-            <ul class="pagination text-center">
-                <li class="page-item">
-                    <a class="page-link active" href="#" aria-label="Previous">
-                        <span aria-hidden="true">«</span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">»</span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </li>
-            </ul>
         </div>
     </div>
 <?php

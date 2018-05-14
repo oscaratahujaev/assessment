@@ -173,7 +173,7 @@ class DataController extends Controller
     }
 
 
-    public function actionStatistics($categoryId = 1, $regionId = 1, $yearId = 2018, $quarterId = 1)
+    public function actionStatistics($categoryId = 1, $regionId = null, $yearId = 2018, $quarterId = 1)
     {
 
         return $this->render('statistics',

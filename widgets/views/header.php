@@ -13,19 +13,19 @@ use yii\helpers\Url;
     <div class="row">
         <div class="col-md-5">
             <div class="logo_box">
-                <a href="<?= Url::to('#') ?>">
+                <a href="<?= Url::to('/') ?>">
                     <img src="/img/Uzb.png">
                     <h5>
-                        Информационная система <br>
-                        оценки деятельности<br>
-                        руководителей регионов
+                        Ҳудуд раҳбарлари<br>
+                        фаолиятини баҳолаш<br>
+                        аҳборот тизими
                     </h5>
                 </a>
             </div>
         </div>
         <div class="col-md-7">
             <div class="box">
-                <div class="dropdown">
+                <div class="dropdown" style="max-width:150px;">
                     <img src="/img/eye.png">
                     <button class="dropdown" data-toggle="dropdown">
                         Махсус имкониятлар
@@ -61,10 +61,8 @@ use yii\helpers\Url;
                                      class="defaultSlider ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all">
                                     <div class="ui-slider-range ui-widget-header ui-corner-all ui-slider-range-min"
                                          style="width: 0%;"></div>
-                                    <span c
-                                    <dss
-                                    ="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 0%
-                                    ;"></span>
+                                    <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"
+                                          style="left: 0%;"></span>
                                     <div class="ui-slider-range ui-widget-header ui-corner-all ui-slider-range-min"
                                          style="width: 0%;"></div>
                                     <div class="ui-slider-range ui-widget-header ui-corner-all ui-slider-range-min"
@@ -78,60 +76,34 @@ use yii\helpers\Url;
                     </div>
                 </div>
                 <div class="enter">
-                    <?= (Yii::$app->user->isGuest) ? (
-                    '<button href="<??>" type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#myModal">
-                                Войти в кабинет
-                            </button>
+                    <?php if (Yii::$app->user->isGuest): ?>
+                        <div class="named__box">
+                            <ul>
+                                <li>
+                                    <?= Html::a('Кириш', ['/login'], ['style' => 'color:#505355',]) ?>
 
-                            <div class="modal fade" id="myModal">
-                                <div class="modal-dialog modal-lg modal-dialog-centered">
-                                    <div class="modal-content">
+                                </li>
+                            </ul>
+                        </div>
+                    <?php else: ?>
+                        <div class="named__box">
+                            <ul>
+                                <li>
+                                    <?= Html::a('Чиқиш <span class="link">(' . Yii::$app->user->identity->username . ')</span>',
+                                        ['/logout'], [
+                                            'style' => 'color:#505355',
+                                            'data' => [
+                                                'confirm' => Yii::t('main', 'Are you sure you want to delete this item?'),
+                                                'method' => 'post',
+                                            ],
+                                        ]) ?>
 
-                                        <!-- Modal Header -->
-                                        <div class="modal-header">
-                                            <h4 class="modal-title">Авторизация</h4>
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        </div>
-                                        <!-- Modal body -->
-                                        <div class="modal-body">
-                                            <div class="authorization_text">Жамоавий мурожаат яратиш учун Ягона
-                                                идентификация тизими (id.gov.uz) орқали авторизациядан ўтишингиз лозим
-                                            </div>
-                                            <a href="/login" class="register_square">
-                                                <img src="/img/oneidBig.png">
-                                            </a>
-                                        </div>
-
-                                        <!-- Modal footer -->
-
-
-                                    </div>
-                                </div>
-                            </div>'
-                    ) : (
-                        '<div class="named__box">
-                     <ul> <li> <span class="link">MNO</span></li>
-                       <li> <span class="link">' . Yii::$app->user->identity->username . '</span></li> 
-                     </ul>
-                      </div>');
-                    ?>
+                                </li>
+                            </ul>
+                        </div>
+                    <?php endif; ?>
 
                 </div>
-<!--                <ul class="lang">-->
-<!--                    <li><a class="actives" href="#">РУ</a></li>-->
-<!--                    <li><a href="#">УЗ</a></li>-->
-<!--                </ul>-->
-                <?php if (!Yii::$app->user->isGuest): ?>
-                    <div class="simple_button">
-                        <?= Html::beginForm(['/site/logout'], 'post')
-                        . Html::submitButton(
-                            'Выход',
-                            ['class' => 'btn btn-outline-primary logout']
-                        )
-                        . Html::endForm()
-                        ?>
-                    </div>
-                <?php endif; ?>
 
             </div>
             <div class="clearfix"></div>

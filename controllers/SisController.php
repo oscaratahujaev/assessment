@@ -11,24 +11,24 @@ namespace app\controllers;
 
 use app\models\User;
 use Yii;
+use yii\base\Exception;
 use yii\web\Controller;
 
 class SisController extends Controller
 {
-    public function actionSignup($code)
+    public function actionSignup($code = null)
     {
-        $authorizationurl = "https://sso.gov.uz:8443/sso/oauth/Authorization.do";
+        if (is_null($code)) {
+            throw new Exception("\$code isn't set");
+            //            return $this->goHome();
+        }
 
         $params = Yii::$app->params;
+
+        $authorizationurl = $params['authUrl'];
         $clientid = $params['clientId'];
         $scope = $params['scope'];
         $clientsecret = $params['token'];
-
-        $authCode = $_GET["code"];
-
-        if (!$authCode) {
-            return $this->goHome();
-        }
 
         $ch = curl_init();
 
@@ -38,7 +38,7 @@ class SisController extends Controller
         $param = "grant_type=" . rawurlencode('one_authorization_code');
         $param = $param . "&client_id=" . rawurlencode($clientid);
         $param = $param . "&client_secret=" . rawurlencode($clientsecret);
-        $param = $param . "&code=" . rawurlencode($authCode);
+        $param = $param . "&code=" . rawurlencode($code);
         $param = $param . "&scope=" . rawurlencode($scope);
         $param = $param . "&redirect_uri=" . rawurlencode("");
 
@@ -102,7 +102,6 @@ class SisController extends Controller
     public function actionLogout()
     {
         Yii::$app->user->logout();
-        //        return $this->goHome();
 
         $clientId = Yii::$app->params['clientId'];
         return $this->redirect(Yii::$app->params['logoutUrl'] . "?id=" . $clientId);

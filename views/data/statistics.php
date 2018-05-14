@@ -81,7 +81,7 @@ foreach ($category['categoryParams'] as $categoryParam) {
         <thead class="thead-light">
         <tr>
             <th rowspan="<?= $maxChilds ?>">№</th>
-            <th rowspan="<?= $maxChilds ?>">Hudud nomi</th>
+            <th rowspan="<?= $maxChilds ?>">Ҳудуд номи</th>
             <?php foreach ($children as $key => $value): ?>
                 <?php if (isset($value['children'])): ?>
                     <th colspan="<?= sizeof($value['children']) ?>">
