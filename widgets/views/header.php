@@ -116,7 +116,6 @@ use yii\helpers\Url;
                                 <li>
                                     <?= Html::a('Чиқиш <span class="link">(' . Yii::$app->user->identity->username . ')</span>',
                                         ['/logout'], [
-                                            'class' => 'btn btn-danger',
                                             'style' => 'color:#505355',
                                             'data' => [
                                                 'confirm' => Yii::t('main', 'Are you sure you want to delete this item?'),
