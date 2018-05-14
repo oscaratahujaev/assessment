@@ -21,10 +21,11 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $js = [
         'js/jquery.js',
+        'js/jquery.cookie.js',
         'js/popper.min.js',
         'js/bootstrap.js',
         'js/jquery-ui.js',
-        'js/jquery.cookie.js',
+
         'js/specialView.js',
         'js/jquery.vmap.js',
         'js/map.js',
@@ -37,13 +38,14 @@ class AppAsset extends AssetBundle
         'css/jqvmap.css',
         'css/jquery-ui.css',
         'css/map.css',
-        'css/style.css',
+
         'css/media.css',
         'css/animate.css',
         'css/fontawesome-all.css',
+        'css/style.css',
     ];
     public $depends = [
-//        'yii\web\YiiAsset',
-//        'yii\bootstrap\BootstrapAsset',
+        //        'yii\web\YiiAsset',
+        //        'yii\bootstrap\BootstrapAsset',
     ];
 }

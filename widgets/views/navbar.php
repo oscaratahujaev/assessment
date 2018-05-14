@@ -12,12 +12,12 @@ $path = '/' . Yii::$app->controller->id . "/" . Yii::$app->controller->action->i
             <ul class="navbar-nav">
                 <li class="nav-item active">
                     <a id="hello" class="nav-link <?= $path === '/site/index' ? 'actives' : '' ?>"
-                       href="<?= \yii\helpers\Url::to("/") ?>">Главная <span
+                       href="<?= \yii\helpers\Url::to("/") ?>">Бош саҳифа<span
                                 class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?= $path === '/score/values' ? 'actives' : '' ?>"
-                       href="<?= \yii\helpers\Url::to('/score/values') ?>">Оценка</a>
+                       href="<?= \yii\helpers\Url::to('/score/values') ?>">Баҳолар</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?= $path === '/data/statistics' ? 'actives' : '' ?>"
@@ -25,17 +25,17 @@ $path = '/' . Yii::$app->controller->id . "/" . Yii::$app->controller->action->i
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?= $path === '/data/table' ? 'actives' : '' ?>"
-                       href="<?= \yii\helpers\Url::to('/data/table') ?>">Добавить</a>
+                       href="<?= \yii\helpers\Url::to('/data/table') ?>">Маълумотни киритиш</a>
                 </li>
                 <li class="nav-item">
                     <div id="references" class="dropdown navbar-dropdown">
                         <a class="dropdown nav-link">
-                            Махсус имкониятлар
+                            Маълумотномалар
                         </a>
                         <div id="reference-items" class="dropdown-menu dropdown-menu-right">
                             <div class="triangle2"></div>
                             <div class=" dropdown-custom-item">
-                                <a href="<?= \yii\helpers\Url::to('/category') ?>">Категории</a>
+                                <a href="<?= \yii\helpers\Url::to('/category') ?>">Категория</a>
                             </div>
                             <div class=" dropdown-custom-item">
                                 <a href="<?= \yii\helpers\Url::to('/category-params') ?>">Параметры</a>
@@ -54,12 +54,6 @@ $path = '/' . Yii::$app->controller->id . "/" . Yii::$app->controller->action->i
                             </div>
                             <div class=" dropdown-custom-item">
                                 <a href="<?= \yii\helpers\Url::to('/district') ?>">Районы</a>
-                            </div>
-                            <div class=" dropdown-custom-item">
-                                <a href="<?= \yii\helpers\Url::to('/data') ?>">Показатели</a>
-                            </div>
-                            <div class=" dropdown-custom-item">
-                                <a href="<?= \yii\helpers\Url::to('/score') ?>">Оценка</a>
                             </div>
                             <div class=" dropdown-custom-item">
                                 <a href="<?= \yii\helpers\Url::to('/years') ?>">Года</a>

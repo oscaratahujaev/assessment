@@ -25,7 +25,7 @@ $year = Years::find()->all();
             [
                 'id' => 'region',
                 'class' => 'form-control',
-                'prompt' => 'Viloyatni tanlang'
+                'prompt' => ''
             ]
         ); ?>
     </div>
@@ -55,24 +55,32 @@ $year = Years::find()->all();
     </div>
 </div>
 <?= Html::endForm(); ?>
+<?php $i = 1; ?>
 <div class="scores-table">
-    <table class="table table-bordered">
+    <table class="table table-bordered table-striped">
         <thead class="thead-light">
-        <th>Hudud Nomi</th>
-        <th>Score</th>
+        <th style="width:35px">№</th>
+        <th>Ҳудуд номи</th>
+        <th>Баҳоси</th>
         </thead>
         <tbody>
         <?php foreach ($scoreValues as $score): ?>
+
             <tr>
+                <td><?= $i ?></td>
                 <td><?= $score['name'] ?></td>
                 <td><?= round($score['score_sum'], 2) ?></td>
             </tr>
+            <?php $i++; ?>
         <?php endforeach; ?>
+
         <?php foreach ($emptyPlaces as $place): ?>
             <tr>
+                <td><?= $i ?></td>
                 <td><?= $place['name'] ?></td>
                 <td>0</td>
             </tr>
+            <?php $i++; ?>
         <?php endforeach; ?>
 
         </tbody>
