@@ -20,7 +20,7 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $js = [
-        'js/jquery.js',
+//        'js/jquery.js',
         'js/jquery.cookie.js',
         'js/popper.min.js',
         'js/bootstrap.js',
