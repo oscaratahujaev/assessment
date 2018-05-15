@@ -37,7 +37,7 @@ class ScoreController extends Controller
                     [
                         'actions' => ['values'],
                         'allow' => true,
-                        'roles' => ['?'],
+                        'roles' => ['?', '@'],
                     ],
                     [
                         'allow' => User::can(User::USER_SIMPLE),
