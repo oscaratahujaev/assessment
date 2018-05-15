@@ -138,9 +138,7 @@ foreach ($category['categoryParams'] as $categoryParam) {
         <?php endforeach; ?>
         </tbody>
     </table>
-    <p>
 
-    </p>
 </div>
 
 
