@@ -120,6 +120,8 @@ foreach ($category['categoryParams'] as $categoryParam) {
             </tr>
             <?php $i++; ?>
         <?php endforeach; ?>
+
+
         <!--Fill with empty cells if the values are not set-->
         <?php foreach ($emptyPlaces as $place): ?>
             <tr>
