@@ -26,6 +26,7 @@ use yii\web\IdentityInterface;
  * @property string $email
  * @property string $auth_key
  * @property integer $status
+ * @property integer $role
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $password write-only password
@@ -40,6 +41,15 @@ class User extends ActiveRecord implements IdentityInterface
     const MESSAGE_NOT_REGISTERED = "Тизимга кириш учун рўухатдан ўтиш талаб этилади.";
     const MESSAGE_NOT_CONFIRMED = 'Тизимга кириш учун администратор рухсатини олиш талаб этилади.';
     const MESSAGE_REGISTERED_NOT_CONFIRMED = 'Сиз муваффакиятли рўйхатдан ўтдингиз. Тизимга кириш учун администратор рухсатини олиш талаб этилади.';
+
+
+    const USER_ADMIN = 2;
+    const USER_SIMPLE = 1;
+
+    public static $roles = [
+        self::USER_ADMIN => 'Администратор',
+        self::USER_SIMPLE => 'Маълумот киритувчи'
+    ];
 
     /**
      * @inheritdoc
@@ -69,7 +79,7 @@ class User extends ActiveRecord implements IdentityInterface
 
             [['username', 'auth_key', 'password_hash', 'created_at', 'updated_at'], 'required'],
 
-            [['status', 'created_at', 'updated_at'], 'integer'],
+            [['status', 'created_at', 'updated_at', 'role'], 'integer'],
 
             [['phone_number', 'lastname', 'firstname', 'username', 'password_hash', 'password_reset_token', 'email', 'tin', 'pin', 'address'], 'string', 'max' => 255],
 
@@ -78,6 +88,20 @@ class User extends ActiveRecord implements IdentityInterface
             [['firstname', 'birthdate', 'per_adr', 'fullname'], 'safe'],
 
         ];
+    }
+
+    public static function can($role)
+    {
+
+        return true;
+        $user = Yii::$app->user;
+        if ($user->isGuest) {
+            return false;
+        }
+        if ($user->identity->role == $role) {
+            return true;
+        }
+        return false;
     }
 
     public function loginViaSis($userAttributes)

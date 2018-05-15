@@ -5,9 +5,11 @@ namespace app\controllers;
 use app\components\Functions;
 use app\models\District;
 use app\models\Region;
+use app\models\User;
 use Yii;
 use app\models\Score;
 use app\models\ScoreSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -27,6 +29,16 @@ class ScoreController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['logout'],
+                        'allow' => User::can(User::USER_SIMPLE),
+                        'roles' => ['@'],
+                    ],
                 ],
             ],
         ];

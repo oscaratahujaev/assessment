@@ -13,10 +13,12 @@ use app\models\ParamType;
 use app\models\Quarter;
 use app\models\Region;
 use app\models\Score;
+use app\models\User;
 use app\models\Years;
 use Yii;
 use yii\base\ErrorException;
 use yii\base\Exception;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -36,6 +38,16 @@ class DataController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['logout'],
+                        'allow' => User::can(User::USER_SIMPLE),
+                        'roles' => ['@'],
+                    ],
                 ],
             ],
         ];

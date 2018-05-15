@@ -25,7 +25,6 @@ $districts = District::find()->where(['region_id' => $region_id])->all();
                     ArrayHelper::map($districts, 'id', 'name'),
                     ['prompt' => 'Туманни танланг', 'class' => 'form-control',
                         'id' => 'district', 'required' => true]); ?>
-
             </td>
             <?php foreach ($data as $key => $item): ?>
                 <td class="align-bottom">

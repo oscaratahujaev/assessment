@@ -3,9 +3,11 @@
 namespace app\controllers;
 
 use app\models\CategoryParamsSearch;
+use app\models\User;
 use Yii;
 use app\models\Category;
 use app\models\CategorySearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -27,6 +29,16 @@ class CategoryController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            /*'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['logout'],
+                        'allow' => User::can(User::USER_ADMIN),
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],*/
         ];
     }
 

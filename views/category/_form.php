@@ -16,9 +16,10 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'name')->textInput(['maxlength' => true])->label("Категория номи") ?>
 
-    <?= $form->field($model, 'ministry_id')->dropDownList(ArrayHelper::map(Ministry::find()->all(), 'id', 'name')); ?>
+    <?= $form->field($model, 'ministry_id')
+        ->dropDownList(ArrayHelper::map(Ministry::find()->all(), 'id', 'name'))->label("Вазирлик номи"); ?>
     <?= $form->field($model, 'place_type')->dropDownList(['' => ''] + District::$placeType); ?>
     <?= $form->field($model, 'factor_column')->input('number'); ?>
 

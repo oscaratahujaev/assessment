@@ -3,16 +3,10 @@
 namespace app\controllers;
 
 use app\components\Functions;
-use app\models\Category;
-use app\models\Data;
 use Yii;
-use yii\base\Exception;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
-use yii\filters\VerbFilter;
-use app\models\LoginForm;
-use app\models\ContactForm;
 
 class SiteController extends Controller
 {
@@ -63,7 +57,7 @@ class SiteController extends Controller
         $emptyPlaces = Functions::getEmptyPlaces($scoreValues, $regionId);
 
         if (Yii::$app->request->isAjax) {
-            sleep(2);
+            sleep(1);
             return $this->renderAjax('home_scores', [
                 'scoreValues' => $scoreValues,
                 'emptyPlaces' => $emptyPlaces,

@@ -64,4 +64,15 @@ class Functions
         return $emptyPlaces;
     }
 
+    public static function getUserRole($roleId)
+    {
+        if ($roleId == 1) {
+            return "Маълумот киритувчи";
+        } else if ($roleId == 2) {
+            return "Администратор";
+        } else {
+            return null;
+        }
+    }
+
 }
