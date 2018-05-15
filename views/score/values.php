@@ -17,6 +17,8 @@ $district = District::find()->all();
 $quarter = Quarter::find()->all();
 $year = Years::find()->all();
 /*Values set for drop down lists for filters*/
+
+//debug(Yii::$app->user->isGuest);
 ?>
 
 <?= Html::beginForm(Url::to(['/score/values']), 'GET'); ?>
