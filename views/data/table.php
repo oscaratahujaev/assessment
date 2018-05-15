@@ -20,6 +20,8 @@ use yii\widgets\ActiveForm;
 /**
  *$category Category;
  * */
+
+$this->title = 'Маълумотни киритиш';
 $categories = Category::find()->all();
 $regions = Region::find()->all();
 $district = District::find()->all();
@@ -118,6 +120,8 @@ foreach ($category['categoryParams'] as $categoryParam) {
             </tr>
             <?php $i++; ?>
         <?php endforeach; ?>
+
+
         <!--Fill with empty cells if the values are not set-->
         <?php foreach ($emptyPlaces as $place): ?>
             <tr>
@@ -136,9 +140,7 @@ foreach ($category['categoryParams'] as $categoryParam) {
         <?php endforeach; ?>
         </tbody>
     </table>
-    <p>
 
-    </p>
 </div>
 
 

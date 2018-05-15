@@ -10,6 +10,7 @@ namespace app\controllers;
 
 
 use app\models\User;
+use function Sodium\compare;
 use Yii;
 use yii\base\Exception;
 use yii\web\Controller;
@@ -19,8 +20,8 @@ class SisController extends Controller
     public function actionSignup($code = null)
     {
         if (is_null($code)) {
-            throw new Exception("\$code isn't set");
-            //            return $this->goHome();
+            //            throw new Exception("\$code isn't set");
+            return $this->render('login');
         }
 
         $params = Yii::$app->params;
@@ -87,7 +88,7 @@ class SisController extends Controller
         }
 
         if ($user->loginViaSis($response)) {
-            Yii::$app->getSession()->setFlash('success', 'Вы успешно прошли авторизацию.');
+//            Yii::$app->getSession()->setFlash('success', 'Вы успешно прошли авторизацию.');
         }
 
         return $this->goBack();

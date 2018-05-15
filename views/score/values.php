@@ -1,4 +1,5 @@
-<?php use app\models\Category;
+<?php
+use app\models\Category;
 use app\models\District;
 use app\models\Quarter;
 use app\models\Region;
@@ -6,6 +7,8 @@ use app\models\Years;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
+
+$this->title = "Баҳолар";
 
 /*Values set for drop down lists for filters*/
 $categories = Category::find()->all();

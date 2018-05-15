@@ -14,11 +14,12 @@ use yii\helpers\Url;
         <i class="arrow"></i>
         <div>
             <div id="home_score_block">
+                <h4 class="text-center"><?= $year ?> йил, <?= $quarter ?>-чорак</h4>
                 <div class="row">
                     <?php foreach ($scoreValues as $value): ?>
-                        <div class="item col-md-6">
+                        <div class="item col-md-6" style="margin-bottom:20px">
                             <h5><?= $value['name'] ?></h5>
-                            <p>Score:
+                            <p>Бахо:
                                 <span> <?= Yii::$app->formatter->asDecimal($value['score_sum']) ?> / 100</span>
                             </p>
                             <a href="<?= Url::to('score/values?regionId=' . $value['id']) ?>">
@@ -27,9 +28,9 @@ use yii\helpers\Url;
                         </div>
                     <?php endforeach; ?>
                     <?php foreach ($emptyPlaces as $place): ?>
-                        <div class="item col-md-6">
+                        <div class="item col-md-6" style="margin-bottom:20px">
                             <h5><?= $place['name'] ?></h5>
-                            <p>Score:
+                            <p>Бахо:
                                 <span>0 / 100</span>
                             </p>
                             <?php $region_id = isset($place['region_id']) ? $place['region_id'] : $place['id'] ?>

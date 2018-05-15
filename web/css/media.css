@@ -1,46 +1,62 @@
-@media screen and ( max-width: 1199px){
-    svg{
+@media screen and ( max-width: 1199px) {
+    svg {
         transform: scale(0.8);
         float: right;
         margin: 0 70px 0 0;
     }
 }
-@media screen and ( max-width: 991px){
 
-    .circle__block li{
+@media screen and ( max-width: 991px) {
+
+    .circle__block li {
         width: 30%;
         float: left;
         list-style: none;
     }
-    .circle__block li a:before{
+
+    .circle__block li a:before {
         display: none;
     }
-    svg{
+
+    svg {
         transform: scale(0.7);
         float: right;
         margin: 0 130px 0 0;
     }
 
 }
-@media screen and ( max-width: 767px){
-    .circle__block li{
+
+@media screen and ( max-width: 767px) {
+    .circle__block li {
         width: 50%;
         float: left;
         list-style: none;
     }
-    svg{
-        transform: scale(1);
+
+    svg {
+        transform: scale(0.6);
         float: right;
-        margin: 0 60px 0 0;
+        margin: 0 165px 0 0;
+    }
+}
+
+@media screen and ( max-width: 587px) {
+    .circle__block li {
+        width: 100%;
+        list-style: none;
     }
 
+    .circle__block li a {
+        margin: 15px auto;
+    }
 
-}
-@media screen and ( max-width: 587px){
-    .circle__block li{
-        width: 50%;
-        float: left;
+    .care li {
+        width: 48%;
         list-style: none;
+    }
+
+    .care li a {
+        margin: 15px auto;
     }
 
 }

@@ -508,7 +508,10 @@ img {
 .inspections-list {
     height: 450px;
     overflow-y: scroll;
-    padding: 30px 15px;
+    padding: 10px 15px;
+}
+.inspections-list h4{
+    margin-bottom:20px;
 }
 
 #mapLabels {
@@ -813,16 +816,20 @@ img {
     background: #986db8;
 }
 
+.circle__block li:nth-child(3) a:hover {
+    background: #4f979d;
+}
+
 .circle__block li:nth-child(1) a {
-    background: #dd3c4b;
+    background: #f2404f;
 }
 
 .circle__block li:nth-child(2) a {
-    background: #b683dd;
+    background: #c390ea;
 }
 
 .circle__block li:nth-child(3) a {
-    background: #56b1b7;
+    background: #57c0c6;
 }
 
 .circle__block li:nth-child(4) a {
@@ -868,7 +875,7 @@ img {
 }
 
 .circle__block li {
-    width: 25%;
+    width: 33%;
     float: left;
     list-style: none;
 }

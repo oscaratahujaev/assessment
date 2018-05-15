@@ -38,11 +38,11 @@ class AppAsset extends AssetBundle
         'css/jqvmap.css',
         'css/jquery-ui.css',
         'css/map.css',
-
+        'css/style.css',
         'css/media.css',
         'css/animate.css',
         'css/fontawesome-all.css',
-        'css/style.css',
+
     ];
     public $depends = [
         //        'yii\web\YiiAsset',
