@@ -31,6 +31,7 @@ class SiteController extends Controller
         1 == 2 ? (3 == 4 ? true : false) : false;
 
         if (Yii::$app->request->isAjax) {
+            sleep(1);
             return $this->renderAjax('home_scores', [
                 'scoreValues' => $scoreValues,
                 'emptyPlaces' => $emptyPlaces,
