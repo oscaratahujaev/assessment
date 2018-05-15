@@ -10,6 +10,7 @@ namespace app\controllers;
 
 
 use app\models\User;
+use function Sodium\compare;
 use Yii;
 use yii\base\Exception;
 use yii\web\Controller;
