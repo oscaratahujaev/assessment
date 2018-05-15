@@ -10,9 +10,7 @@ namespace app\controllers;
 
 
 use app\models\User;
-use function Sodium\compare;
 use Yii;
-use yii\base\Exception;
 use yii\web\Controller;
 
 class SisController extends Controller
@@ -79,7 +77,7 @@ class SisController extends Controller
 
         if (isset($response['error'])) {
             Yii::$app->getSession()->setFlash('error', 'Авторизация временное не работает. Попробуйте повторить попытку через некоторое время.');
-            return $this->redirect(['/']);
+            return $this->goHome();
         }
 
         $user = User::findOne(['pin' => $response['pin']]);
