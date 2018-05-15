@@ -46,7 +46,7 @@ class DataController extends Controller
                     [
                         'actions' => ['statistics'],
                         'allow' => true,
-                        'roles' => ['?'],
+                        'roles' => ['?', '@'],
                     ],
                     [
                         'allow' => User::can(User::USER_SIMPLE),
