@@ -96,10 +96,10 @@ class User extends ActiveRecord implements IdentityInterface
         if ($user->isGuest) {
             return false;
         }
+
         if ($user->identity->role == $role || $user->identity->role > $role) {
             return true;
         }
-
         return false;
     }
 
