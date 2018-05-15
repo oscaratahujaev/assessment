@@ -44,7 +44,11 @@ class DataController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['statistics'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
+                    [
                         'allow' => User::can(User::USER_SIMPLE),
                         'roles' => ['@'],
                     ],
@@ -162,7 +166,7 @@ class DataController extends Controller
             foreach ($data as $item) {
                 $arr[$item['region_id']]['place'] = $item['region'] ? $item['region']['name'] : '';
                 $arr[$item['region_id']]['values'][] = $item;
-//                $arr[$item['region_id']]['score'] = $item['scoreRegion'] ? $item ['scoreRegion']['value'] : '';
+                //                $arr[$item['region_id']]['score'] = $item['scoreRegion'] ? $item ['scoreRegion']['value'] : '';
             }
         }
 

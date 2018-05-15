@@ -53,7 +53,7 @@ use yii\helpers\Url;
                         </div>
 
                         <div class="appearance">
-                            <p class="specialTitle">Shirift o'lchami</p>
+                            <p class="specialTitle">Shrift o'lchami</p>
 
                             <div class="block">
                                 <div class="sliderText"><span class="range">0</span>% ga kattalashtirish</div>

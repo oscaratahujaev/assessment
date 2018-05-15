@@ -35,7 +35,11 @@ class ScoreController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['values'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
+                    [
                         'allow' => User::can(User::USER_SIMPLE),
                         'roles' => ['@'],
                     ],
@@ -65,8 +69,8 @@ class ScoreController extends Controller
         $scoreValues = Functions::getScore($yearId, $quarterId, $regionId);
         $emptyPlaces = Functions::getEmptyPlaces($scoreValues, $regionId);
 
-      /*  debug($emptyPlaces);
-        die();*/
+        /*  debug($emptyPlaces);
+          die();*/
 
         return $this->render('values', [
             'regionId' => $regionId,

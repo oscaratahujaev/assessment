@@ -17,20 +17,23 @@ $path = '/' . Yii::$app->controller->id . "/" . Yii::$app->controller->action->i
                        href="<?= \yii\helpers\Url::to("/") ?>">Бош саҳифа<span
                                 class="sr-only">(current)</span></a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link <?= $path === '/score/values' ? 'actives' : '' ?>"
+                       href="<?= \yii\helpers\Url::to('/score/values') ?>">Баҳолар</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <?= $path === '/data/statistics' ? 'actives' : '' ?>"
+                       href="<?= \yii\helpers\Url::to('/data/statistics') ?>">Статистика</a>
+                </li>
                 <?php if (User::can(User::USER_SIMPLE)): ?>
-                    <li class="nav-item">
-                        <a class="nav-link <?= $path === '/score/values' ? 'actives' : '' ?>"
-                           href="<?= \yii\helpers\Url::to('/score/values') ?>">Баҳолар</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link <?= $path === '/data/statistics' ? 'actives' : '' ?>"
-                           href="<?= \yii\helpers\Url::to('/data/statistics') ?>">Статистика</a>
-                    </li>
                     <li class="nav-item">
                         <a class="nav-link <?= $path === '/data/table' ? 'actives' : '' ?>"
                            href="<?= \yii\helpers\Url::to('/data/table') ?>">Маълумотни киритиш</a>
                     </li>
                 <?php endif; ?>
+
+
                 <?php if (User::can(User::USER_ADMIN)): ?>
                     <li class="nav-item">
                         <div id="references" class="dropdown navbar-dropdown">
