@@ -5,6 +5,9 @@
 use yii\web\View;
 
 $this->title = 'Бош саҳифа';
+$this->registerJsFile('/js/jquery.js', [
+    'position' => View::POS_HEAD,
+]);
 
 ?>
 

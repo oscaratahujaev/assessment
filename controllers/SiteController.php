@@ -17,6 +17,7 @@ class SiteController extends Controller
      */
     public function actionIndex($regionId = 0)
     {
+        $this->layout = 'home';
         $year = date('Y');
         $quarter = 1;
         $scoreValues = Functions::getScore($year, $quarter, $regionId);

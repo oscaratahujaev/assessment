@@ -23,7 +23,7 @@ $config = [
                     'js' => []
                 ],
                 'yii\web\JqueryAsset' => [
-                    'jsOptions' => [ 'position' => \yii\web\View::POS_HEAD ],
+                    'jsOptions' => [ 'position' => \yii\web\View::POS_HEAD],
                     'js' => [
                         '/js/jquery.js',
                     ],

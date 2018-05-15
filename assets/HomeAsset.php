@@ -15,17 +15,22 @@ use yii\web\AssetBundle;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class AppAsset extends AssetBundle
+class HomeAsset extends AssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $js = [
-//        'js/jquery.js',
+        //        'js/jquery.js',
         'js/jquery.cookie.js',
         'js/popper.min.js',
         'js/bootstrap.js',
         'js/jquery-ui.js',
+
         'js/specialView.js',
+        'js/jquery.vmap.js',
+        'js/map.js',
+        'js/vmap.uzbekistan.js',
+        'js/main.js',
         'js/table.js',
     ];
     public $css = [
