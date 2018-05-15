@@ -508,7 +508,10 @@ img {
 .inspections-list {
     height: 450px;
     overflow-y: scroll;
-    padding: 30px 15px;
+    padding: 10px 15px;
+}
+.inspections-list h4{
+    margin-bottom:20px;
 }
 
 #mapLabels {
