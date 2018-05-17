@@ -2,19 +2,17 @@
 
 namespace app\controllers;
 
-use app\models\User;
 use Yii;
-use app\models\Ministry;
-use app\models\MinistrySearch;
-use yii\filters\AccessControl;
+use app\models\CategoryMinistery;
+use app\models\CategoryMinisterySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * MinistryController implements the CRUD actions for Ministry model.
+ * CategoryMinisteryController implements the CRUD actions for CategoryMinistery model.
  */
-class MinistryController extends Controller
+class CategoryMinisteryController extends Controller
 {
     /**
      * @inheritdoc
@@ -28,25 +26,16 @@ class MinistryController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
-            /*'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'allow' => User::can(User::USER_ADMIN),
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],*/
         ];
     }
 
     /**
-     * Lists all Ministry models.
+     * Lists all CategoryMinistery models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new MinistrySearch();
+        $searchModel = new CategoryMinisterySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -56,7 +45,7 @@ class MinistryController extends Controller
     }
 
     /**
-     * Displays a single Ministry model.
+     * Displays a single CategoryMinistery model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -69,13 +58,13 @@ class MinistryController extends Controller
     }
 
     /**
-     * Creates a new Ministry model.
+     * Creates a new CategoryMinistery model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Ministry();
+        $model = new CategoryMinistery();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -87,7 +76,7 @@ class MinistryController extends Controller
     }
 
     /**
-     * Updates an existing Ministry model.
+     * Updates an existing CategoryMinistery model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -107,7 +96,7 @@ class MinistryController extends Controller
     }
 
     /**
-     * Deletes an existing Ministry model.
+     * Deletes an existing CategoryMinistery model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -121,18 +110,18 @@ class MinistryController extends Controller
     }
 
     /**
-     * Finds the Ministry model based on its primary key value.
+     * Finds the CategoryMinistery model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Ministry the loaded model
+     * @return CategoryMinistery the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Ministry::findOne($id)) !== null) {
+        if (($model = CategoryMinistery::findOne($id)) !== null) {
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }
