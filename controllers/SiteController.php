@@ -10,6 +10,23 @@ use yii\web\Response;
 
 class SiteController extends Controller
 {
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index'],
+                'rules' => [
+                    [
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+        ];
+    }
+
     /**
      * Displays homepage.
      *
@@ -56,6 +73,13 @@ class SiteController extends Controller
             $this->enableCsrfValidation = false;
         }
         return parent::beforeAction($action);
+    }
+
+    public function actionLogin()
+    {
+        $this->layout = "login";
+        return $this->render('login');
+
     }
 
 }

@@ -86,7 +86,7 @@ class SisController extends Controller
         }
 
         if ($user->loginViaSis($response)) {
-//            Yii::$app->getSession()->setFlash('success', 'Вы успешно прошли авторизацию.');
+            //            Yii::$app->getSession()->setFlash('success', 'Вы успешно прошли авторизацию.');
         }
 
         return $this->goBack();
@@ -95,6 +95,7 @@ class SisController extends Controller
 
     public function actionLogin()
     {
+        $this->layout = "empty";
         return $this->render('login');
     }
 

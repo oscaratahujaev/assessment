@@ -40,7 +40,7 @@ class User extends ActiveRecord implements IdentityInterface
     const MESSAGE_UPDATED = "Муваффақиятли сақланди.";
     const MESSAGE_NOT_REGISTERED = "Тизимга кириш учун рўухатдан ўтиш талаб этилади.";
     const MESSAGE_NOT_CONFIRMED = 'Тизимга кириш учун администратор рухсатини олиш талаб этилади.';
-    const MESSAGE_REGISTERED_NOT_CONFIRMED = 'Сиз муваффакиятли рўйхатдан ўтдингиз. Тизимга кириш учун администратор рухсатини олиш талаб этилади.';
+    const MESSAGE_REGISTERED_NOT_CONFIRMED = 'Сиз муваффакиятли рўйхатдан ўтдингиз.';
 
 
     const USER_ADMIN = 2;
@@ -92,7 +92,6 @@ class User extends ActiveRecord implements IdentityInterface
 
     public static function can($role)
     {
-        return true;
         $user = Yii::$app->user;
         if ($user->isGuest) {
             return false;
@@ -134,8 +133,8 @@ class User extends ActiveRecord implements IdentityInterface
 
         $this->validate();
 
-        if ($this->isNewRecord && !$this->validate()) {
-            Yii::$app->getSession()->setFlash('success', self::MESSAGE_REGISTERED_NOT_CONFIRMED);
+        if ($this->isNewRecord) {
+//            Yii::$app->getSession()->setFlash('success', self::MESSAGE_REGISTERED_NOT_CONFIRMED);
         }
 
         if (!$this->save()) {
@@ -145,6 +144,11 @@ class User extends ActiveRecord implements IdentityInterface
             Yii::$app->getSession()->setFlash('error', $errors);
             return false;
         }
+
+        if ($this->isNewRecord) {
+            return false;
+        }
+
 
         if ($this->status == self::STATUS_INACTIVE) {
             Yii::$app->getSession()->setFlash('warning', self::MESSAGE_NOT_CONFIRMED);
