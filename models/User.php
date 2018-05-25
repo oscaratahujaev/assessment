@@ -145,11 +145,6 @@ class User extends ActiveRecord implements IdentityInterface
             return false;
         }
 
-        if ($this->isNewRecord) {
-            return false;
-        }
-
-
         if ($this->status == self::STATUS_INACTIVE) {
             Yii::$app->getSession()->setFlash('warning', self::MESSAGE_NOT_CONFIRMED);
             return false;
