@@ -10,7 +10,7 @@ $this->title = Yii::t('app', 'Update District: {nameAttribute}', [
 ]);
 //$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Districts'), 'url' => ['index']];
 //$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-//$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
+//$this->params['breadcrumbs'][] = Yii::t('app', 'Ўзгартириш');
 ?>
 <div class="district-update">
 

@@ -12,8 +12,8 @@ $ips = [
 ];
 //if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
 //    if (in_array($_SERVER['HTTP_X_FORWARDED_FOR'], $ips)) {
-//        defined('YII_DEBUG') or define('YII_DEBUG', true);
-//        defined('YII_ENV') or define('YII_ENV', 'dev');
+        defined('YII_DEBUG') or define('YII_DEBUG', true);
+        defined('YII_ENV') or define('YII_ENV', 'dev');
 //    }
 //} elseif (isset($_SERVER['REMOTE_ADDR'])) {
 //    if (in_array($_SERVER['REMOTE_ADDR'], $ips)) {

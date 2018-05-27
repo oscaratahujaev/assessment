@@ -25,14 +25,19 @@ use yii\web\IdentityInterface;
  * @property string $password_reset_token
  * @property string $email
  * @property string $auth_key
+ * @property string $login_type
  * @property integer $status
  * @property integer $role
  * @property integer $created_at
  * @property integer $updated_at
+ * @property integer $ministry_id
  * @property string $password write-only password
  */
 class User extends ActiveRecord implements IdentityInterface
 {
+    const LOGIN_TYPE_ID = "id.gov.uz";
+    const LOGIN_TYPE_FORM = "login/password";
+
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
     const STATUS_INACTIVE = 1;
@@ -42,14 +47,25 @@ class User extends ActiveRecord implements IdentityInterface
     const MESSAGE_NOT_CONFIRMED = 'Тизимга кириш учун администратор рухсатини олиш талаб этилади.';
     const MESSAGE_REGISTERED_NOT_CONFIRMED = 'Сиз муваффакиятли рўйхатдан ўтдингиз.';
 
-
-    const USER_ADMIN = 2;
-    const USER_SIMPLE = 1;
+    const USER_AUDIT = 1;
+    const USER_SIMPLE = 2;
+    const USER_APPROVE = 3;
+    const USER_ADMIN = 4;
 
     public static $roles = [
+        self::USER_AUDIT => 'Наблюдатель',
         self::USER_ADMIN => 'Администратор',
-        self::USER_SIMPLE => 'Маълумот киритувчи'
+        self::USER_SIMPLE => 'Маълумот киритувчи',
+        self::USER_APPROVE => 'Тасдиқловчи',
     ];
+
+    public static function getRoleById($id)
+    {
+        if (is_null($id)) {
+            return "";
+        }
+        return self::$roles[$id];
+    }
 
     /**
      * @inheritdoc
@@ -69,6 +85,12 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
+    public function beforeSave($insert)
+    {
+        $this->fullname = $this->lastname . " " . $this->firstname;
+        return parent::beforeSave($insert);
+    }
+
     /**
      * @inheritdoc
      */
@@ -77,16 +99,39 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED, self::STATUS_INACTIVE]],
 
-            [['username', 'auth_key', 'password_hash', 'created_at', 'updated_at'], 'required'],
+            [['username', 'auth_key', 'password_hash'], 'required'],
 
-            [['status', 'created_at', 'updated_at', 'role'], 'integer'],
+            [['status', 'created_at', 'updated_at', 'role', 'ministry_id'], 'integer'],
 
             [['phone_number', 'lastname', 'firstname', 'username', 'password_hash', 'password_reset_token', 'email', 'tin', 'pin', 'address'], 'string', 'max' => 255],
 
             [['password_reset_token'], 'unique'],
 
+            [['email'], 'email'],
+
+            [['ministry_id'], 'required', 'when' => function ($model) {
+                return $model->role == self::USER_SIMPLE;
+            }, 'whenClient' => "function (attribute, value) {
+                  var role = $('#user-role').val();
+                  return role == " . self::USER_SIMPLE . ";
+            }"],
+
             [['firstname', 'birthdate', 'per_adr', 'fullname'], 'safe'],
 
+        ];
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'username' => 'Логин',
+            'phone_number' => 'Телефон раками',
+            'lastname' => 'Фамилия',
+            'firstname' => 'Исм',
+            'status' => 'Статус',
+            'region_id' => 'Худуд',
+            'ministry_id' => 'Ташкилот',
+            'role' => 'Роль',
         ];
     }
 
@@ -134,7 +179,8 @@ class User extends ActiveRecord implements IdentityInterface
         $this->validate();
 
         if ($this->isNewRecord) {
-//            Yii::$app->getSession()->setFlash('success', self::MESSAGE_REGISTERED_NOT_CONFIRMED);
+            $this->login_type = self::LOGIN_TYPE_ID;
+            //            Yii::$app->getSession()->setFlash('success', self::MESSAGE_REGISTERED_NOT_CONFIRMED);
         }
 
         if (!$this->save()) {
@@ -151,6 +197,11 @@ class User extends ActiveRecord implements IdentityInterface
         }
 
         return Yii::$app->user->login($this, $duration);
+    }
+
+    public function getMinistry()
+    {
+        return $this->hasOne(Ministry::className(), ['id' => 'ministry_id']);
     }
 
     /**
@@ -177,7 +228,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findByUsername($username)
     {
-        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['username' => $username, 'login_type' => self::LOGIN_TYPE_FORM]);
     }
 
     /**
@@ -259,6 +310,19 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_hash = Yii::$app->security->generatePasswordHash($password);
     }
+
+    function randomPassword()
+    {
+        $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890=';
+        $pass = array(); //remember to declare $pass as an array
+        $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+        for ($i = 0; $i < 8; $i++) {
+            $n = rand(0, $alphaLength);
+            $pass[] = $alphabet[$n];
+        }
+        return implode($pass); //turn the array into a string
+    }
+
 
     /**
      * Generates "remember me" authentication key

@@ -83,6 +83,7 @@ class Data extends \yii\db\ActiveRecord
         $request = Yii::$app->request;
         $categoryId = $request->get("categoryId");
         $regionId = $request->get("regionId");
+        $districtId = $request->get("districtId");
         $year = $request->get("yearId");
         $quarter = $request->get("quarterId");
         $category = Category::find()->with('categoryParams')->where(['id' => $categoryId])->asArray()->one();
@@ -93,10 +94,10 @@ class Data extends \yii\db\ActiveRecord
             $data = new Data();
             $data->category_id = $categoryId;
             $data->region_id = $regionId;
-            $data->district_id = $post["districtId"];
+            $data->district_id = $districtId;
             $data->param_id = $param['id'];
             $data->year = $year;
-            $data->quarter = $quarter ? $quarter : Quarter::find()->one()->id;
+            $data->quarter = $quarter;
 
             if ($param['param_type_id'] == ParamType::TYPE_INPUT) {
                 /**
@@ -124,6 +125,11 @@ class Data extends \yii\db\ActiveRecord
             }
         }
         return true;
+    }
+
+    public static function updateData($category, $post)
+    {
+
     }
 
     /**

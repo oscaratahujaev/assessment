@@ -36,6 +36,7 @@ class CategoryMinistery extends \yii\db\ActiveRecord
         return [
             [['ministery_id', 'category_id', 'creator', 'modiefier'], 'integer'],
             [['created_date', 'modiefied_at'], 'safe'],
+            [['ministery_id', 'category_id'], 'unique', 'targetAttribute' => ['ministery_id', 'category_id']],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
             [['ministery_id'], 'exist', 'skipOnError' => true, 'targetClass' => Ministry::className(), 'targetAttribute' => ['ministery_id' => 'id']],
         ];
@@ -48,7 +49,7 @@ class CategoryMinistery extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'ministery_id' => 'Ministery ID',
+            'ministery_id' => 'Ташкилот',
             'category_id' => 'Category ID',
             'creator' => 'Creator',
             'created_date' => 'Created Date',

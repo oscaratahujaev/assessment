@@ -56,7 +56,7 @@ $year = Years::find()->all();
     </div>
     <div class="col-md-2">
         <?= Html::label(' ', 'region', ['class' => 'form-label']) ?>
-        <button class="btn btn-block btn-outline-primary" id="btn-submit" type="submit">Filter</button>
+        <button class="btn btn-block btn-outline-primary" id="btn-submit" type="submit">Излаш</button>
     </div>
 </div>
 <?= Html::endForm(); ?>

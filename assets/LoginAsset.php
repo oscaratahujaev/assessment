@@ -16,9 +16,10 @@ class LoginAsset extends AssetBundle
         'css/bootstrap.min.css',
         'css/mdb.min.css',
         'css/style.css',
+        '/css/login.css',
     ];
     public $js = [
-//        'js/jquery-3.2.1.min.js',
+        //        'js/jquery-3.2.1.min.js',
         'js/popper.min.js',
         'js/bootstrap.min.js',
         'js/mdb.min.js',

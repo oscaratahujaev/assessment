@@ -10,7 +10,7 @@ $this->title = Yii::t('app', 'Update Param Type: {nameAttribute}', [
 ]);
 //$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Param Types'), 'url' => ['index']];
 //$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-//$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
+//$this->params['breadcrumbs'][] = Yii::t('app', 'Ўзгартириш');
 ?>
 <div class="param-type-update">
 

@@ -31,7 +31,6 @@ class UserController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['logout'],
                         'allow' => User::can(User::USER_ADMIN),
                         'roles' => ['@'],
                     ],
@@ -77,8 +76,26 @@ class UserController extends Controller
     {
         $model = new User();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $pass = $model->randomPassword();
+            $model->setPassword($pass);
+            $model->auth_key = md5($model->username);
+            $model->login_type = User::LOGIN_TYPE_FORM;
+
+            if ($model->save()) {
+                Yii::$app->session->setFlash('success', '
+                <p>Фойдаланувчи муваффақиятли яратилди!</p>
+                <p>Логин: ' . $model->username . '</p>
+                <p>Парол: ' . $pass . '</p>
+                ');
+                return $this->redirect(['index']);
+            } else {
+                debug($model->getErrors());
+                exit;
+            }
+
+        } else {
+
         }
 
         return $this->render('create', [
@@ -98,7 +115,7 @@ class UserController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view','id'=>$model->id]);
         }
 
         return $this->render('update', [

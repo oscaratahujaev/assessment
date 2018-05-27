@@ -8,6 +8,7 @@ use app\models\Category;
 use app\models\CategoryDataSearch;
 use app\models\CategoryParams;
 use app\models\Data;
+use app\models\DataStatus;
 use app\models\District;
 use app\models\ParamType;
 use app\models\Quarter;
@@ -73,7 +74,7 @@ class DataController extends Controller
     }
 
 
-    public function actionAdd($categoryId = 1, $regionId = 1, $yearId = 2018, $quarterId = 1)
+    public function actionAdd($categoryId = 1, $regionId = 1, $districtId, $yearId = 2018, $quarterId = 1)
     {
         $request = Yii::$app->request;
 
@@ -102,7 +103,7 @@ class DataController extends Controller
                 $model = new Data();
                 $model->category_id = $categoryId;
                 $model->region_id = $regionId;
-                $model->district_id = 1;
+                $model->district_id = $districtId;
                 $model->param_id = $param['id'];
                 $model->param->name = $param['name'];
                 $data[$i] = $model;
@@ -117,7 +118,131 @@ class DataController extends Controller
             'data' => $data,
             'category' => $category,
             'region_id' => $regionId,
-            'districtId' => $request->get('districtID'),
+            'districtId' => $districtId,
+        ]);
+    }
+
+    public function actionUpdate($categoryId, $regionId, $districtId, $yearId, $quarterId)
+    {
+        $request = Yii::$app->request;
+        $category = Category::find()->with('categoryParams')->where(['id' => $categoryId])->asArray()->one();
+
+        $post = $request->post();
+
+        if ($post) {
+
+//            if (Data::updateData($category, $post) && Score::updateScore($post)) {
+
+                return $this->redirect(['table',
+                    'category' => $category,
+                    'categoryId' => $categoryId,
+                    'year' => $yearId,
+                    'quarter' => $quarterId,
+                    'regionId' => $regionId,
+                ]);
+//            }
+        }
+
+        $arr = Data::find()
+            ->from('data d')
+            ->leftJoin('category_params p', 'd.param_id=p.id')
+            ->where([
+                'region_id' => $regionId,
+                'district_id' => $districtId,
+                'd.category_id' => $categoryId,
+                'year' => $yearId,
+                'quarter' => $quarterId,
+                'p.param_type_id' => 1
+            ])
+            ->all();
+        if (empty($arr)) {
+            return $this->goHome();
+        }
+        $data = [];
+        foreach ($arr as $key => $item) {
+            $data[$key + 3] = $item;
+        }
+//        debug($data);
+//        exit;
+
+        //        $i = 3;
+        //        $data = [];
+        //        foreach ($category['categoryParams'] as $param) {
+        //            if ($param['param_type_id'] == ParamType::TYPE_INPUT) {
+        //                $model = new Data();
+        //                $model->category_id = $categoryId;
+        //                $model->region_id = $regionId;
+        //                $model->district_id = $districtId;
+        //                $model->param_id = $param['id'];
+        //                $model->param->name = $param['name'];
+        //                $data[$i] = $model;
+        //            }
+        //
+        //            if (in_array($param['param_type_id'], [ParamType::TYPE_INPUT, ParamType::TYPE_FORMULA])) {
+        //                $i++;
+        //            }
+        //        }
+
+        return $this->render('update', [
+            'data' => $data,
+            'category' => $category,
+            'region_id' => $regionId,
+            'districtId' => $districtId,
+        ]);
+
+
+    }
+
+    public function actionLoadFile($id)
+    {
+        $model = DataStatus::findOne($id);
+        if (empty($model)) {
+            return $this->goHome();
+        }
+        header('Pragma: public');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+        header('Content-Transfer-Encoding: binary');
+        header('Content-length: ' . $model->filesize);
+        header('Content-Type: ' . $model->filetype);
+        header('Content-Disposition: attachment; filename=' . $model->filename);
+
+        echo $model->file;
+    }
+
+    public function actionSendForApprovement($id)
+    {
+        $model = DataStatus::findOne($id);
+        if (empty($model)) {
+            return $this->goHome();
+        }
+
+    }
+
+    public function actionFileUpload($categoryId, $year, $quarter)
+    {
+        $dataStatus = DataStatus::findOne([
+            'category_id' => $categoryId,
+            'year' => $year,
+            'quarter' => $quarter,
+        ]);
+        if (empty($dataStatus)) {
+            $dataStatus = new DataStatus();
+            $dataStatus->category_id = $categoryId;
+            $dataStatus->year = $year;
+            $dataStatus->quarter = $quarter;
+        }
+
+        if ($dataStatus->load(Yii::$app->request->post()) && $dataStatus->save()) {
+            return $this->redirect(['table',
+                'categoryId' => $categoryId,
+                'year' => $year,
+                'quarterId' => $quarter
+            ]);
+        }
+
+        return $this->render('file-upload', [
+            'model' => $dataStatus
         ]);
     }
 
@@ -158,6 +283,7 @@ class DataController extends Controller
 
         if ($regionId) {
             foreach ($data as $item) {
+                $arr[$item['district_id']]['id'] = $item['district'] ? $item['district']['id'] : '';
                 $arr[$item['district_id']]['place'] = $item['district'] ? $item['district']['name'] : '';
                 $arr[$item['district_id']]['values'][] = $item;
                 $arr[$item['district_id']]['score'] = $item['scoreDistrict'] ? $item ['scoreDistrict']['value'] : '';
@@ -173,7 +299,7 @@ class DataController extends Controller
 
         $filledDistricts = [];
         $emptyPlaces = [];
-        if (isset($regionId)) {
+        if ($regionId != "") {
             foreach ($arr as $item) {
                 array_push($filledDistricts, $item['place']);
             }
@@ -181,6 +307,7 @@ class DataController extends Controller
         } else {
             $emptyPlaces = Region::find()->where(['NOT IN', 'name', $filledDistricts])->all();
         }
+
         return [
             'data' => $arr,
             'emptyPlaces' => $emptyPlaces,
@@ -203,89 +330,19 @@ class DataController extends Controller
     }
 
 
-    public function actionTable($categoryId = 1, $regionId = 1, $yearId = 2018, $quarterId = 1)
+    public function actionTable($categoryId = 1, $regionId = 1, $year = 2018, $quarterId = 1)
     {
-
         return $this->render('table',
-            array_merge(self::getData($categoryId, $regionId, $yearId, $quarterId),
+            array_merge(self::getData($categoryId, $regionId, $year, $quarterId),
                 [
                     'categoryId' => $categoryId,
                     'regionId' => $regionId,
-                    'yearId' => $yearId,
+                    'yearId' => $year,
                     'quarterId' => $quarterId,
                 ]));
 
     }
 
-
-    /**
-     * Displays a single Data model.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public
-    function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
-     * Creates a new Data model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public
-    function actionCreate()
-    {
-        $model = new Data();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Updates an existing Data model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public
-    function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Deletes an existing Data model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public
-    function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
-    }
 
     /**
      * Finds the Data model based on its primary key value.

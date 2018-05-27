@@ -10,7 +10,7 @@ $this->title = Yii::t('app', 'Update Score: {nameAttribute}', [
 ]);
 //$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Scores'), 'url' => ['index']];
 //$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-//$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
+//$this->params['breadcrumbs'][] = Yii::t('app', 'Ўзгартириш');
 ?>
 <div class="score-update">
 

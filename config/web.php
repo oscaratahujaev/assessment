@@ -11,7 +11,7 @@ $config = [
         '@bower' => '@vendor/bower-asset',
         '@npm' => '@vendor/npm-asset',
     ],
-
+    'language' => 'uz',
 
     'components' => [
         'assetManager' => [
@@ -23,7 +23,7 @@ $config = [
                     'js' => []
                 ],
                 'yii\web\JqueryAsset' => [
-                    'jsOptions' => [ 'position' => \yii\web\View::POS_HEAD],
+                    'jsOptions' => ['position' => \yii\web\View::POS_HEAD],
                     'js' => [
                         '/js/jquery.js',
                     ],
@@ -38,7 +38,7 @@ $config = [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-//            'loginUrl' => ['/login'],
+            //            'loginUrl' => ['/login'],
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
 

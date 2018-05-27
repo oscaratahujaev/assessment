@@ -1,5 +1,10 @@
 <?php
 
+use app\models\Ministry;
+use app\models\Region;
+use app\models\User;
+use kartik\select2\Select2;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -11,32 +16,59 @@ use yii\widgets\ActiveForm;
 <div class="user-form">
 
     <?php $form = ActiveForm::begin(); ?>
+    <div class="row">
 
-    <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
+        <?php if ($model->isNewRecord) { ?>
+            <div class="col-md-3">
+                <?= $form->field($model, 'username')->textInput(['maxlength' => true, 'required' => true,]) ?>
+                <?= $form->field($model, 'status')->hiddenInput(['value' => User::STATUS_ACTIVE])->label(false) ?>
+            </div>
+        <?php } else { ?>
+            <div class="col-md-3">
+                <?= $form->field($model, 'status')->dropDownList([User::STATUS_INACTIVE => 'Inactive', User::STATUS_ACTIVE => 'Active']) ?>
+            </div>
+        <?php } ?>
+        <div class="col-md-3">
+            <?= $form->field($model, 'lastname')->textInput(['maxlength' => true, 'required' => true,]) ?>
+        </div>
 
-    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+        <div class="col-md-3">
+            <?= $form->field($model, 'firstname')->textInput(['maxlength' => true, 'required' => true,]) ?>
+        </div>
 
-    <?= $form->field($model, 'status')->textInput() ?>
+        <div class="col-md-3">
+            <?= $form->field($model, 'phone_number')->textInput(['maxlength' => true, 'required' => true,]) ?>
+        </div>
 
-    <?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
+        <div class="col-md-3">
+            <?= $form->field($model, 'region_id')->dropDownList(
+                ['' => ''] + ArrayHelper::map(Region::find()->all(), 'id', 'name')
+            ) ?>
+        </div>
 
-    <?= $form->field($model, 'tin')->textInput(['maxlength' => true]) ?>
+        <div class="col-md-3">
+            <?= $form->field($model, 'role')->dropDownList(
+                ['' => ''] + User::$roles
+            ) ?>
+        </div>
 
-    <?= $form->field($model, 'pin')->textInput(['maxlength' => true]) ?>
+        <div class="col-md-6">
+            <?= $form->field($model, 'ministry_id')->widget(Select2::classname(), [
+                'data' => ['' => ''] + ArrayHelper::map(\app\models\Ministry::find()->all(), 'id', 'name'),
+            ]);
+            ?>
+        </div>
 
-    <?= $form->field($model, 'phone_number')->textInput(['maxlength' => true]) ?>
+        <div class="col-md-3">
+            <?= $form->field($model, 'email')->textInput(['required' => true]) ?>
+        </div>
 
-    <?= $form->field($model, 'fullname')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'birthdate')->textInput(['maxlength' => true]) ?>
+    </div>
 
-    <?= $form->field($model, 'lastname')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'firstname')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'role')->dropDownList(['2' => 'Администратор', '1' => 'Маълумот киритувчи']) ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Сақлаш', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\CategoryMinistery;
+use app\models\CategoryMinisterySearch;
 use app\models\CategoryParamsSearch;
 use app\models\User;
 use Yii;
@@ -29,16 +31,15 @@ class CategoryController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
-            /*'access' => [
+            'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['logout'],
                         'allow' => User::can(User::USER_ADMIN),
                         'roles' => ['@'],
                     ],
                 ],
-            ],*/
+            ],
         ];
     }
 
@@ -66,17 +67,34 @@ class CategoryController extends Controller
      */
     public function actionView($id)
     {
-        //        debug("Hello");
-        //        exit;
         $searchModel = new CategoryParamsSearch();
-        $_GET['CategoryParamsSearch']['category_id'] = $id;
-
+        $searchModel->category_id = $id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        $ministrySearchModel = new CategoryMinisterySearch();
+        $ministrySearchModel->category_id = $id;
+        $minstryDataProvider = $ministrySearchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('view', [
             'model' => $this->findModel($id),
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'ministrySearchModel' => $ministrySearchModel,
+            'minstryDataProvider' => $minstryDataProvider,
+        ]);
+    }
+
+    public function actionAddMinistry($categoryId)
+    {
+        $model = new CategoryMinistery();
+        $model->category_id = $categoryId;
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $categoryId]);
+        }
+
+        return $this->render('add-ministry', [
+            'model' => $model,
         ]);
     }
 

@@ -2,9 +2,14 @@
 
 namespace app\components;
 
+use app\models\Category;
+use app\models\CategoryMinistery;
 use app\models\District;
 use app\models\Region;
+use app\models\User;
 use Yii;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
 
 /**
  * Created by PhpStorm.
@@ -73,6 +78,47 @@ class Functions
         } else {
             return null;
         }
+    }
+
+    public static function checkIfEditable()
+    {
+        // Если к министерству не прикреплена категория, то данные нельзя вносить
+        $categories = self::getUserCategories();
+        if (empty($categories)) {
+            return false;
+        }
+
+
+        return true;
+    }
+
+    public static function getUserCategories()
+    {
+        $user = Yii::$app->user->identity;
+        $categories = [];
+
+        if ($user->role == User::USER_SIMPLE) {
+            $arr = CategoryMinistery::findAll(['ministery_id' => $user->ministry_id]);
+            foreach ($arr as $item) {
+                $categories[$item['category_id']] = $item->category->name;
+            }
+
+        } elseif ($user->role == User::USER_ADMIN) {
+            $categories = ArrayHelper::map(Category::find()->all(), 'id', 'name');
+        }
+        return $categories;
+
+    }
+
+    public static function getButton($id)
+    {
+        return Html::a('Тасдиқлаш учун жўнатиш',
+            [
+                '/data/send-for-approvement', 'id' => $id,
+            ], [
+                'class' => 'btn btn-outline-primary float-right'
+            ]);
+
     }
 
 }

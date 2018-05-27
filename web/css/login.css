@@ -1,0 +1,38 @@
+.login section {
+    padding: 60px 0;
+}
+
+.login  section .section-title {
+    text-align: center;
+    color: #007b5e;
+    margin-bottom: 50px;
+    text-transform: uppercase;
+}
+.login #tabs{
+    background: #007b5e;
+    color: #eee;
+}
+.login #tabs h6.section-title{
+    color: #eee;
+}
+
+.login #tabs .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    color: #58b1e5;
+    background-color: transparent;
+    border-color: transparent transparent #f3f3f3;
+    border-bottom: 4px solid !important;
+    font-size: 20px;
+    font-weight: bold;
+
+}
+.login #tabs .nav-tabs .nav-link {
+    border: 1px solid transparent;
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+    color: #eee;
+    font-size: 20px;
+}
+
+#nav-tabContent{
+    padding:20px 10px 40px 10px !important;
+}

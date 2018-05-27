@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\components\Functions;
+use app\models\LoginForm;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -78,6 +79,22 @@ class SiteController extends Controller
     public function actionLogin()
     {
         $this->layout = "login";
+        $form = new LoginForm();
+        $request = Yii::$app->request;
+
+        if ($request->post()) {
+//            debug($request->post());
+//            debug($form->load($request->post()));
+//            debug($form->login());
+//            debug($form->validate());
+//            debug($form->getErrors());
+//            exit;
+        }
+
+        if ($form->load(Yii::$app->request->post()) && $form->login()) {
+            return $this->goHome();
+        }
+
         return $this->render('login');
 
     }

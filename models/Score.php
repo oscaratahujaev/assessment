@@ -82,13 +82,14 @@ class Score extends \yii\db\ActiveRecord
         $regionId = $request->get("regionId");
         $year = $request->get("yearId");
         $quarter = $request->get("quarterId");
+        $districtId = $request->get("districtId");
         $category = Category::find()->with('categoryParams')->where(['id' => $categoryId])->asArray()->one();
 
 
         $score = new Score();
         $score->category_id = $categoryId;
         $score->region_id = $regionId;
-        $score->district_id = $post['districtId'];
+        $score->district_id = $districtId;
         $score->year = $year;
         $score->quarter_id = $quarter ? $quarter : Quarter::find()->one()->id;
         $className = "app\\components\\";
@@ -98,6 +99,12 @@ class Score extends \yii\db\ActiveRecord
         $scoreCalculator->calculate();
         $score->value = $scoreCalculator->getValue();
         return $score->save();
+    }
+
+    public static function updateScore($post)
+    {
+
+
     }
 
 

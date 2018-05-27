@@ -7,49 +7,33 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\User */
 
-$this->title = $model->id;
+$this->title = $model->fullname;
 ?>
 <div class="user-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
+    <h3><?= Html::encode($this->title) ?>
+        <?= Html::a('<i class="fa fa-pencil-alt"></i>', ['update', 'id' => $model->id], ['class' => 'btn btn-primary float-right']) ?>
+    </h3>
 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
             'username',
-//            'auth_key',
-//            'password_hash',
-//            'password_reset_token',
             'email:email',
-            'status',
             [
-                'label' => 'Рули',
+                'label' => 'Статус',
+                'value' => $model->status == 1 ? 'Inactive' : 'Active',
+            ],
+            [
+                'label' => 'Роль',
                 'value' => Functions::getUserRole($model->role),
             ],
-//            'created_at',
-//            'updated_at',
-            'address',
-            'tin',
-            'pin',
-            'region_id',
-            'district_id',
+            [
+                'label' => 'Ташкилот',
+                'value' => $model->ministry ? $model->ministry->name : "",
+            ],
             'phone_number',
-            'fullname',
-            'birthdate',
-            'lastname',
-            'firstname',
+            'email',
         ],
     ]) ?>
 

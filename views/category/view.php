@@ -11,34 +11,93 @@ $this->title = $model->name;
 ?>
 <div class="category-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h3 class="text-center"><?= Html::encode($this->title) ?></h3>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
+        <?= Html::a('Ўзгартириш', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
     </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'name',
-            'factor_column',
-            [
-                'label' => 'score_class',
-                'value' => \app\models\Category::getScoreClassById($model->score_class),
-            ],
-        ],
-    ]) ?>
-
     <div class="row">
+
+        <div class="col-md-12" style="margin-bottom:30px;">
+
+            <?= DetailView::widget([
+                'model' => $model,
+                'attributes' => [
+                    'name',
+                    'factor_column',
+                    [
+                        'label' => 'score_class',
+                        'value' => \app\models\Category::getScoreClassById($model->score_class),
+                    ],
+                ],
+            ]) ?>
+        </div>
+
+
         <div class="col-md-12">
-            <?= Html::a('Add param', ['/category-params/create', 'categoryId' => $model->id], ['class' => 'btn btn-success']) ?>
+            <h2 class="text-center">Масъул ташкилотлар
+                <?= Html::a('<i class="fa fa-plus"></i>',
+                    ['/category/add-ministry', 'categoryId' => $model->id],
+                    [
+                        'class' => 'btn btn-outline-primary float-right',
+                        'title' => 'Ташкилот қўшиш',
+                        'data-toggle' => 'tooltip'
+                    ]
+                ) ?>
+            </h2>
+
+            <?= GridView::widget([
+                'dataProvider' => $minstryDataProvider,
+                'filterModel' => $ministrySearchModel,
+                'columns' => [
+                    ['class' => 'yii\grid\SerialColumn'],
+
+                    [
+                        'attribute' => 'ministery_id',
+                        'value' => function ($data) {
+                            return $data->ministery ? $data->ministery->name : "";
+
+                        }
+                    ],
+                    [
+                        'class' => 'yii\grid\ActionColumn',
+                        'headerOptions' => ['style' => 'width:70px;'],
+                        'controller' => 'category-ministery',
+                        'buttons' => [
+                            'delete' => function ($url) {
+                                return Html::a(
+                                    '<span class="fa fa-trash"></span> ',
+                                    $url,
+
+                                    [
+                                        'title' => 'Delete',
+                                        'data' => [
+                                            'confirm' => Yii::t('main', 'Ушбу ташкилотни ўчирмоқчимисиз?'),
+                                            'method' => 'post',
+                                        ],
+                                    ]
+                                );
+                            },
+                        ],
+                    ],
+                ],
+            ]); ?>
+
+        </div>
+
+        <div class="clearfix"></div>
+        <div class="col-md-12" style="margin-top: 30px">
+            <h2 class="text-center">Индикатор параметрлари
+                <?= Html::a('<i class="fa fa-plus"></i>',
+                    ['/category-params/create', 'categoryId' => $model->id],
+                    [
+                        'class' => 'btn btn-outline-primary float-right',
+                        'title' => 'Ташкилот қўшиш',
+                        'data-toggle' => 'tooltip',
+                    ]
+                ) ?>
+            </h2>
+
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
@@ -64,11 +123,11 @@ $this->title = $model->name;
 
                     [
                         'class' => 'yii\grid\ActionColumn',
-                        'headerOptions'=>['style'=>'width:70px;'],
+                        'headerOptions' => ['style' => 'width:70px;'],
                         'controller' => 'category-params',
                         'buttons' => [
                             'update' => function ($url, $model, $key) {
-                                return Html::a('<i class="glyphicon glyphicon-pencil"></i>', ['/category-params/update', 'id' => $model->id, 'categoryId' => $model->category_id]);
+                                return Html::a('<span class="fa fa-pencil-alt"></span>', ['/category-params/update', 'id' => $model->id, 'categoryId' => $model->category_id]);
                             }
                         ],
                     ],

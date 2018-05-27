@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\MinistrySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Ministries');
+$this->title = Yii::t('app', 'Ташкилотлар');
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="ministry-index">
@@ -16,7 +16,7 @@ $this->title = Yii::t('app', 'Ministries');
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Ministry'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Янги қўшиш <i class="fa fa-plus"></i>', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([

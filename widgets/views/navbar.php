@@ -36,6 +36,10 @@ $path = '/' . Yii::$app->controller->id . "/" . Yii::$app->controller->action->i
 
                 <?php if (User::can(User::USER_ADMIN)): ?>
                     <li class="nav-item">
+                        <a class="nav-link <?= $path === '/user/index' ? 'actives' : '' ?>"
+                           href="<?= \yii\helpers\Url::to('/user') ?>">Фойдаланувчилар</a>
+                    </li>
+                    <li class="nav-item">
                         <div id="references" class="dropdown navbar-dropdown">
                             <a class="dropdown nav-link">
                                 Маълумотномалар
@@ -43,19 +47,10 @@ $path = '/' . Yii::$app->controller->id . "/" . Yii::$app->controller->action->i
                             <div id="reference-items" class="dropdown-menu dropdown-menu-right">
                                 <div class="triangle2"></div>
                                 <div class=" dropdown-custom-item">
-                                    <a href="<?= \yii\helpers\Url::to('/category') ?>">Категория</a>
+                                    <a href="<?= \yii\helpers\Url::to('/category') ?>">Индикаторлар</a>
                                 </div>
                                 <div class=" dropdown-custom-item">
-                                    <a href="<?= \yii\helpers\Url::to('/category-params') ?>">Параметры</a>
-                                </div>
-                                <div class=" dropdown-custom-item">
-                                    <a href="<?= \yii\helpers\Url::to('/param-type') ?>">Типы параметров</a>
-                                </div>
-                                <div class=" dropdown-custom-item">
-                                    <a href="<?= \yii\helpers\Url::to('/quarter') ?>">Квартал</a>
-                                </div>
-                                <div class=" dropdown-custom-item">
-                                    <a href="<?= \yii\helpers\Url::to('/ministry') ?>">Министерства</a>
+                                    <a href="<?= \yii\helpers\Url::to('/ministry') ?>">Ташкилотлар</a>
                                 </div>
                                 <div class=" dropdown-custom-item">
                                     <a href="<?= \yii\helpers\Url::to('/region') ?>">Регионы</a>
@@ -64,7 +59,7 @@ $path = '/' . Yii::$app->controller->id . "/" . Yii::$app->controller->action->i
                                     <a href="<?= \yii\helpers\Url::to('/district') ?>">Районы</a>
                                 </div>
                                 <div class=" dropdown-custom-item">
-                                    <a href="<?= \yii\helpers\Url::to('/years') ?>">Года</a>
+                                    <a href="<?= \yii\helpers\Url::to('/years') ?>">Йил</a>
                                 </div>
                                 <div class="more_margin"></div>
                                 <div class="clearfix"></div>

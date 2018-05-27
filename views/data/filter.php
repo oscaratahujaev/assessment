@@ -1,8 +1,10 @@
-<?php use app\models\Category;
+<?php use app\components\Functions;
+use app\models\Category;
 use app\models\District;
 use app\models\Quarter;
 use app\models\Region;
 use app\models\Years;
+use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -21,9 +23,13 @@ $year = Years::find()->all();
 <div class="row">
     <div class="col-md-12">
         <?= Html::label('Индикатор', 'categoryId', ['class' => 'form-label']) ?>
-        <?= Html::dropDownList('categoryId', $categoryId,
-            ArrayHelper::map($categories, 'id', 'name'),
-            ['class' => 'form-control', 'id' => 'category']); ?>
+        <?= Select2::widget([
+            'name' => 'categoryId',
+            'value' => $categoryId,
+            'data' => Functions::getUserCategories(),
+            'options' => ['class' => 'form-control', 'id' => 'category']
+        ]);
+        ?>
     </div>
 </div>
 <br>
@@ -63,7 +69,7 @@ $year = Years::find()->all();
     </div>
     <div class="col-md-2">
         <?= Html::label(' ', 'region', ['class' => 'form-label']) ?>
-        <?= Html::submitButton('Поиск', [
+        <?= Html::submitButton('Излаш', [
             'class' => 'btn btn-block btn-outline-primary',
             'id' => 'btn-submit',
         ]) ?>

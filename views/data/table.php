@@ -6,6 +6,7 @@
  * Time: 10:02
  *
  */
+use app\components\Functions;
 use app\models\Category;
 use app\models\District;
 use app\models\ParamType;
@@ -17,6 +18,8 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
+
+$isEditable = Functions::checkIfEditable();
 /**
  *$category Category;
  * */
@@ -106,6 +109,11 @@ foreach ($category['categoryParams'] as $categoryParam) {
         </thead>
         <tbody>
 
+        <?php
+        //        debug($data);
+        //        debug($emptyPlaces);
+        //        exit;
+        ?>
         <?php foreach ($data as $item): ?>
             <tr>
                 <td><?= $i ?></td>
@@ -116,7 +124,23 @@ foreach ($category['categoryParams'] as $categoryParam) {
                         <td><?= $value['value'] ?></td>
                     <?php endif; ?>
                 <?php endforeach; ?>
-                <td></td>
+                <td>
+                    <?php if ($isEditable) { ?>
+                        <?= Html::a('<i class="fa fa-pencil-alt"></i>',
+                            [
+                                '/data/update',
+                                'categoryId' => $categoryId,
+                                'regionId' => $regionId,
+                                'districtId' => $item['id'],
+                                'yearId' => $yearId,
+                                'quarterId' => $quarterId,
+                            ],
+                            [
+                                'class' => 'btn btn-outline-primary',
+                                'id' => 'addUrl'
+                            ]) ?>
+                    <?php } ?>
+                </td>
             </tr>
             <?php $i++; ?>
         <?php endforeach; ?>
@@ -130,17 +154,34 @@ foreach ($category['categoryParams'] as $categoryParam) {
                 <?php for ($j = 0; $j < $numberOfColumns - $parentColumns; $j++) {
                     echo '<td>0</td>';
                 } ?>
-                <td><a class="btn btn-outline-primary" id="addUrl" href="
-          <?= Url::to('/data/add?categoryId=' . $categoryId .
-                        '&regionId=' . $regionId . '&districtId=' . $place['id'] .
-                        '&yearId=' . $yearId . '&quarterId=' . $quarterId) ?>">
-                        <i class="fa fa-plus"></i></a></td>
+                <td>
+                    <?php if ($isEditable) { ?>
+                        <?= Html::a('<i class="fa fa-plus"></i>',
+                            [
+                                '/data/add',
+                                'categoryId' => $categoryId,
+                                'regionId' => $regionId,
+                                'districtId' => $place['id'],
+                                'yearId' => $yearId,
+                                'quarterId' => $quarterId,
+                            ],
+                            [
+                                'class' => 'btn btn-outline-primary',
+                                'id' => 'addUrl'
+                            ]) ?>
+                    <?php } ?>
+                </td>
             </tr>
             <?php $i++ ?>
         <?php endforeach; ?>
         </tbody>
     </table>
 
+    <?= $this->render('file', [
+        'categoryId' => $categoryId,
+        'year' => $yearId,
+        'quarterId' => $quarterId,
+    ]) ?>
 </div>
 
 

@@ -32,7 +32,6 @@ class ParamTypeController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['logout'],
                         'allow' => User::can(User::USER_ADMIN),
                         'roles' => ['@'],
                     ],

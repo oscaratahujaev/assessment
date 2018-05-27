@@ -9,8 +9,9 @@ use yii\grid\GridView;
 $this->title = 'Categories';
 ?>
 <div class="category-index">
+    <h2>Мезон-индикаторлари</h2>
     <p>
-        <?= Html::a('Create Category', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Янги қўшиш <i class="fa fa-plus"></i>', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -50,26 +51,26 @@ $this->title = 'Categories';
                             ]
                         );
                     },
-                    'update' => function ($url) {
-                        return Html::a(
-                            '<span class="fa fa-pencil-alt"></span> ',
-                            $url,
-                            [
-                                'title' => 'view',
-                                'data-pjax' => '0',
-                            ]
-                        );
-                    },
-                    'delete' => function ($url) {
-                        return Html::a(
-                            '<span class="fa fa-trash"></span> ',
-                            $url,
-                            [
-                                'title' => 'Delete',
-                                'data-pjax' => '0',
-                            ]
-                        );
-                    },
+                    //                    'update' => function ($url) {
+                    //                        return Html::a(
+                    //                            '<span class="fa fa-pencil-alt"></span> ',
+                    //                            $url,
+                    //                            [
+                    //                                'title' => 'view',
+                    //                                'data-pjax' => '0',
+                    //                            ]
+                    //                        );
+                    //                    },
+                    //                    'delete' => function ($url) {
+                    //                        return Html::a(
+                    //                            '<span class="fa fa-trash"></span> ',
+                    //                            $url,
+                    //                            [
+                    //                                'title' => 'Delete',
+                    //                                'data-pjax' => '0',
+                    //                            ]
+                    //                        );
+                    //                    },
                 ],
             ],
         ],

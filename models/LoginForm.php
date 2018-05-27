@@ -59,9 +59,29 @@ class LoginForm extends Model
      */
     public function login()
     {
-        if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
+        $user = User::findByUsername($this->username);
+//        debug($user);
+//        exit;
+        if (empty($user)) {
+            Yii::$app->session->setFlash('danger', User::MESSAGE_NOT_REGISTERED);
+            return false;
         }
+
+        if ($this->validate()) {
+            if ($user->status != User::STATUS_ACTIVE) {
+                Yii::$app->session->setFlash('warning', User::MESSAGE_NOT_CONFIRMED);
+                return false;
+            }
+
+            $user = User::findByUsername($this->username);
+            $user->updated_at = date("Y-m-d H:i:s");
+            $user->save();
+
+            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+        }
+
+        Yii::$app->session->setFlash('danger', 'Логин ёки парол нотўғри киритилди.');
+
         return false;
     }
 

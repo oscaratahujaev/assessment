@@ -28,7 +28,7 @@ class MinistryController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
-            /*'access' => [
+            'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
@@ -36,7 +36,7 @@ class MinistryController extends Controller
                         'roles' => ['@'],
                     ],
                 ],
-            ],*/
+            ],
         ];
     }
 
